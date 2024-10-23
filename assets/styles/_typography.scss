@@ -1,0 +1,45 @@
+@import "functions";
+
+@font-face {
+  font-family: 'Pixels';
+  src: url('/fonts/Stopwatch.woff2') format('woff2'), url('/fonts/Stopwatch.otf') format('opentype'), url('/fonts/Stopwatch.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+html {
+  // * if this is updated, also update the the
+  // * size in the `rem` function in `./_functions.scss`
+  font-size: 18px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Pixels;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: rem(48);
+  line-height: 1.1;
+}
+
+h3 {
+  font-size: rem(26);
+  line-height: 1.1;
+}
+
+p {
+  font-size: rem(18);
+  line-height: 1.3;
+}
+
+.text {
+  &-secondary {
+    color: var(--color-text-secondary);
+  }
+}

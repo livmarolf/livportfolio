@@ -1,0 +1,29 @@
+:root {
+  --color-background_rgb: 0, 0, 0;
+  --color-background-card_rgb: 25, 25, 25;
+  --color-background-card-dark_rgb: 14, 14, 14;
+  --color-background-card-light_rgb: 37, 37, 37;
+  --color-text-primary_rgb: 255, 255, 255;
+  --color-text-secondary_rgb: 158, 158, 158;
+  --color-border_rgb: 158, 158, 158;
+
+
+  --color-background: rgb(var(--color-background_rgb));
+  --color-background-card: rgb(var(--color-background-card_rgb));
+  --color-background-card-dark: rgb(var(--color-background-card-dark_rgb));
+  --color-background-card-light: rgb(var(--color-background-card-light_rgb));
+
+  --color-text-primary: rgb(var(--color-text-primary_rgb));
+  --color-text-secondary: rgb(var(--color-text-secondary_rgb));
+  --color-border: rgb(var(--color-border_rgb));
+
+  --common-gap: 20px;
+
+  // noise kinesis
+  --x: -9999999px;
+  --y: -9999999px;
+  --noise-size: 600px;
+  --noise-scale: 7;
+  --noise-color-influence: 0.3;
+  --noise-color: 255, 255, 255;
+}
