@@ -10,7 +10,7 @@ const matrixDisplayReady = ref(false)
       <div class="socials">
         <ul>
           <li>
-            <NuxtLink v-kinesis to="https://github.com/livmarolf" target="_blank">
+            <NuxtLink v-wave v-kinesis to="https://github.com/livmarolf" target="_blank">
               <h3>github</h3>
               <div class="icon-wrapper">
                 <nuxt-icon name="arrow-right" />
@@ -18,7 +18,7 @@ const matrixDisplayReady = ref(false)
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink v-kinesis to="/https://www.linkedin.com/in/oliviamarolf/" target="_blank">
+            <NuxtLink v-wave v-kinesis to="/https://www.linkedin.com/in/oliviamarolf/" target="_blank">
               <h3>linked</h3>
               <div class="icon-wrapper">
                 <nuxt-icon name="arrow-right" />
@@ -26,7 +26,7 @@ const matrixDisplayReady = ref(false)
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink v-kinesis to="/https://www.figma.com/@livmarolf" target="_blank">
+            <NuxtLink v-wave v-kinesis to="/https://www.figma.com/@livmarolf" target="_blank">
               <h3>figma</h3>
               <div class="icon-wrapper">
                 <nuxt-icon name="arrow-right" />
@@ -34,7 +34,7 @@ const matrixDisplayReady = ref(false)
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink v-kinesis to="/resume">
+            <NuxtLink v-wave v-kinesis to="/resume">
               <h3>resume</h3>
               <div class="icon-wrapper">
                 <nuxt-icon name="arrow-right" />

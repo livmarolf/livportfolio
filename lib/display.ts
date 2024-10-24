@@ -350,10 +350,33 @@ export class Display {
 
 			const [x, y] = target.dataset.loc.split(",").map(Number);
 
-			if (this.get(x, y) === Colors.ON) this.set(x, y, Colors.OFF);
-			else this.set(x, y, Colors.ON);
+			if (e.altKey) {
+				const colorPicker = document.createElement("input");
+				colorPicker.type = "color";
+				colorPicker.onchange = () => {
+					//@ts-ignore
+					this.previousColor = colorPicker.value;
+					this.set(x, y, colorPicker.value);
+
+					const tmpBuffer = this.writeBuffer.slice();
+
+					this.flushBuffer();
+
+					this.writeBuffer = tmpBuffer;
+				};
+				colorPicker.click();
+				return;
+			}
+
+			if (this.get(x, y) !== Colors.OFF) this.set(x, y, Colors.OFF);
+			// @ts-ignore
+			else this.set(x, y, this.previousColor ?? Colors.ON);
+
+			const tmpBuffer = this.writeBuffer.slice();
 
 			this.flushBuffer();
+
+			this.writeBuffer = tmpBuffer;
 		});
 
 		document.addEventListener("keydown", (e) => {
@@ -365,7 +388,7 @@ export class Display {
 	}
 
 	export(color = false, full = false) {
-		const output: [number, number, string?][] = [];
+		let output: [number, number, string?][] = [];
 
 		for (let y = 0; y < this.height; y++) {
 			for (let x = 0; x < this.width; x++) {
@@ -375,6 +398,11 @@ export class Display {
 				}
 			}
 		}
+
+		const minX = Math.min(...output.map(([x]) => x));
+		const minY = Math.min(...output.map(([, y]) => y));
+
+		output = output.map(([x, y, color]) => [x - minX, y - minY, color]);
 
 		return JSON.stringify(output);
 	}

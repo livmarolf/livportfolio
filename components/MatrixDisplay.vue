@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Colors, Display, type Scene } from '~/lib/display';
+import { pacManGhost, pacManGhostAlt } from '~/lib/text/art';
 import type { GlyphMatrix } from '~/lib/text/glyphs';
 
 const emit = defineEmits<(e: 'ready') => void>()
@@ -110,12 +111,11 @@ const textScanOn: Scene = [
 
 const pacMan: Scene = [
   {
-    duration: (width) => {
-      return width * 100
-    },
+    duration: (width) => width * 100
+    ,
     start: 0,
     render(t) {
-      const pacManWidth = this.text.glyphWidth(mouthOpen)
+      const pacManWidth = this.text.glyphWidth(pacManGhost)
 
       const pacManX = Math.floor((this.width + pacManWidth) * t)
       const [, y] = this.center
@@ -129,8 +129,23 @@ const pacMan: Scene = [
       const pacManGlyph = Math.abs(pacManX) % 4 < 2 ? mouthOpen : mouthClosed
 
       this.text.glyph(pacManX, y, pacManGlyph, 'yellow', ['right', 'center'])
+      return [pacManX]
     },
   },
+  {
+    duration: (width) => width * 100,
+    start: 1300,
+    render(t, pacManX) {
+      // const ghostWidth = this.text.glyphWidth(pacManGhost)
+
+      // const ghostX = Math.floor((this.width + ghostWidth) * t)
+      const [, y] = this.center
+
+      const ghostGlyph = Math.abs(pacManX) % 4 < 2 ? pacManGhost : pacManGhostAlt
+
+      this.text.glyph(pacManX - 14, y, ghostGlyph, 'none', ['right', 'center'])
+    }
+  }
 ]
 
 const uxDesigner: Scene = [
@@ -170,7 +185,11 @@ const matrixDisplayEl = useTemplateRef('dot-matrix-display');
 onMounted(() => {
   if (!matrixDisplayEl.value) return
   const display = new Display(matrixDisplayEl.value, [textScanOn, pacMan, uxDesigner, pacMan]);
-  display.play()
+  display.playbackControls();
+  display.play();
+  // display.edit();
+  // display.text.glyph(0, 0, pacManGhost, 'none');
+  // display.flushBuffer();
   emit('ready')
 })
 
