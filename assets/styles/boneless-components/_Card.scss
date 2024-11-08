@@ -1,0 +1,54 @@
+.card {
+  background: var(--color-background-card);
+  border-radius: rem(8);
+  padding: rem(64);
+  overflow: hidden;
+  display: grid;
+  grid-template: 1fr auto / 1fr;
+  gap: rem(48) 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  &--label,
+  .accent {
+    color: var(--accent, var(--color-text-primary));
+  }
+
+  &--title {
+    .force-wrap {
+      width: 100%;
+    }
+
+    .no-wrap {
+      display: flex;
+      align-items: center;
+    }
+
+
+    .icon-button {
+      margin-left: 0.5em;
+    }
+  }
+
+  &--text {
+    color: var(--color-text-secondary);
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    background: var(--accent, var(--color-text-primary));
+    border-radius: rem(2);
+    width: rem(4);
+    top: rem(9);
+    left: rem(9);
+    bottom: rem(9);
+  }
+}
+
+img.card {
+  padding: 0;
+  object-fit: cover;
+}

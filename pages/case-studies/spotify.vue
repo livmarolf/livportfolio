@@ -13,14 +13,14 @@
       </Card>
       <DisplayCard>
         <template #label>
-          <nuxt-icon name="spotify" filled />
+          <Icon name="spotify" />
           <p>intro</p>
         </template>
         <template #default>
           <NuxtImg class="display-image" src="/images/case-studies/spotify-1.png" />
           <Tooltip width="var(--tooltip-1-width)">
-            <template #top-text>So it’s time to pick a movie...</template>
-            <template #bottom-text>Let’s dive into <strong>Disney Plus</strong> and see what movies they have to
+            <template #top-text>So it's time to pick a movie...</template>
+            <template #bottom-text>Let's dive into <strong>Disney Plus</strong> and see what movies they have to
               offer</template>
           </Tooltip>
         </template>

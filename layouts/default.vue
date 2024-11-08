@@ -1,6 +1,7 @@
 <template>
-  <!-- <PageHeader /> -->
+  <PageHeader />
   <slot />
+  <PageFooter />
 </template>
 
 <style lang="scss">

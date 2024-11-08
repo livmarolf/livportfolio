@@ -77,7 +77,7 @@ const textScanOn: Scene = [
     start: 0,
     minResolution: {
       horizontal: 25,
-      vertical: 11,
+      vertical: 17,
     },
     render() {
       return this.text.box(...this.center, ['OLIVIA', 'MAROLF'], Colors.ON, ['center', 'center'])
@@ -111,8 +111,7 @@ const textScanOn: Scene = [
 
 const pacMan: Scene = [
   {
-    duration: (width) => width * 100
-    ,
+    duration: (width) => width * 100,
     start: 0,
     render(t) {
       const pacManWidth = this.text.glyphWidth(pacManGhost)
@@ -135,10 +134,7 @@ const pacMan: Scene = [
   {
     duration: (width) => width * 100,
     start: 1300,
-    render(t, pacManX) {
-      // const ghostWidth = this.text.glyphWidth(pacManGhost)
-
-      // const ghostX = Math.floor((this.width + ghostWidth) * t)
+    render(_, pacManX) {
       const [, y] = this.center
 
       const ghostGlyph = Math.abs(pacManX) % 4 < 2 ? pacManGhost : pacManGhostAlt

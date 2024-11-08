@@ -14,13 +14,21 @@ export type Actor = {
 		horizontal: number;
 		vertical: number;
 	};
-	render: (this: Display, t: number, prevObjInfo: any) => unknown;
+	initializeStore?: (this: Display) => Record<string, unknown>;
+	render: (
+		this: Display,
+		t: number,
+		// biome-ignore lint/suspicious/noExplicitAny: I don't want to type this
+		prevObjInfo: any,
+		// biome-ignore lint/suspicious/noExplicitAny: I don't want to type this
+		store: Record<string, any>,
+	) => unknown;
 };
 
 export type Scene = Actor[];
 
 export const MAX_PIXEL_SIZE = 24;
-export const MIN_VERTICAL_RESOLUTION = 17;
+export const MIN_VERTICAL_RESOLUTION = 1;
 
 export class Display {
 	private el: HTMLElement;
@@ -39,6 +47,9 @@ export class Display {
 	private previousFrame: string[] = [];
 	private writeBuffer: string[] = [];
 	private animationFrameId: number | null = null;
+	private sceneStore = new Map<Actor, Record<string, unknown>>();
+	private finalActor: Actor | null = null;
+	private loopOffset: number;
 
 	text: TextRenderer = new TextRenderer(this);
 
@@ -56,11 +67,16 @@ export class Display {
 		return this.writeBuffer.length;
 	}
 
-	constructor(el: HTMLElement, scenes: Scene[]) {
+	constructor(
+		el: HTMLElement,
+		scenes: Scene[],
+		options: { loopOffset?: number } = { loopOffset: 0 },
+	) {
 		this.el = el;
 		this.scenes = scenes;
 
 		this.render = this.render.bind(this);
+		this.loopOffset = options.loopOffset ?? 0;
 
 		this.buildDOM();
 
@@ -169,6 +185,20 @@ export class Display {
 		return minRes;
 	};
 
+	private prepareFinalActor(sceneDuration: number) {
+		if (this.loopOffset >= 0 || this.finalActor) return;
+
+		this.finalActor = {
+			...this.scenes[0][0],
+			start: sceneDuration + this.loopOffset,
+		};
+
+		this.sceneStore.set(
+			this.finalActor,
+			this.finalActor.initializeStore?.call(this) ?? {},
+		);
+	}
+
 	private render() {
 		if (!this.currentScene) return;
 		this.running = true;
@@ -189,13 +219,27 @@ export class Display {
 			return this.nextScene();
 		}
 
+		this.prepareFinalActor(sceneDuration);
+
 		let prevRenderInfo: unknown = null;
 
-		for (const { start, duration, render, clip } of this.currentScene) {
+		const actors =
+			this.currentSceneIndex === this.scenes.length - 1 && this.finalActor
+				? [...this.currentScene, this.finalActor]
+				: this.currentScene;
+
+		for (const actor of actors) {
+			const { start, duration, render, clip } = actor;
+
 			const t = (this.elapsed - start) / computeDuration(duration);
 			if (t < 0 || (t > 1 && clip)) continue;
 
-			prevRenderInfo = render.bind(this)(t, prevRenderInfo);
+			prevRenderInfo = render.bind(this)(
+				t,
+				prevRenderInfo,
+				// biome-ignore lint/style/noNonNullAssertion: ts can't infer the type
+				this.sceneStore.get(actor)!,
+			);
 		}
 		this.flushBuffer();
 
@@ -205,9 +249,26 @@ export class Display {
 	private nextScene() {
 		if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
 
+		const finalActorStore =
+			this.finalActor && this.sceneStore.get(this.finalActor);
+		this.finalActor = null;
+
+		this.sceneStore.clear();
+
 		this.animationFrameId = requestAnimationFrame(this.render);
 		this.currentSceneIndex = (this.currentSceneIndex + 1) % this.scenes.length;
-		this.sceneStart = performance.now();
+		this.sceneStart =
+			this.currentSceneIndex === 0
+				? performance.now() + this.loopOffset
+				: performance.now();
+
+		for (const actor of this.currentScene) {
+			this.sceneStore.set(actor, actor.initializeStore?.call(this) ?? {});
+		}
+
+		if (finalActorStore) {
+			this.sceneStore.set(this.currentScene[0], finalActorStore);
+		}
 	}
 
 	private flushBuffer() {
@@ -233,6 +294,10 @@ export class Display {
 		if (this.running) {
 			if (this.logging) console.warn("Display is already running");
 			return;
+		}
+
+		for (const actor of this.currentScene) {
+			this.sceneStore.set(actor, actor.initializeStore?.call(this) ?? {});
 		}
 
 		this.sceneStart = performance.now();
@@ -311,8 +376,8 @@ export class Display {
 
 	playbackControls() {
 		document.addEventListener("keydown", (e) => {
-			e.preventDefault();
 			if (e.key === " ") {
+				e.preventDefault();
 				if (this.running) {
 					// @ts-ignore
 					this._haltTime = performance.now();

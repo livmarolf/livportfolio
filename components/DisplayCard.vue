@@ -22,9 +22,7 @@
   gap: rem(12);
   color: var(--color-text-secondary);
 
-  :deep(.nuxt-icon) {
-    font-size: rem(28);
-  }
+
 
   :deep(p) {
     font-size: rem(16);

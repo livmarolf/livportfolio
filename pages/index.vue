@@ -1,113 +1,144 @@
 <script setup lang="ts">
 const matrixDisplayReady = ref(false)
-
 </script>
 
 <template>
   <main :class="{ hidden: !matrixDisplayReady }">
-    <MatrixDisplay @ready="matrixDisplayReady = true" class="matrix-display" />
+    <MatrixDisplay @ready="matrixDisplayReady = true;" class="matrix-display" />
     <section class="socials-and-skills">
       <div class="socials">
         <ul>
           <li>
             <NuxtLink v-wave v-kinesis to="https://github.com/livmarolf" target="_blank">
               <h3>github</h3>
-              <div class="icon-wrapper">
-                <nuxt-icon name="arrow-right" />
-              </div>
+              <IconButton icon="arrow-angled" />
             </NuxtLink>
           </li>
           <li>
             <NuxtLink v-wave v-kinesis to="/https://www.linkedin.com/in/oliviamarolf/" target="_blank">
               <h3>linked</h3>
-              <div class="icon-wrapper">
-                <nuxt-icon name="arrow-right" />
-              </div>
+              <IconButton icon="arrow-angled" />
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink v-wave v-kinesis to="/https://www.figma.com/@livmarolf" target="_blank">
+            <NuxtLink v-wave v-kinesis to="https://www.figma.com/@livmarolf" target="_blank">
               <h3>figma</h3>
-              <div class="icon-wrapper">
-                <nuxt-icon name="arrow-right" />
-              </div>
+              <IconButton icon="arrow-angled" />
             </NuxtLink>
           </li>
           <li>
             <NuxtLink v-wave v-kinesis to="/resume">
               <h3>resume</h3>
-              <div class="icon-wrapper">
-                <nuxt-icon name="arrow-right" />
-              </div>
+              <IconButton icon="download" />
             </NuxtLink>
           </li>
         </ul>
       </div>
       <div class="skills">
         <div class="marquee">
-          <nuxt-icon name="affinity" filled></nuxt-icon>
-          <nuxt-icon name="css3" filled></nuxt-icon>
-          <nuxt-icon name="html5" filled></nuxt-icon>
-          <nuxt-icon name="framer" filled></nuxt-icon>
-          <nuxt-icon name="framer-motion" filled></nuxt-icon>
-          <nuxt-icon name="clickup" filled></nuxt-icon>
-          <nuxt-icon name="javascript" filled></nuxt-icon>
-          <nuxt-icon name="python" filled></nuxt-icon>
-          <nuxt-icon name="react" filled></nuxt-icon>
-          <nuxt-icon name="sass" filled></nuxt-icon>
-          <nuxt-icon name="sql" filled></nuxt-icon>
-          <nuxt-icon name="vs-code" filled></nuxt-icon>
-          <nuxt-icon name="figma" filled></nuxt-icon>
+          <Icon name="affinity" />
+          <Icon name="css3" />
+          <Icon name="html5" />
+          <Icon name="framer" />
+          <Icon name="framer-motion" />
+          <Icon name="clickup" />
+          <Icon name="javascript" />
+          <Icon name="python" />
+          <Icon name="react" />
+          <Icon name="sass" />
+          <Icon name="sql" />
+          <Icon name="vs-code" />
+          <Icon name="figma" />
           <!-- duplicate icons -->
-          <nuxt-icon name="affinity" filled></nuxt-icon>
-          <nuxt-icon name="css3" filled></nuxt-icon>
-          <nuxt-icon name="html5" filled></nuxt-icon>
-          <nuxt-icon name="framer" filled></nuxt-icon>
-          <nuxt-icon name="framer-motion" filled></nuxt-icon>
-          <nuxt-icon name="clickup" filled></nuxt-icon>
-          <nuxt-icon name="javascript" filled></nuxt-icon>
-          <nuxt-icon name="python" filled></nuxt-icon>
-          <nuxt-icon name="react" filled></nuxt-icon>
-          <nuxt-icon name="sass" filled></nuxt-icon>
-          <nuxt-icon name="sql" filled></nuxt-icon>
-          <nuxt-icon name="vs-code" filled></nuxt-icon>
-          <nuxt-icon name="figma" filled></nuxt-icon>
+          <Icon name="affinity" />
+          <Icon name="css3" />
+          <Icon name="html5" />
+          <Icon name="framer" />
+          <Icon name="framer-motion" />
+          <Icon name="clickup" />
+          <Icon name="javascript" />
+          <Icon name="python" />
+          <Icon name="react" />
+          <Icon name="sass" />
+          <Icon name="sql" />
+          <Icon name="vs-code" />
+          <Icon name="figma" />
         </div>
       </div>
     </section>
-    <section class="two-cards">
-      <Card>
-        <NuxtImg src="/images/olivia-marolf.png" alt="Olivia Marolf" format="webp" placeholder />
-      </Card>
-
-      <Card v-kinesis class="noise" label="About">
-
-        <h2>mason sucks... frick frick frick frick help</h2>
-
-        <p class="text-secondary">I solve problems through thoughtful design and practical solutions that enhance
-          usability. Design is part
-          of my life, and I enjoy blending creativity with problem-solving to improve user interactions.</p>
-
-      </Card>
+    <section class="card-group">
+      <NuxtImg class="card" src="/images/home/zero.svg" />
+      <div v-wave class="card" style="--accent: var(--accent-zero);">
+        <span class="card--label">Case Studies</span>
+        <h2 v-wave-trigger class="card--title">
+          Designing
+          <span class="no-wrap">
+            <span class="accent">Zero</span>
+            <IconButton icon="arrow-right" />
+          </span>
+        </h2>
+        <p class="card--text">
+          A local cardboard recycling company hired us to design their first website to build brand
+          awareness, promote sustainability, and streamline recycling pickup scheduling.
+        </p>
+      </div>
     </section>
-    <div class="divider-link">
-      <h2>Case Studies</h2>
-      <NuxtLink class="link" to="/case-studies">
-        SEE ALL <div><nuxt-icon name="arrow-right" filled /></div>
-      </NuxtLink>
-    </div>
+    <section class="card-group left">
+      <div v-wave class="card" style="--accent: var(--accent-disney);">
+        <span class="card--label">Case Studies</span>
+        <h2 v-wave-trigger class="card--title">
+          <span class="accent">Disney plus</span> movies
+          <span class="no-wrap">
+            <span>filter</span>
+            <IconButton icon="arrow-right" />
+          </span>
+        </h2>
+        <p class="card--text">
+          Disney Plus' "Movies" page has a usability issue: the filter disappears when scrolling,
+          forcing users to scroll back up to use it. This is especially frustrating on TVs, where navigation takes
+          several clicks.
+        </p>
+      </div>
+      <NuxtImg class="card" src="/images/home/disney-plus.svg" />
+    </section>
+    <section class="card-group">
+      <NuxtImg class="card" src="/images/home/spotify.svg" />
+      <div v-wave class="card" style="--accent: var(--accent-spotify);">
+        <span class="card--label">Case Studies</span>
+        <h2 v-wave-trigger class="card--title">
+          <span class="accent">spotify{{ ' ' }}</span>
+          <span class="no-wrap">
+            <span>wrapped</span>
+            <IconButton icon="arrow-right" />
+          </span>
+        </h2>
+        <p class="card--text">
+          How does a simple year-end recap become a viral sensation? This case study explores the design choices behind
+          one of Spotify's most engaging features.
+        </p>
+      </div>
+    </section>
   </main>
 </template>
 
 <style lang="scss" scoped>
+$colors: (
+  zero: #04D190,
+  disney: #00B5DA,
+  spotify: #ADF83F,
+  lets-connect: #6E67FF
+);
+
 main {
+  @each $name, $color in $colors {
+    --accent-#{"" + $name}: #{$color};
+  }
+
   transition: opacity 0.1s ease-in-out;
 
   &.hidden {
     opacity: 0;
   }
-
-  height: 300vh;
 }
 
 .matrix-display {
@@ -119,7 +150,6 @@ main {
 }
 
 .socials {
-  --noise-size: 200px;
   display: flex;
   justify-content: stretch;
   gap: var(--common-gap);
@@ -161,24 +191,6 @@ main {
       border-radius: rem(8);
       z-index: 1;
     }
-
-
-    .icon-wrapper {
-      font-size: rem(18);
-      background: var(--color-background-card-light);
-      border: 1px solid var(--color-border);
-      color: var(--color-border);
-      border-radius: rem(8);
-      width: rem(36);
-      height: rem(36);
-      display: grid;
-      place-items: center;
-
-      .nuxt-icon>* {
-        margin-bottom: 0;
-        transform: rotate(-45deg);
-      }
-    }
   }
 }
 
@@ -205,14 +217,6 @@ main {
     color: var(--color-text-primary);
 
     animation: skills-marquee 60s linear infinite;
-
-    .nuxt-icon {
-      display: contents;
-
-      >* {
-        margin-bottom: 0;
-      }
-    }
   }
 }
 
@@ -226,41 +230,17 @@ main {
   }
 }
 
-.two-cards {
+.card-group {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--common-gap);
-  height: clamp(rem(700), 75vh, rem(900));
-}
+  grid-template-columns: 2fr 1fr;
 
-.divider-link {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 48px;
-
-  .link {
-    color: inherit;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: rem(12);
-
-    div {
-      font-size: rem(18);
-      background: var(--color-background-card-light);
-      border: 1px solid var(--color-border);
-      border-radius: rem(8);
-      width: rem(36);
-      height: rem(36);
-      display: grid;
-      place-items: center;
-      color: var(--color-border);
-
-      .nuxt-icon>* {
-        margin-bottom: 0;
-      }
-    }
+  &:nth-of-type(odd) {
+    grid-template-columns: 1fr 2fr;
   }
+
+  margin-bottom: var(--common-gap);
+
+  gap: var(--common-gap);
+  height: clamp(rem(600), 75vh, rem(750));
 }
 </style>

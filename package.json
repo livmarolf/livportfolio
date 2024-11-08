@@ -1,25 +1,30 @@
 {
-  "name": "nuxt-app",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "@nuxt/image": "^1.8.1",
-    "@nuxtjs/google-fonts": "^3.2.0",
-    "nuxt": "^3.13.0",
-    "v-wave": "^3.0.2",
-    "vue": "latest",
-    "vue-router": "latest"
-  },
-  "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c",
-  "devDependencies": {
-    "nuxt-icons": "^3.2.1",
-    "sass": "^1.79.5"
-  }
+	"name": "nuxt-app",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"icons": "node ./scripts/icons.js"
+	},
+	"dependencies": {
+		"@nuxt/image": "^1.8.1",
+		"@nuxtjs/google-fonts": "^3.2.0",
+		"nuxt": "^3.13.0",
+		"v-wave": "^3.0.2",
+		"vue": "latest",
+		"vue-router": "latest"
+	},
+	"packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c",
+	"devDependencies": {
+		"@types/jsdom": "^21.1.7",
+		"@vueuse/core": "^11.2.0",
+		"@vueuse/nuxt": "^11.2.0",
+		"jsdom": "^25.0.1",
+		"sass": "^1.79.5",
+		"vite-svg-loader": "^5.1.0"
+	}
 }

@@ -5,6 +5,8 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -24,52 +26,9 @@ button {
   color: inherit;
 }
 
-
-
 .glass {
   background: rgb(71, 71, 71, .36);
   backdrop-filter: blur(28px);
 }
 
-.noise[data-kinesis] {
-  position: relative;
-  overflow: hidden;
-
-  &.with-border {
-    border: 2px solid transparent;
-    transition: border-color 0.2s ease-in-out;
-
-    &:hover {
-      border-color: rgb(var(--noise-color));
-    }
-  }
-
-  &:not(:hover)::before {
-    opacity: 0;
-  }
-
-  >* {
-    z-index: 1;
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    left: 0;
-    width: var(--noise-size);
-    height: var(--noise-size);
-    border-radius: 50%;
-    top: calc(var(--y) - var(--noise-size) / 2);
-    left: calc(var(--x) - var(--noise-size) / 2);
-    background: radial-gradient(rgba(var(--noise-color), var(--noise-color-influence)),
-        #191919 70%);
-
-    mask-image: url(/images/noise.png);
-    mask-position: calc(var(--x) * -1) calc(var(--y) * -1);
-    mask-size: calc(100px * var(--noise-scale));
-    image-rendering: pixelated;
-    transition: opacity 0.5s ease-in-out;
-  }
-}
+@import 'boneless-components/Card';

@@ -1,19 +1,34 @@
-const kinesisSubscriber: Map<string, (x: number, y: number) => void> =
-	new Map();
+const kinesisSubscriber: Set<HTMLElement> = new Set();
 
-const subscribe = (id: string, cb: (x: number, y: number) => void) => {
-	kinesisSubscriber.set(id, cb);
-};
-
-const unsubscribe = (id: string) => {
-	kinesisSubscriber.delete(id);
-};
+const LIGHT_SIZE = 128;
 
 window.addEventListener("pointermove", (e) => {
 	const { x, y } = e;
 
-	for (const cb of kinesisSubscriber.values()) {
-		cb(x, y);
+	const els = [...kinesisSubscriber];
+	const rects = [];
+
+	for (const el of els) {
+		rects.push(el.getBoundingClientRect());
+	}
+
+	for (let i = 0; i < els.length; i++) {
+		const el = els[i];
+		const rect = rects[i];
+
+		if (rect.top > window.innerHeight) continue;
+		if (rect.bottom < 0) continue;
+
+		const relativeX = x - rect.left;
+		const relativeY = y - rect.top;
+
+		if (relativeX < -LIGHT_SIZE) continue;
+		if (relativeY < -LIGHT_SIZE) continue;
+		if (relativeX > rect.width + LIGHT_SIZE) continue;
+		if (relativeY > rect.height + LIGHT_SIZE) continue;
+
+		el.style.setProperty("--x", `${relativeX}px`);
+		el.style.setProperty("--y", `${relativeY}px`);
 	}
 });
 
@@ -21,15 +36,10 @@ export default defineNuxtPlugin((nuxtApp) => {
 	nuxtApp.vueApp.directive("kinesis", {
 		mounted(el) {
 			el.dataset.kinesis = Math.random().toString(36).substring(2);
-			subscribe(el.dataset.kinesis, (x, y) => {
-				const rect = el.getBoundingClientRect();
-
-				el.style.setProperty("--x", `${x - rect.left}px`);
-				el.style.setProperty("--y", `${y - rect.top}px`);
-			});
+			kinesisSubscriber.add(el);
 		},
 		unmounted(el) {
-			unsubscribe(el.dataset.kinesis);
+			kinesisSubscriber.delete(el);
 		},
 		getSSRProps() {
 			return {};
