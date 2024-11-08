@@ -91,7 +91,7 @@ onMounted(() => {
       </h2>
     </section>
     <section class="links">
-      <div class="card socials">
+      <div class="card borderless socials">
         <h3>Olivia Marolf</h3>
 
         <ul>
@@ -135,7 +135,7 @@ onMounted(() => {
           </NuxtLink>
         </li>
       </ul>
-      <div class="card copyright">
+      <div class="card borderless copyright">
         <p>© 2024</p>
         <p>OLIVIA MAROLF - UX DESIGNER</p>
       </div>

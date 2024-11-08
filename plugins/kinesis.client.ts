@@ -1,6 +1,14 @@
 const kinesisSubscriber: Set<HTMLElement> = new Set();
 
 const LIGHT_SIZE = 128;
+const OFF_SCREEN = "-99999px";
+
+document.addEventListener("mouseleave", () => {
+	for (const el of kinesisSubscriber) {
+		el.style.setProperty("--x", OFF_SCREEN);
+		el.style.setProperty("--y", OFF_SCREEN);
+	}
+});
 
 window.addEventListener("pointermove", (e) => {
 	const { x, y } = e;
