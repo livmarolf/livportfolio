@@ -1,30 +1,29 @@
 <template>
   <main>
     <section class="intro">
-      <Card accent="var(--spotify-green)" label="case study" border>
+      <div class="card" style="--accent: var(--spotify-green)">
+        <span class="card--label">case study</span>
+        <h2 class="card--title"><span class="accent">spotify</span> wrapped</h2>
 
-        <h2><span class="spotify-green">spotify</span> wrapped</h2>
-
-        <p class="text-secondary">
+        <p class="card--text">
           How does a simple year-end recap become a viral sensation? This case study explores the design choices behind
           one of Spotify's most engaging features.
         </p>
-
-      </Card>
-      <DisplayCard>
-        <template #label>
+      </div>
+      <div class="card borderless dark">
+        <span class="card--label">
           <Icon name="spotify" />
           <p>intro</p>
-        </template>
-        <template #default>
-          <NuxtImg class="display-image" src="/images/case-studies/spotify-1.png" />
-          <Tooltip width="var(--tooltip-1-width)">
-            <template #top-text>So it's time to pick a movie...</template>
-            <template #bottom-text>Let's dive into <strong>Disney Plus</strong> and see what movies they have to
-              offer</template>
-          </Tooltip>
-        </template>
-      </DisplayCard>
+        </span>
+
+        <NuxtImg class="display-image" src="/images/case-studies/spotify-1.png" />
+        <Tooltip width="var(--tooltip-1-width)">
+          <template #top-text>So it's time to pick a movie...</template>
+          <template #bottom-text>Let's dive into <strong>Disney Plus</strong> and see what movies they have to
+            offer</template>
+        </Tooltip>
+
+      </div>
     </section>
   </main>
 </template>
@@ -74,6 +73,7 @@ section {
   :deep(.tooltip) {
     --tooltip-width: #{rem(350)};
     bottom: rem(64);
+    left: rem(64);
     position: absolute;
   }
 }

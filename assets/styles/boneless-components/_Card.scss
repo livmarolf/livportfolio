@@ -1,5 +1,10 @@
 .card {
   background: var(--color-background-card);
+
+  &.dark {
+    background: var(--color-background-card-dark);
+  }
+
   border-radius: rem(8);
   padding: rem(64);
   overflow: hidden;
@@ -10,7 +15,21 @@
   width: 100%;
   position: relative;
 
-  &--label,
+  &--label {
+    color: var(--accent, var(--color-text-secondary));
+    display: flex;
+    align-items: center;
+    height: min-content;
+    vertical-align: middle;
+    font-size: rem(14);
+    gap: rem(12);
+    text-transform: uppercase;
+
+    .icon {
+      font-size: rem(24);
+    }
+  }
+
   .accent {
     color: var(--accent, var(--color-text-primary));
   }
@@ -35,7 +54,7 @@
     color: var(--color-text-secondary);
   }
 
-  &::before {
+  &:not(.borderless)::before {
     content: '';
     display: block;
     position: absolute;

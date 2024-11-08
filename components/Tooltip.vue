@@ -15,7 +15,7 @@
 <style lang="scss" scoped>
 .tooltip {
   padding: rem(18);
-  border: 2px solid var(--color-border);
+  border: 1px solid #606060;
   border-radius: rem(8);
   background: rgba(var(--color-background-card-light_rgb), 0.7);
   backdrop-filter: blur(12px);
