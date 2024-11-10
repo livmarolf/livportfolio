@@ -232,10 +232,10 @@ main {
 
 .card-group {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 7fr 5fr;
 
   &:nth-of-type(odd) {
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 5fr 7fr;
   }
 
   margin-bottom: var(--common-gap);
