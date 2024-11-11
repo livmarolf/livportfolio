@@ -181,7 +181,7 @@ const matrixDisplayEl = useTemplateRef('dot-matrix-display');
 onMounted(() => {
   if (!matrixDisplayEl.value) return
   const display = new Display(matrixDisplayEl.value, [textScanOn, pacMan, uxDesigner, pacMan]);
-  display.playbackControls();
+  // display.playbackControls();`
   display.play();
   // display.edit();
   // display.text.glyph(0, 0, pacManGhost, 'none');

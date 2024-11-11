@@ -377,7 +377,7 @@ export class Display {
 	playbackControls() {
 		document.addEventListener("keydown", (e) => {
 			if (e.key === " ") {
-				e.preventDefault();
+				// e.preventDefault();
 				if (this.running) {
 					// @ts-ignore
 					this._haltTime = performance.now();

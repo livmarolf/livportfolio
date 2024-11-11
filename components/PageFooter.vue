@@ -72,7 +72,7 @@ const matrixDisplayEl = useTemplateRef('footer-matrix-display');
 onMounted(() => {
   if (!matrixDisplayEl.value) return
   const display = new Display(matrixDisplayEl.value, [ribbons], { loopOffset: -2500 });
-  display.playbackControls();
+  // display.playbackControls();
   display.play();
 })
 </script>
@@ -117,19 +117,21 @@ onMounted(() => {
       </div>
       <ul class="projects">
         <li>
-          <NuxtLink v-kinesis v-wave to="/case-studies" style="--accent: var(--accent-zero);" class="card project">
+          <NuxtLink v-kinesis v-wave to="/case-studies/zero" style="--accent: var(--accent-zero);" class="card project">
             <h3>designing <span class="accent">zero</span></h3>
             <IconButton icon="arrow-right" />
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink v-kinesis v-wave to="/case-studies" style="--accent: var(--accent-disney);" class="card project">
+          <NuxtLink v-kinesis v-wave to="/case-studies/disney-plus" style="--accent: var(--accent-disney);"
+            class="card project">
             <h3><span class="accent">disney plus</span> movies filter</h3>
             <IconButton icon="arrow-right" />
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink v-kinesis v-wave to="/case-studies" style="--accent: var(--accent-spotify);" class="card project">
+          <NuxtLink v-kinesis v-wave to="/case-studies/spotify" style="--accent: var(--accent-spotify);"
+            class="card project">
             <h3><span class="accent">spotify</span> wrapped</h3>
             <IconButton icon="arrow-right" />
           </NuxtLink>
@@ -204,12 +206,6 @@ footer {
   height: min-content;
 }
 
-.links {
-  display: grid;
-  grid-template: repeat(4, min-content) / auto 2fr;
-  gap: var(--common-gap);
-}
-
 .socials {
   &::before {
     display: none;
@@ -242,6 +238,20 @@ footer {
   }
 }
 
+.links {
+  display: grid;
+  grid-template: repeat(4, min-content) / auto 2fr;
+
+  &:has(.router-link-exact-active) {
+    grid-template: repeat(3, min-content) / auto 2fr;
+
+    .socials {
+      grid-row: span 3;
+    }
+  }
+
+  gap: var(--common-gap);
+}
 
 .projects {
   display: contents;
@@ -249,6 +259,7 @@ footer {
   li {
     display: contents;
   }
+
 
   .project {
     gap: 0 rem(48);
@@ -264,6 +275,11 @@ footer {
     position: relative;
     background: radial-gradient(var(--light-size) at var(--x) var(--y), var(--color-text-primary), var(--color-background-card-dark));
     border-radius: rem(8);
+
+    &.router-link-exact-active {
+      display: none;
+    }
+
 
     &>* {
       z-index: 2;

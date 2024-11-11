@@ -1,4 +1,15 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+
+const images = [
+  '/images/case-studies/zero/gallery/1.png',
+  '/images/case-studies/zero/gallery/2.png',
+  '/images/case-studies/zero/gallery/3.png',
+  '/images/case-studies/zero/gallery/4.png',
+]
+
+const currentImage = ref(0)
+
+</script>
 
 <template>
   <main>
@@ -22,20 +33,26 @@
     </section>
 
     <!-- GALLERY -->
-    <section class="gallery"></section>
+    <section class="gallery">
+      <NuxtImg v-for="(image, i) in images" v-show="currentImage === i" class="card" :src="image" :key="image" />
+      <ul>
+        <li v-for="(image, i) in images" :key="image">
+          <button @click="currentImage = i" type="button">
+            <NuxtImg class="card" :class="{ active: currentImage === i }" :src="image" />
+          </button>
+        </li>
+      </ul>
+    </section>
 
     <!-- EARLY IDEATION -->
-    <section class="early-ideation">
+    <section class=" early-ideation">
       <div class="card borderless dark">
         <span class="card--label">
           <Icon name="zero" />
           <p>early ideation</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/early-ideation.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/early-ideation.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Taking notes and brainstorming is an important part of the process!
@@ -80,10 +97,7 @@
           <p>documented research</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/documented-research.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/documented-research.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Now that objectives are defined, it’s time to
@@ -130,10 +144,7 @@
           <p>branding</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/branding.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/branding.png" />
       </div>
 
       <div class="card" style="--accent: var(--zero-cyan)">
@@ -172,10 +183,7 @@
           <p>tv version</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/educational-content.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/educational-content.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Incorporating components from
@@ -196,10 +204,7 @@
           <p>conversion</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/conversion.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/conversion.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Each page includes one or more calls to action (CTAs)
@@ -234,10 +239,7 @@
           <p>measuring success</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/measuring-success.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/measuring-success.png" />
       </div>
       <div class="card" style="--accent: var(--zero-green)">
         <span class="card--label">results</span>
@@ -251,7 +253,7 @@
           followers and direct inquiries from the website.
         </p>
       </div>
-      <div class="card" style="--accent: var(--zero-green)">
+      <div class="card" style="--accent: var(--zero-cyan)">
         <span class="card--label">results</span>
         <h3 class="card--topic">advertising success</h3>
         <p class="card--title">
@@ -291,6 +293,59 @@ section {
   gap: var(--common-gap);
 }
 
+.gallery {
+  display: grid;
+  grid-template: 1fr / 10.5fr 1.5fr;
+  gap: var(--common-gap);
+  height: max(rem(600), 85vh);
+
+  img {
+    height: 100%;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--common-gap);
+
+    list-style: none;
+    overflow-y: auto;
+
+    scrollbar-color: var(--color-background-card-light) transparent;
+    scrollbar-width: thin;
+
+    li {
+      display: contents;
+    }
+
+    button {
+      background: transparent;
+      border: 0;
+      outline: none;
+
+      &:focus img {
+        border: none;
+        outline: rem(3) solid var(--color-border);
+      }
+
+      img {
+        height: auto;
+        aspect-ratio: 1 / 1;
+        cursor: pointer;
+        outline-offset: rem(-3);
+
+        &:hover {
+          outline: rem(3) solid var(--color-border);
+        }
+
+        &.active {
+          outline: rem(3) solid var(--color-text-primary);
+        }
+      }
+    }
+  }
+}
+
 .early-ideation {
   display: grid;
   grid-template: 1fr 1fr / 7fr 5fr;
@@ -309,6 +364,10 @@ section {
 
   .card.borderless {
     grid-area: image;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .card:nth-of-type(2) {
@@ -322,9 +381,6 @@ section {
   .display-image {
     max-width: 100%;
     max-height: 70%;
-    position: absolute;
-    bottom: rem(64);
-    left: rem(64);
   }
 }
 
@@ -346,6 +402,10 @@ section {
 
   .card.borderless {
     grid-area: image;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .card:nth-of-type(2) {
@@ -359,9 +419,6 @@ section {
   .display-image {
     max-width: 100%;
     max-height: 70%;
-    position: absolute;
-    bottom: rem(64);
-    left: rem(64);
   }
 }
 
@@ -381,10 +438,11 @@ section {
   .card.borderless {
     display: flex;
     justify-content: center;
-    align-items: end;
+    align-items: flex-end;
 
     img {
-      width: 100%;
+      max-width: 100%;
+      max-height: 100%;
     }
   }
 }
@@ -467,6 +525,7 @@ section {
 
     .display-image {
       max-height: 95%;
+      max-width: 100%;
     }
   }
 
