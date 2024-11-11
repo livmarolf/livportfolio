@@ -17,9 +17,15 @@
           <Icon name="spotify" />
           <p>intro</p>
         </span>
-        <NuxtImg class="display-image" src="/images/case-studies/spotify-1.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/spotify-1.png"
+        />
         <Tooltip width="var(--tooltip-width)">
-          <template #top-text>Spotify Wrapped turns music data into a <strong>personalized recap</strong></template>
+          <template #top-text
+            >Spotify Wrapped turns music data into a
+            <strong>personalized recap</strong></template
+          >
           <template #bottom-text>
             Let's explore why it goes viral every year
           </template>
@@ -34,7 +40,10 @@
           <p>home</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/spotify-2.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/spotify-2.png"
+        />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             People get so excited about it throughout the year
@@ -78,13 +87,18 @@
           <p>wrapped</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/spotify-3.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/spotify-3.png"
+        />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
-            What better way to capture user's attention than telling <strong>stories</strong>?
+            What better way to capture user's attention than telling
+            <strong>stories</strong>?
           </template>
           <template #bottom-text>
-            Spotify does this with <strong>carefully crafted hooks</strong> to introduce each new section
+            Spotify does this with <strong>carefully crafted hooks</strong> to
+            introduce each new section
           </template>
         </Tooltip>
       </div>
@@ -96,21 +110,22 @@
           <span class="accent">narrative design principles</span>
         </p>
         <p class="card--text">
-          Each slide of Wrapped builds anticipation, keeps users engaged, and presents their year in music as a personal
-          journey.
+          Each slide of Wrapped builds anticipation, keeps users engaged, and
+          presents their year in music as a personal journey.
         </p>
       </div>
       <div class="card" style="--accent: var(--spotify-light-green)">
         <span class="card--label">UX THEORY</span>
         <h3 class="card--topic">narrative design</h3>
         <p class="card--title">
-          Narrative design transforms data into a <span class="accent">story</span>, creating a captivating emotional
+          Narrative design transforms data into a
+          <span class="accent">story</span>, creating a captivating emotional
           arc
         </p>
         <p class="card--text">
-          Wrapped takes users on a step-by-step journey through their music habits, building anticipation with each
-          reveal,
-          from top songs to favorite artists.
+          Wrapped takes users on a step-by-step journey through their music
+          habits, building anticipation with each reveal, from top songs to
+          favorite artists.
         </p>
       </div>
     </section>
@@ -122,13 +137,15 @@
           <p>wrapped</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/spotify-4.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/spotify-4.png"
+        />
         <Tooltip width="var(--tooltip-width)">
-          <template #top-text>
-            Spotify Wrapped goes beyond data
-          </template>
+          <template #top-text> Spotify Wrapped goes beyond data </template>
           <template #bottom-text>
-            It taps into pride and nostalgia using <strong>emotional design</strong> to boost engagement
+            It taps into pride and nostalgia using
+            <strong>emotional design</strong> to boost engagement
           </template>
         </Tooltip>
       </div>
@@ -136,24 +153,24 @@
         <span class="card--label">UX INSIGHT</span>
         <h3 class="card--topic">emotion</h3>
         <p class="card--title">
-          Wrapped evokes pride, nostalgia, and curiosity, using <span class="accent">emotional design</span> to boost
-          engagement.
+          Wrapped evokes pride, nostalgia, and curiosity, using
+          <span class="accent">emotional design</span> to boost engagement.
         </p>
         <p class="card--text">
-          Wrapped transforms data into a meaningful celebration that resonates emotionally, encouraging deeper
-          interaction.
+          Wrapped transforms data into a meaningful celebration that resonates
+          emotionally, encouraging deeper interaction.
         </p>
       </div>
       <div class="card" style="--accent: var(--spotify-pink)">
         <span class="card--label">UX THEORY</span>
         <h3 class="card--topic">don norman's theory</h3>
         <p class="card--title">
-          According to <span class="accent">Don Norman's emotional design theory</span>...
+          According to
+          <span class="accent">Don Norman's emotional design theory</span>...
         </p>
         <p class="card--text">
-          Successful design must consider three levels: visceral, behavioral, and reflective. Wrapped engages users on
-          all
-          three levels.
+          Successful design must consider three levels: visceral, behavioral,
+          and reflective. Wrapped engages users on all three levels.
         </p>
       </div>
     </section>
@@ -165,13 +182,18 @@
           <p>wrapped</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/spotify-5.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/spotify-5.png"
+        />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
-            With <strong>social sharing</strong> Wrapped creates a sense of community
+            With <strong>social sharing</strong> Wrapped creates a sense of
+            community
           </template>
           <template #bottom-text>
-            Wrapped becomes not just a personal reflection but a <strong>celebration</strong> of their year in music
+            Wrapped becomes not just a personal reflection but a
+            <strong>celebration</strong> of their year in music
           </template>
         </Tooltip>
       </div>
@@ -179,24 +201,25 @@
         <span class="card--label">UX INSIGHT</span>
         <h3 class="card--topic">the viral factor</h3>
         <p class="card--title">
-          Wrapped's <span class="accent">shareability</span> plays a huge role in its <span
-            class="accent">success</span>
+          Wrapped's <span class="accent">shareability</span> plays a huge role
+          in its <span class="accent">success</span>
         </p>
         <p class="card--text">
-          The design encourages users to share their results on social media, leveraging social proof to extend
-          Spotify's
-          brand presence.
+          The design encourages users to share their results on social media,
+          leveraging social proof to extend Spotify's brand presence.
         </p>
       </div>
       <div class="card" style="--accent: var(--spotify-yellow)">
         <span class="card--label">UX THEORY</span>
         <h3 class="card--topic">persuasion theory</h3>
         <p class="card--title">
-          People are <span class="accent">more likely to engage</span> with something if they see others doing it too
+          People are <span class="accent">more likely to engage</span> with
+          something if they see others doing it too
         </p>
         <p class="card--text">
-          Wrapped turns users into brand advocates by encouraging them to share their stories, creating a viral loop as
-          people compare results and join the communal experience.
+          Wrapped turns users into brand advocates by encouraging them to share
+          their stories, creating a viral loop as people compare results and
+          join the communal experience.
         </p>
       </div>
     </section>
@@ -232,15 +255,36 @@ section {
     position: absolute;
   }
 
+  .card.borderless {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: width(1060)) {
+      flex-direction: column;
+      gap: rem(64);
+      padding-top: rem(128);
+
+      :deep(.tooltip) {
+        bottom: 0;
+        left: 0;
+        position: relative;
+      }
+    }
+  }
+
+  .display-image {
+    max-width: 80%;
+    max-height: 80%;
+    position: relative;
+  }
+
   &:first-of-type {
     grid-template: 1fr / 5fr 7fr;
 
-    .display-image {
-      max-width: 70%;
-      max-height: 70%;
-      position: absolute;
-      bottom: rem(64);
-      right: rem(64);
+    @media (max-width: width(1060)) {
+      grid-template: auto auto / 1fr;
+      height: auto;
     }
   }
 
@@ -264,12 +308,20 @@ section {
       "insight image"
       "theory image";
 
-    .display-image {
-      max-width: 70%;
-      max-height: 70%;
-      position: absolute;
-      bottom: rem(64);
-      right: rem(64);
+    @media (max-width: width(1060)) {
+      grid-template: auto auto / 1fr 1fr;
+      grid-template-areas:
+        "insight theory"
+        "image image";
+      height: auto;
+    }
+
+    @media (max-width: width(960)) {
+      grid-template: auto auto auto / 1fr;
+      grid-template-areas:
+        "insight"
+        "theory"
+        "image";
     }
   }
 
@@ -279,16 +331,25 @@ section {
       "image insight"
       "image theory";
 
-    .card.borderless {
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    @media (max-width: width(1060)) {
+      grid-template: auto auto / 1fr 1fr;
+      grid-template-areas:
+        "insight theory"
+        "image image";
+
+      height: auto;
+
+      .display-image {
+        max-height: 60vh !important;
+      }
     }
 
-    .display-image {
-      max-width: 80%;
-      max-height: 80%;
-      position: relative;
+    @media (max-width: width(960)) {
+      grid-template: auto auto auto / 1fr;
+      grid-template-areas:
+        "insight"
+        "theory"
+        "image";
     }
   }
 }

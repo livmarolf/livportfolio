@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Colors, Display, type Scene } from '~/lib/display';
+import { Colors, Display, type Scene } from "~/lib/display";
 
 const generateRibbon = (width: number, height: number) => {
   const y = [Math.floor(height * Math.random())];
@@ -10,7 +10,7 @@ const generateRibbon = (width: number, height: number) => {
   }
 
   return y;
-}
+};
 
 const ribbons: Scene = [
   {
@@ -21,15 +21,15 @@ const ribbons: Scene = [
       vertical: 3,
     },
     initializeStore() {
-      return { y: generateRibbon(this.width, this.height) }
+      return { y: generateRibbon(this.width, this.height) };
     },
     render(t, _, store) {
-      const length = Math.floor(this.width / 2)
-      const start = Math.floor((this.width + length) * t) - length
-      const end = Math.floor((this.width + length) * t)
+      const length = Math.floor(this.width / 2);
+      const start = Math.floor((this.width + length) * t) - length;
+      const end = Math.floor((this.width + length) * t);
 
       for (let x = start; x < end; x++) {
-        this.set(x, store.y[x], 'var(--accent-lets-connect)')
+        this.set(x, store.y[x], "var(--accent-lets-connect)");
       }
     },
   },
@@ -37,15 +37,15 @@ const ribbons: Scene = [
     duration: 5000,
     start: 2500,
     initializeStore() {
-      return { y: generateRibbon(this.width, this.height) }
+      return { y: generateRibbon(this.width, this.height) };
     },
     render(t, _, store) {
-      const length = Math.floor(this.width / 2)
-      const start = Math.floor((this.width + length) * t) - length
-      const end = Math.floor((this.width + length) * t)
+      const length = Math.floor(this.width / 2);
+      const start = Math.floor((this.width + length) * t) - length;
+      const end = Math.floor((this.width + length) * t);
 
       for (let x = start; x < end; x++) {
-        this.set(x, store.y[x], 'var(--accent-zero)')
+        this.set(x, store.y[x], "var(--accent-zero)");
       }
     },
   },
@@ -53,34 +53,40 @@ const ribbons: Scene = [
     duration: 5000,
     start: 5000,
     initializeStore() {
-      return { y: generateRibbon(this.width, this.height) }
+      return { y: generateRibbon(this.width, this.height) };
     },
     render(t, _, store) {
-      const length = Math.floor(this.width / 2)
-      const start = Math.floor((this.width + length) * t) - length
-      const end = Math.floor((this.width + length) * t)
+      const length = Math.floor(this.width / 2);
+      const start = Math.floor((this.width + length) * t) - length;
+      const end = Math.floor((this.width + length) * t);
 
       for (let x = start; x < end; x++) {
-        this.set(x, store.y[x], 'var(--accent-disney)')
+        this.set(x, store.y[x], "var(--accent-disney)");
       }
     },
   },
-]
+];
 
-const matrixDisplayEl = useTemplateRef('footer-matrix-display');
+const matrixDisplayEl = useTemplateRef("footer-matrix-display");
 
 onMounted(() => {
-  if (!matrixDisplayEl.value) return
-  const display = new Display(matrixDisplayEl.value, [ribbons], { loopOffset: -2500 });
+  if (!matrixDisplayEl.value) return;
+  const display = new Display(matrixDisplayEl.value, [ribbons], {
+    loopOffset: -2500,
+  });
   // display.playbackControls();
   display.play();
-})
+});
 </script>
 
 <template>
   <footer>
     <div class="dot-matrix-display" ref="footer-matrix-display" />
-    <section v-wave class="card lets-connect" style="--accent: var(--accent-lets-connect);">
+    <section
+      v-wave
+      class="card lets-connect"
+      style="--accent: var(--accent-lets-connect)"
+    >
       <span class="card--label">Contact</span>
       <h2 v-wave-trigger class="card--title large">
         <span class="force-wrap">Drop me a line and let's</span>
@@ -102,7 +108,10 @@ onMounted(() => {
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
+            <NuxtLink
+              to="https://www.linkedin.com/in/oliviamarolf/"
+              target="_blank"
+            >
               <Icon name="linked-in" />
               linkedin.com/in/oliviamarolf
             </NuxtLink>
@@ -117,21 +126,37 @@ onMounted(() => {
       </div>
       <ul class="projects">
         <li>
-          <NuxtLink v-kinesis v-wave to="/case-studies/zero" style="--accent: var(--accent-zero);" class="card project">
+          <NuxtLink
+            v-kinesis
+            v-wave
+            to="/case-studies/zero"
+            style="--accent: var(--accent-zero)"
+            class="card project"
+          >
             <h3>designing <span class="accent">zero</span></h3>
             <IconButton icon="arrow-right" />
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink v-kinesis v-wave to="/case-studies/disney-plus" style="--accent: var(--accent-disney);"
-            class="card project">
+          <NuxtLink
+            v-kinesis
+            v-wave
+            to="/case-studies/disney-plus"
+            style="--accent: var(--accent-disney)"
+            class="card project"
+          >
             <h3><span class="accent">disney plus</span> movies filter</h3>
             <IconButton icon="arrow-right" />
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink v-kinesis v-wave to="/case-studies/spotify" style="--accent: var(--accent-spotify);"
-            class="card project">
+          <NuxtLink
+            v-kinesis
+            v-wave
+            to="/case-studies/spotify"
+            style="--accent: var(--accent-spotify)"
+            class="card project"
+          >
             <h3><span class="accent">spotify</span> wrapped</h3>
             <IconButton icon="arrow-right" />
           </NuxtLink>
@@ -147,10 +172,10 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 $colors: (
-  zero: #04D190,
-  disney: #00B5DA,
-  spotify: #ADF83F,
-  lets-connect: #6E67FF
+  zero: #04d190,
+  disney: #00b5da,
+  spotify: #adf83f,
+  lets-connect: #6e67ff,
 );
 
 footer {
@@ -241,6 +266,7 @@ footer {
 .links {
   display: grid;
   grid-template: repeat(4, min-content) / auto 2fr;
+  gap: var(--common-gap);
 
   &:has(.router-link-exact-active) {
     grid-template: repeat(3, min-content) / auto 2fr;
@@ -250,7 +276,17 @@ footer {
     }
   }
 
-  gap: var(--common-gap);
+  @media (max-width: width(1030)) {
+    grid-template: repeat(5, min-content) / 1fr;
+
+    &:has(.router-link-exact-active) {
+      grid-template: repeat(4, min-content) / 1fr;
+
+      .socials {
+        grid-row: 1;
+      }
+    }
+  }
 }
 
 .projects {
@@ -259,7 +295,6 @@ footer {
   li {
     display: contents;
   }
-
 
   .project {
     gap: 0 rem(48);
@@ -273,15 +308,18 @@ footer {
     --light-size: #{rem(128)};
     --border-width: #{rem(1)};
     position: relative;
-    background: radial-gradient(var(--light-size) at var(--x) var(--y), var(--color-text-primary), var(--color-background-card-dark));
+    background: radial-gradient(
+      var(--light-size) at var(--x) var(--y),
+      var(--color-text-primary),
+      var(--color-background-card-dark)
+    );
     border-radius: rem(8);
 
     &.router-link-exact-active {
       display: none;
     }
 
-
-    &>* {
+    & > * {
       z-index: 2;
     }
 
@@ -298,7 +336,11 @@ footer {
       width: calc(100% - var(--border-width) * 2);
       height: calc(100% - var(--border-width) * 2);
       background-color: var(--color-background-card-dark);
-      background-image: radial-gradient(var(--light-size) at var(--x) var(--y), #171717, var(--color-background-card-dark));
+      background-image: radial-gradient(
+        var(--light-size) at var(--x) var(--y),
+        #171717,
+        var(--color-background-card-dark)
+      );
       border-radius: rem(7);
       z-index: 1;
     }
@@ -314,6 +356,10 @@ footer {
   justify-content: space-between;
   align-items: center;
   color: var(--color-text-secondary);
+
+  @media (max-width: width(450)) {
+    flex-direction: column-reverse;
+  }
 }
 
 .project,

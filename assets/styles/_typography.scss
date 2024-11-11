@@ -1,8 +1,10 @@
 @import "functions";
 
 @font-face {
-  font-family: 'Pixels';
-  src: url('/fonts/Stopwatch.woff2') format('woff2'), url('/fonts/Stopwatch.otf') format('opentype'), url('/fonts/Stopwatch.ttf') format('truetype');
+  font-family: "Pixels";
+  src: url("/fonts/Stopwatch.woff2") format("woff2"),
+    url("/fonts/Stopwatch.otf") format("opentype"),
+    url("/fonts/Stopwatch.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -12,6 +14,10 @@ html {
   // * if this is updated, also update the the
   // * size in the `rem` function in `./_functions.scss`
   font-size: 18px;
+
+  @media (max-width: width(500)) {
+    font-size: 14px;
+  }
 }
 
 h1,
@@ -33,6 +39,10 @@ h2 {
 
   &.large {
     font-size: rem(64);
+
+    @media (max-width: width(450)) {
+      font-size: rem(48);
+    }
   }
 }
 

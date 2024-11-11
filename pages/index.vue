@@ -1,27 +1,42 @@
 <script setup lang="ts">
-const matrixDisplayReady = ref(false)
+const matrixDisplayReady = ref(false);
 </script>
 
 <template>
   <main :class="{ hidden: !matrixDisplayReady }">
-    <MatrixDisplay @ready="matrixDisplayReady = true;" class="matrix-display" />
+    <MatrixDisplay @ready="matrixDisplayReady = true" class="matrix-display" />
     <section class="socials-and-skills">
       <div class="socials">
         <ul>
           <li>
-            <NuxtLink v-wave v-kinesis to="https://github.com/livmarolf" target="_blank">
+            <NuxtLink
+              v-wave
+              v-kinesis
+              to="https://github.com/livmarolf"
+              target="_blank"
+            >
               <h3>github</h3>
               <IconButton icon="arrow-angled" />
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink v-wave v-kinesis to="/https://www.linkedin.com/in/oliviamarolf/" target="_blank">
+            <NuxtLink
+              v-wave
+              v-kinesis
+              to="/https://www.linkedin.com/in/oliviamarolf/"
+              target="_blank"
+            >
               <h3>linked</h3>
               <IconButton icon="arrow-angled" />
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink v-wave v-kinesis to="https://www.figma.com/@livmarolf" target="_blank">
+            <NuxtLink
+              v-wave
+              v-kinesis
+              to="https://www.figma.com/@livmarolf"
+              target="_blank"
+            >
               <h3>figma</h3>
               <IconButton icon="arrow-angled" />
             </NuxtLink>
@@ -68,7 +83,7 @@ const matrixDisplayReady = ref(false)
     </section>
     <section class="card-group">
       <NuxtImg class="card" src="/images/home/zero.svg" />
-      <div v-wave class="card" style="--accent: var(--accent-zero);">
+      <div v-wave class="card" style="--accent: var(--accent-zero)">
         <span class="card--label">Case Studies</span>
         <h2 v-wave-trigger class="card--title">
           Designing
@@ -78,13 +93,14 @@ const matrixDisplayReady = ref(false)
           </span>
         </h2>
         <p class="card--text">
-          A local cardboard recycling company hired us to design their first website to build brand
-          awareness, promote sustainability, and streamline recycling pickup scheduling.
+          A local cardboard recycling company hired us to design their first
+          website to build brand awareness, promote sustainability, and
+          streamline recycling pickup scheduling.
         </p>
       </div>
     </section>
     <section class="card-group left">
-      <div v-wave class="card" style="--accent: var(--accent-disney);">
+      <div v-wave class="card" style="--accent: var(--accent-disney)">
         <span class="card--label">Case Studies</span>
         <h2 v-wave-trigger class="card--title">
           <span class="accent">Disney plus</span> movies
@@ -94,27 +110,29 @@ const matrixDisplayReady = ref(false)
           </span>
         </h2>
         <p class="card--text">
-          Disney Plus' "Movies" page has a usability issue: the filter disappears when scrolling,
-          forcing users to scroll back up to use it. This is especially frustrating on TVs, where navigation takes
-          several clicks.
+          Disney Plus' "Movies" page has a usability issue: the filter
+          disappears when scrolling, forcing users to scroll back up to use it.
+          This is especially frustrating on TVs, where navigation takes several
+          clicks.
         </p>
       </div>
       <NuxtImg class="card" src="/images/home/disney-plus.svg" />
     </section>
     <section class="card-group">
       <NuxtImg class="card" src="/images/home/spotify.svg" />
-      <div v-wave class="card" style="--accent: var(--accent-spotify);">
+      <div v-wave class="card" style="--accent: var(--accent-spotify)">
         <span class="card--label">Case Studies</span>
         <h2 v-wave-trigger class="card--title">
-          <span class="accent">spotify{{ ' ' }}</span>
+          <span class="accent">spotify{{ " " }}</span>
           <span class="no-wrap">
             <span>wrapped</span>
             <IconButton icon="arrow-right" />
           </span>
         </h2>
         <p class="card--text">
-          How does a simple year-end recap become a viral sensation? This case study explores the design choices behind
-          one of Spotify's most engaging features.
+          How does a simple year-end recap become a viral sensation? This case
+          study explores the design choices behind one of Spotify's most
+          engaging features.
         </p>
       </div>
     </section>
@@ -123,10 +141,10 @@ const matrixDisplayReady = ref(false)
 
 <style lang="scss" scoped>
 $colors: (
-  zero: #04D190,
-  disney: #00B5DA,
-  spotify: #ADF83F,
-  lets-connect: #6E67FF
+  zero: #04d190,
+  disney: #00b5da,
+  spotify: #adf83f,
+  lets-connect: #6e67ff,
 );
 
 main {
@@ -150,9 +168,17 @@ main {
 }
 
 .socials {
-  display: flex;
-  justify-content: stretch;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--common-gap);
+
+  @media (max-width: width(1060)) {
+    grid-template: 1fr 1fr / 1fr 1fr;
+  }
+
+  @media (max-width: width(600)) {
+    grid-template: 1fr 1fr 1fr 1fr / 1fr;
+  }
 
   ul,
   li {
@@ -171,10 +197,14 @@ main {
 
     --border-width: #{rem(1)};
     position: relative;
-    background: radial-gradient(rem(128) at var(--x) var(--y), var(--color-text-primary), var(--color-background-card));
+    background: radial-gradient(
+      rem(128) at var(--x) var(--y),
+      var(--color-text-primary),
+      var(--color-background-card)
+    );
     border-radius: rem(8);
 
-    &>* {
+    & > * {
       z-index: 2;
     }
 
@@ -187,7 +217,11 @@ main {
       width: calc(100% - var(--border-width) * 2);
       height: calc(100% - var(--border-width) * 2);
       background-color: var(--color-background-card-dark);
-      background-image: radial-gradient(rem(128) at var(--x) var(--y), #222, var(--color-background-card-dark));
+      background-image: radial-gradient(
+        rem(128) at var(--x) var(--y),
+        #222,
+        var(--color-background-card-dark)
+      );
       border-radius: rem(8);
       z-index: 1;
     }
@@ -202,9 +236,14 @@ main {
     display: block;
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, var(--color-background), rgba(var(--color-background_rgb), 0) 10%, rgba(var(--color-background_rgb), 0) 90%, var(--color-background));
+    background: linear-gradient(
+      to right,
+      var(--color-background),
+      rgba(var(--color-background_rgb), 0) 10%,
+      rgba(var(--color-background_rgb), 0) 90%,
+      var(--color-background)
+    );
     z-index: 1;
-
   }
 
   .marquee {
@@ -233,14 +272,27 @@ main {
 .card-group {
   display: grid;
   grid-template-columns: 7fr 5fr;
+  margin-bottom: var(--common-gap);
+  gap: var(--common-gap);
+  height: clamp(rem(600), 75vh, rem(750));
 
   &:nth-of-type(odd) {
     grid-template-columns: 5fr 7fr;
   }
 
-  margin-bottom: var(--common-gap);
+  @media (max-width: width(1060)) {
+    // grid-template-columns: 7fr 5fr;
+    grid-template: auto auto / 1fr;
+    height: auto;
 
-  gap: var(--common-gap);
-  height: clamp(rem(600), 75vh, rem(750));
+    img {
+      grid-row: 1;
+    }
+
+    &:nth-of-type(odd) {
+      // grid-template-columns: 5fr 7fr;
+      grid-template: auto auto / 1fr;
+    }
+  }
 }
 </style>
