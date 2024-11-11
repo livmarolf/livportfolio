@@ -3,3 +3,7 @@
 @function rem($px-value) {
   @return math.div($px-value, 18)+rem+'/* #{$px-value}px */';
 }
+
+@function width($px-value) {
+  @return math.div($px-value, 16)+rem+'/* #{$px-value}px */';
+}
