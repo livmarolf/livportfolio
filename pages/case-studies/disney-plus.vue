@@ -5,7 +5,7 @@ const showOriginal = ref(false);
 <template>
   <main>
     <!-- INTRO -->
-    <section>
+    <section class="intro">
       <div class="card" style="--accent: var(--disney-blue)">
         <span class="card--label">case study</span>
         <h1 class="card--title">
@@ -23,32 +23,30 @@ const showOriginal = ref(false);
       <NuxtImg class="card" src="/images/home/disney-plus.svg" />
     </section>
     <!-- SOLUTION PREVIEW -->
-    <section>
-      <div class="card borderless dark">
-        <span class="card--label">
-          <Icon name="disney" />
-          <p>solution preview</p>
-        </span>
+    <section class="solution-preview card borderless dark">
+      <span class="card--label">
+        <Icon name="disney" />
+        <p>solution preview</p>
+      </span>
 
-        <div class="img-swapper">
-          <div @click="showOriginal = !showOriginal" class="button-group">
-            <button>improved</button>
-            <button>original</button>
-          </div>
-
-          <NuxtImg
-            v-show="!showOriginal"
-            src="/images/case-studies/disney-plus/improved.png"
-          />
-          <NuxtImg
-            v-show="showOriginal"
-            src="/images/case-studies/disney-plus/original.png"
-          />
+      <div class="img-swapper">
+        <div @click="showOriginal = !showOriginal" class="button-group">
+          <button :class="{ active: !showOriginal }">improved</button>
+          <button :class="{ active: showOriginal }">original</button>
         </div>
+
+        <NuxtImg
+          v-show="!showOriginal"
+          src="/images/case-studies/disney-plus/improved.png"
+        />
+        <NuxtImg
+          v-show="showOriginal"
+          src="/images/case-studies/disney-plus/original.png"
+        />
       </div>
     </section>
     <!-- ORIGINAL DESIGN -->
-    <section>
+    <section class="original-design">
       <div class="card borderless dark">
         <span class="card--label">
           <Icon name="disney" />
@@ -95,7 +93,7 @@ const showOriginal = ref(false);
       </div>
     </section>
     <!-- RESULTS FILTER -->
-    <section>
+    <section class="results-filter">
       <div class="card borderless dark">
         <span class="card--label">
           <Icon name="disney" />
@@ -133,7 +131,20 @@ const showOriginal = ref(false);
       </div>
     </section>
     <!-- TV VERSION -->
-    <section>
+    <section class="tv-version-one">
+      <div class="card" style="--accent: var(--disney-purple)">
+        <span class="card--label">edge case</span>
+        <h3 class="card--topic">using a remote</h3>
+        <p class="card--title">
+          A sticky filter won't work on the Disney Plus TV app due to
+          <span class="accent">remote navigation limitation</span>
+        </p>
+        <p class="card--text">
+          On the Disney Plus movies page, remote navigation only moves up, down,
+          left, or right, so a sticky filter at the top can’t be accessed until
+          users scroll back up, defeating its purpose.
+        </p>
+      </div>
       <div class="card borderless dark">
         <span class="card--label">
           <Icon name="disney" />
@@ -154,23 +165,9 @@ const showOriginal = ref(false);
           </template>
         </Tooltip>
       </div>
-
-      <div class="card" style="--accent: var(--disney-purple)">
-        <span class="card--label">edge case</span>
-        <h3 class="card--topic">using a remote</h3>
-        <p class="card--title">
-          A sticky filter won't work on the Disney Plus TV app due to
-          <span class="accent">remote navigation limitation</span>
-        </p>
-        <p class="card--text">
-          On the Disney Plus movies page, remote navigation only moves up, down,
-          left, or right, so a sticky filter at the top can’t be accessed until
-          users scroll back up, defeating its purpose.
-        </p>
-      </div>
     </section>
     <!-- TV VERSION -->
-    <section>
+    <section class="tv-version-two">
       <div class="card borderless dark">
         <span class="card--label">
           <Icon name="disney" />
@@ -228,6 +225,195 @@ $colors: (
 main {
   @each $name, $color in $colors {
     --disney-#{"" + $name}: #{$color};
+  }
+}
+
+section {
+  height: clamp(rem(600), 75vh, rem(750));
+  margin-bottom: var(--common-gap);
+}
+
+.intro {
+  display: grid;
+  grid-template: 1fr / 5fr 7fr;
+  gap: var(--common-gap);
+}
+
+.solution-preview {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: rem(80);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-background-card-dark)
+    );
+  }
+
+  .img-swapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(32);
+    padding-top: rem(64);
+
+    img {
+      width: 80%;
+    }
+
+    .button-group {
+      display: flex;
+      gap: rem(4);
+      border: rem(4) solid var(--color-background-card);
+      border-radius: rem(12);
+      padding: rem(4);
+      cursor: pointer;
+
+      button {
+        background-color: transparent;
+        padding: rem(8) rem(12);
+        border-radius: rem(5);
+        border: none;
+        text-transform: uppercase;
+        cursor: pointer;
+
+        &.active {
+          background-color: var(--color-background-card);
+        }
+      }
+    }
+  }
+}
+
+.original-design {
+  display: grid;
+  grid-template: 1fr 1fr / 5fr 7fr;
+  grid-template-areas:
+    "insight image"
+    "theory image";
+
+  gap: var(--common-gap);
+
+  :deep(.tooltip) {
+    --tooltip-width: #{rem(350)};
+    bottom: rem(64);
+    left: rem(64);
+    position: absolute;
+  }
+
+  .card.borderless {
+    grid-area: image;
+  }
+
+  .card:nth-of-type(2) {
+    grid-area: insight;
+  }
+
+  .card:nth-of-type(3) {
+    grid-area: theory;
+  }
+
+  .display-image {
+    max-width: 70%;
+    max-height: 70%;
+    position: absolute;
+    bottom: rem(64);
+    right: rem(64);
+  }
+}
+
+.results-filter {
+  height: rem(536);
+  display: grid;
+  grid-template: 1fr / 7fr 5fr;
+  gap: var(--common-gap);
+
+  :deep(.tooltip) {
+    --tooltip-width: #{rem(350)};
+    bottom: rem(64);
+    right: rem(64);
+    position: absolute;
+  }
+
+  .card.borderless {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.tv-version-one {
+  height: rem(536);
+  display: grid;
+  grid-template: 1fr / 5fr 7fr;
+  gap: var(--common-gap);
+
+  :deep(.tooltip) {
+    --tooltip-width: #{rem(350)};
+    bottom: rem(64);
+    left: rem(64);
+    position: absolute;
+  }
+
+  .card.borderless {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+
+    .display-image {
+      max-width: 70%;
+      max-height: 70%;
+      position: absolute;
+      bottom: rem(64);
+      right: rem(64);
+    }
+  }
+}
+
+.tv-version-two {
+  display: grid;
+  grid-template: 1fr 1fr / 7fr 5fr;
+  grid-template-areas:
+    "image insight"
+    "image theory";
+
+  gap: var(--common-gap);
+
+  :deep(.tooltip) {
+    --tooltip-width: #{rem(350)};
+    bottom: rem(64);
+    right: rem(64);
+    position: absolute;
+  }
+
+  .card.borderless {
+    grid-area: image;
+  }
+
+  .card:nth-of-type(2) {
+    grid-area: insight;
+  }
+
+  .card:nth-of-type(3) {
+    grid-area: theory;
+  }
+
+  .display-image {
+    max-width: 70%;
+    max-height: 70%;
+    position: absolute;
+    bottom: rem(64);
+    left: rem(64);
   }
 }
 </style>

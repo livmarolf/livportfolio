@@ -7,6 +7,7 @@ import ArrowRight from '~/assets/icons/arrow-right.svg?component'
 import ArrowUp from '~/assets/icons/arrow-up.svg?component'
 import Clickup from '~/assets/icons/clickup.svg?component'
 import Css3 from '~/assets/icons/css3.svg?component'
+import Disney from '~/assets/icons/disney.svg?component'
 import Download from '~/assets/icons/download.svg?component'
 import Figma from '~/assets/icons/figma.svg?component'
 import FramerMotion from '~/assets/icons/framer-motion.svg?component'
@@ -34,6 +35,7 @@ const icons = {
   'arrow-up': ArrowUp,
   'clickup': Clickup,
   'css3': Css3,
+  'disney': Disney,
   'download': Download,
   'figma': Figma,
   'framer-motion': FramerMotion,
