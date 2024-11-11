@@ -25,6 +25,7 @@ import Sass from '~/assets/icons/sass.svg?component'
 import Spotify from '~/assets/icons/spotify.svg?component'
 import Sql from '~/assets/icons/sql.svg?component'
 import VsCode from '~/assets/icons/vs-code.svg?component'
+import Zero from '~/assets/icons/zero.svg?component'
 // <% END_ICON_IMPORT %>
 
 const icons = {
@@ -52,7 +53,8 @@ const icons = {
   'sass': Sass,
   'spotify': Spotify,
   'sql': Sql,
-  'vs-code': VsCode
+  'vs-code': VsCode,
+  'zero': Zero
   // <% END_ICON_MAP %>
 } as const
 
