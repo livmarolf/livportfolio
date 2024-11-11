@@ -17,15 +17,10 @@
           <Icon name="spotify" />
           <p>intro</p>
         </span>
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/spotify-1.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/spotify-1.png" />
         <Tooltip width="var(--tooltip-width)">
-          <template #top-text
-            >Spotify Wrapped turns music data into a
-            <strong>personalized recap</strong></template
-          >
+          <template #top-text>Spotify Wrapped turns music data into a
+            <strong>personalized recap</strong></template>
           <template #bottom-text>
             Let's explore why it goes viral every year
           </template>
@@ -40,10 +35,7 @@
           <p>home</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/spotify-2.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/spotify-2.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             People get so excited about it throughout the year
@@ -87,10 +79,7 @@
           <p>wrapped</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/spotify-3.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/spotify-3.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             What better way to capture user's attention than telling
@@ -137,10 +126,7 @@
           <p>wrapped</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/spotify-4.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/spotify-4.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text> Spotify Wrapped goes beyond data </template>
           <template #bottom-text>
@@ -182,10 +168,7 @@
           <p>wrapped</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/spotify-5.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/spotify-5.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             With <strong>social sharing</strong> Wrapped creates a sense of
@@ -245,7 +228,7 @@ main {
 section {
   display: grid;
   gap: var(--common-gap);
-  height: clamp(rem(600), 75vh, rem(750));
+  height: rem(850);
   margin-bottom: var(--common-gap);
 
   :deep(.tooltip) {

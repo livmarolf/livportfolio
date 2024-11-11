@@ -35,14 +35,8 @@ const showOriginal = ref(false);
           <button :class="{ active: showOriginal }">original</button>
         </div>
 
-        <NuxtImg
-          v-show="!showOriginal"
-          src="/images/case-studies/disney-plus/improved.png"
-        />
-        <NuxtImg
-          v-show="showOriginal"
-          src="/images/case-studies/disney-plus/original.png"
-        />
+        <NuxtImg v-show="!showOriginal" src="/images/case-studies/disney-plus/improved.png" />
+        <NuxtImg v-show="showOriginal" src="/images/case-studies/disney-plus/original.png" />
       </div>
     </section>
     <!-- ORIGINAL DESIGN -->
@@ -53,10 +47,7 @@ const showOriginal = ref(false);
           <p>original design</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/disney-plus/original.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/disney-plus/original.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Ooh there’s so many choices! I wonder if there’s a way to see only
@@ -100,10 +91,7 @@ const showOriginal = ref(false);
           <p>results filter</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/disney-plus/filter-closeup.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/disney-plus/filter-closeup.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             If only the filter stayed accessible while browsing
@@ -151,10 +139,7 @@ const showOriginal = ref(false);
           <p>tv version</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/disney-plus/tv-version.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/disney-plus/tv-version.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             On a TV, the focus doesn't reach the sticky filter until scrolling
@@ -174,18 +159,14 @@ const showOriginal = ref(false);
           <p>tv version</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/disney-plus/remote.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/disney-plus/remote.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             The remote's <strong>back button</strong> can be used to navigate:
           </template>
           <template #bottom-text>
             One press scrolls to the top where the filter is, and a second press
-            takes the user to the previous page</template
-          >
+            takes the user to the previous page</template>
         </Tooltip>
       </div>
       <div class="card" style="--accent: var(--disney-blue)">
@@ -229,7 +210,7 @@ main {
 }
 
 section {
-  height: clamp(rem(600), 75vh, rem(750));
+  height: rem(850);
   margin-bottom: var(--common-gap);
 }
 
@@ -249,11 +230,9 @@ section {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-      to bottom,
-      transparent,
-      var(--color-background-card-dark)
-    );
+    background: linear-gradient(to bottom,
+        transparent,
+        var(--color-background-card-dark));
   }
 
   .img-swapper {

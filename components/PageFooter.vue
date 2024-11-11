@@ -17,7 +17,7 @@ const ribbons: Scene = [
     duration: 5000,
     start: 0,
     minResolution: {
-      horizontal: 11,
+      horizontal: 23,
       vertical: 3,
     },
     initializeStore() {
@@ -82,11 +82,7 @@ onMounted(() => {
 <template>
   <footer>
     <div class="dot-matrix-display" ref="footer-matrix-display" />
-    <section
-      v-wave
-      class="card lets-connect"
-      style="--accent: var(--accent-lets-connect)"
-    >
+    <section v-wave class="card lets-connect" style="--accent: var(--accent-lets-connect)">
       <span class="card--label">Contact</span>
       <h2 v-wave-trigger class="card--title large">
         <span class="force-wrap">Drop me a line and let's</span>
@@ -108,10 +104,7 @@ onMounted(() => {
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink
-              to="https://www.linkedin.com/in/oliviamarolf/"
-              target="_blank"
-            >
+            <NuxtLink to="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
               <Icon name="linked-in" />
               linkedin.com/in/oliviamarolf
             </NuxtLink>
@@ -126,37 +119,21 @@ onMounted(() => {
       </div>
       <ul class="projects">
         <li>
-          <NuxtLink
-            v-kinesis
-            v-wave
-            to="/case-studies/zero"
-            style="--accent: var(--accent-zero)"
-            class="card project"
-          >
+          <NuxtLink v-kinesis v-wave to="/case-studies/zero" style="--accent: var(--accent-zero)" class="card project">
             <h3>designing <span class="accent">zero</span></h3>
             <IconButton icon="arrow-right" />
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink
-            v-kinesis
-            v-wave
-            to="/case-studies/disney-plus"
-            style="--accent: var(--accent-disney)"
-            class="card project"
-          >
+          <NuxtLink v-kinesis v-wave to="/case-studies/disney-plus" style="--accent: var(--accent-disney)"
+            class="card project">
             <h3><span class="accent">disney plus</span> movies filter</h3>
             <IconButton icon="arrow-right" />
           </NuxtLink>
         </li>
         <li>
-          <NuxtLink
-            v-kinesis
-            v-wave
-            to="/case-studies/spotify"
-            style="--accent: var(--accent-spotify)"
-            class="card project"
-          >
+          <NuxtLink v-kinesis v-wave to="/case-studies/spotify" style="--accent: var(--accent-spotify)"
+            class="card project">
             <h3><span class="accent">spotify</span> wrapped</h3>
             <IconButton icon="arrow-right" />
           </NuxtLink>
@@ -308,18 +285,16 @@ footer {
     --light-size: #{rem(128)};
     --border-width: #{rem(1)};
     position: relative;
-    background: radial-gradient(
-      var(--light-size) at var(--x) var(--y),
-      var(--color-text-primary),
-      var(--color-background-card-dark)
-    );
+    background: radial-gradient(var(--light-size) at var(--x) var(--y),
+        var(--color-text-primary),
+        var(--color-background-card-dark));
     border-radius: rem(8);
 
     &.router-link-exact-active {
       display: none;
     }
 
-    & > * {
+    &>* {
       z-index: 2;
     }
 
@@ -336,11 +311,9 @@ footer {
       width: calc(100% - var(--border-width) * 2);
       height: calc(100% - var(--border-width) * 2);
       background-color: var(--color-background-card-dark);
-      background-image: radial-gradient(
-        var(--light-size) at var(--x) var(--y),
-        #171717,
-        var(--color-background-card-dark)
-      );
+      background-image: radial-gradient(var(--light-size) at var(--x) var(--y),
+          #171717,
+          var(--color-background-card-dark));
       border-radius: rem(7);
       z-index: 1;
     }

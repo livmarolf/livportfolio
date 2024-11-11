@@ -283,7 +283,7 @@ main {
 }
 
 section {
-  height: clamp(rem(600), 75vh, rem(750));
+  height: rem(850);
   margin-bottom: var(--common-gap);
 }
 

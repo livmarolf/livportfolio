@@ -19,6 +19,10 @@
     grid-template: auto 1fr auto auto / 1fr;
     gap: rem(12) 0;
 
+    .card--topic {
+      margin-bottom: rem(32);
+    }
+
     .card--title {
       font-size: rem(20);
     }
