@@ -128,4 +128,10 @@
 img.card {
   padding: 0;
   object-fit: cover;
+
+  &::before,
+  &::after {
+    //safari bug fix
+    display: none !important;
+  }
 }
