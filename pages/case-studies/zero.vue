@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-
 const images = [
-  '/images/case-studies/zero/gallery/1.png',
-  '/images/case-studies/zero/gallery/2.png',
-  '/images/case-studies/zero/gallery/3.png',
-  '/images/case-studies/zero/gallery/4.png',
-]
+  "/images/case-studies/zero/gallery/1.png",
+  "/images/case-studies/zero/gallery/2.png",
+  "/images/case-studies/zero/gallery/3.png",
+  "/images/case-studies/zero/gallery/4.png",
+];
 
-const currentImage = ref(0)
-
+const currentImage = ref(0);
 </script>
 
 <template>
@@ -34,25 +32,38 @@ const currentImage = ref(0)
 
     <!-- GALLERY -->
     <section class="gallery">
-      <NuxtImg v-for="(image, i) in images" v-show="currentImage === i" class="card" :src="image" :key="image" />
+      <NuxtImg
+        v-for="(image, i) in images"
+        v-show="currentImage === i"
+        class="card"
+        :src="image"
+        :key="image"
+      />
       <ul>
         <li v-for="(image, i) in images" :key="image">
           <button @click="currentImage = i" type="button">
-            <NuxtImg class="card" :class="{ active: currentImage === i }" :src="image" />
+            <NuxtImg
+              class="card"
+              :class="{ active: currentImage === i }"
+              :src="image"
+            />
           </button>
         </li>
       </ul>
     </section>
 
     <!-- EARLY IDEATION -->
-    <section class=" early-ideation">
+    <section class="early-ideation">
       <div class="card borderless dark">
         <span class="card--label">
           <Icon name="zero" />
           <p>early ideation</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/zero/early-ideation.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/zero/early-ideation.png"
+        />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Taking notes and brainstorming is an important part of the process!
@@ -97,7 +108,10 @@ const currentImage = ref(0)
           <p>documented research</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/zero/documented-research.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/zero/documented-research.png"
+        />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Now that objectives are defined, it’s time to
@@ -144,7 +158,10 @@ const currentImage = ref(0)
           <p>branding</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/zero/branding.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/zero/branding.png"
+        />
       </div>
 
       <div class="card" style="--accent: var(--zero-cyan)">
@@ -183,7 +200,10 @@ const currentImage = ref(0)
           <p>tv version</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/zero/educational-content.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/zero/educational-content.png"
+        />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Incorporating components from
@@ -204,7 +224,10 @@ const currentImage = ref(0)
           <p>conversion</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/zero/conversion.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/zero/conversion.png"
+        />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Each page includes one or more calls to action (CTAs)
@@ -239,7 +262,10 @@ const currentImage = ref(0)
           <p>measuring success</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/zero/measuring-success.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/zero/measuring-success.png"
+        />
       </div>
       <div class="card" style="--accent: var(--zero-green)">
         <span class="card--label">results</span>
@@ -283,21 +309,51 @@ main {
 }
 
 section {
-  height: rem(850);
+  min-height: rem(850);
   margin-bottom: var(--common-gap);
+
+  .card.borderless:has(.tooltip) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: width(1060)) {
+      flex-direction: column;
+      gap: rem(64);
+      padding-top: rem(128);
+
+      :deep(.tooltip) {
+        bottom: 0;
+        left: 0;
+        position: relative;
+      }
+    }
+  }
+
+  .card.borderless:not(:has(.tooltip)) {
+    padding-top: rem(128);
+  }
 }
 
 .intro {
   display: grid;
   grid-template: 1fr / 5fr 7fr;
   gap: var(--common-gap);
+
+  @media (max-width: width(1060)) {
+    grid-template: auto auto / 1fr;
+    height: auto;
+  }
 }
 
 .gallery {
   display: grid;
   grid-template: 1fr / 10.5fr 1.5fr;
   gap: var(--common-gap);
-  height: max(rem(600), 85vh);
+  min-height: initial;
+  height: min-content;
+  max-height: 85vh;
+  grid-template-areas: "preview selector";
 
   img {
     height: 100%;
@@ -313,6 +369,7 @@ section {
 
     scrollbar-color: var(--color-background-card-light) transparent;
     scrollbar-width: thin;
+    grid-area: selector;
 
     li {
       display: contents;
@@ -329,7 +386,7 @@ section {
       }
 
       img {
-        height: auto;
+        height: 100%;
         aspect-ratio: 1 / 1;
         cursor: pointer;
         outline-offset: rem(-3);
@@ -344,16 +401,44 @@ section {
       }
     }
   }
+
+  @media (max-width: width(580)) {
+    grid-template: rem(100) 1fr / 1fr;
+    height: auto;
+
+    grid-template-areas: "selector" "preview";
+
+    ul {
+      flex-direction: row;
+      overflow-y: hidden;
+      overflow-x: auto;
+    }
+  }
 }
 
 .early-ideation {
   display: grid;
   grid-template: 1fr 1fr / 7fr 5fr;
+  gap: var(--common-gap);
   grid-template-areas:
     "image insight"
     "image theory";
 
-  gap: var(--common-gap);
+  @media (max-width: width(1215)) {
+    grid-template: auto auto / 1fr 1fr;
+    grid-template-areas:
+      "insight theory"
+      "image image";
+    height: auto;
+  }
+
+  @media (max-width: width(960)) {
+    grid-template: auto auto auto / 1fr;
+    grid-template-areas:
+      "insight"
+      "theory"
+      "image";
+  }
 
   :deep(.tooltip) {
     --tooltip-width: #{rem(350)};
@@ -387,11 +472,26 @@ section {
 .documented-research {
   display: grid;
   grid-template: 1fr 1fr / 5fr 7fr;
+  gap: var(--common-gap);
   grid-template-areas:
     "insight image"
     "theory image";
 
-  gap: var(--common-gap);
+  @media (max-width: width(1060)) {
+    grid-template: auto auto / 1fr 1fr;
+    grid-template-areas:
+      "insight theory"
+      "image image";
+    height: auto;
+  }
+
+  @media (max-width: width(960)) {
+    grid-template: auto auto auto / 1fr;
+    grid-template-areas:
+      "insight"
+      "theory"
+      "image";
+  }
 
   :deep(.tooltip) {
     --tooltip-width: #{rem(350)};
@@ -423,10 +523,18 @@ section {
 }
 
 .branding {
-  height: rem(536);
+  min-height: rem(536);
   display: grid;
-  grid-template: 1fr / 7fr 5fr;
   gap: var(--common-gap);
+  grid-template: 1fr / 7fr 5fr;
+  grid-template-areas: "image card";
+
+  @media (max-width: width(1060)) {
+    grid-template: auto auto / 1fr;
+    grid-template-areas:
+      "card"
+      "image";
+  }
 
   :deep(.tooltip) {
     --tooltip-width: #{rem(350)};
@@ -435,10 +543,15 @@ section {
     position: absolute;
   }
 
+  .card {
+    grid-area: card;
+  }
+
   .card.borderless {
     display: flex;
     justify-content: center;
     align-items: flex-end;
+    grid-area: image;
 
     img {
       max-width: 100%;
@@ -448,10 +561,14 @@ section {
 }
 
 .educational-content {
-  height: rem(536);
+  min-height: rem(536);
   display: grid;
-  grid-template: 1fr / 5fr 7fr;
   gap: var(--common-gap);
+  grid-template: 1fr / 5fr 7fr;
+
+  @media (max-width: width(1060)) {
+    grid-template: auto auto / 1fr;
+  }
 
   :deep(.tooltip) {
     --tooltip-width: #{rem(350)};
@@ -475,10 +592,18 @@ section {
 }
 
 .conversion {
-  height: rem(536);
+  min-height: rem(536);
   display: grid;
   grid-template: 1fr / 7fr 5fr;
   gap: var(--common-gap);
+  grid-template-areas: "image card";
+
+  @media (max-width: width(1060)) {
+    grid-template: auto auto / 1fr;
+    grid-template-areas:
+      "card"
+      "image";
+  }
 
   :deep(.tooltip) {
     --tooltip-width: #{rem(350)};
@@ -487,11 +612,20 @@ section {
     position: absolute;
   }
 
+  .card {
+    grid-area: card;
+  }
+
   .card.borderless {
     display: flex;
     justify-content: center;
     align-items: end;
     padding-bottom: 0;
+    grid-area: image;
+
+    @media (max-width: width(1060)) {
+      padding-bottom: rem(64);
+    }
 
     .display-image {
       max-width: 100%;
@@ -503,11 +637,26 @@ section {
 .measuring-success {
   display: grid;
   grid-template: 1fr 1fr / 5fr 7fr;
+  gap: var(--common-gap);
   grid-template-areas:
     "insight image"
     "theory image";
 
-  gap: var(--common-gap);
+  @media (max-width: width(1215)) {
+    grid-template: auto auto / 1fr 1fr;
+    grid-template-areas:
+      "insight theory"
+      "image image";
+    height: auto;
+  }
+
+  @media (max-width: width(960)) {
+    grid-template: auto auto auto / 1fr;
+    grid-template-areas:
+      "insight"
+      "theory"
+      "image";
+  }
 
   :deep(.tooltip) {
     --tooltip-width: #{rem(350)};
