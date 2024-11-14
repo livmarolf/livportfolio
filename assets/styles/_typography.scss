@@ -27,6 +27,7 @@ h3 {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-weight: 400;
+  line-height: 1.1;
 
   .icon-button {
     font-size: 0.7em !important;
@@ -35,7 +36,6 @@ h3 {
 
 h2 {
   font-size: rem(48);
-  line-height: 1.1;
 
   &.large {
     font-size: rem(64);
@@ -48,7 +48,6 @@ h2 {
 
 h3 {
   font-size: rem(26);
-  line-height: 1.1;
 }
 
 p {

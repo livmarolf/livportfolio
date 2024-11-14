@@ -35,8 +35,14 @@ const showOriginal = ref(false);
           <button :class="{ active: showOriginal }">original</button>
         </div>
 
-        <NuxtImg v-show="!showOriginal" src="/images/case-studies/disney-plus/improved.png" />
-        <NuxtImg v-show="showOriginal" src="/images/case-studies/disney-plus/original.png" />
+        <NuxtImg
+          v-show="!showOriginal"
+          src="/images/case-studies/disney-plus/improved.png"
+        />
+        <NuxtImg
+          v-show="showOriginal"
+          src="/images/case-studies/disney-plus/original.png"
+        />
       </div>
     </section>
     <!-- ORIGINAL DESIGN -->
@@ -47,10 +53,13 @@ const showOriginal = ref(false);
           <p>original design</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/disney-plus/original.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/disney-plus/original.png"
+        />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
-            Ooh there’s so many choices! I wonder if there’s a way to see only
+            Ooh there's so many choices! I wonder if there's a way to see only
             <strong>animated movies</strong>...
           </template>
           <template #bottom-text> Wait, where did the filter go? </template>
@@ -91,7 +100,10 @@ const showOriginal = ref(false);
           <p>results filter</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/disney-plus/filter-closeup.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/disney-plus/filter-closeup.png"
+        />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             If only the filter stayed accessible while browsing
@@ -129,7 +141,7 @@ const showOriginal = ref(false);
         </p>
         <p class="card--text">
           On the Disney Plus movies page, remote navigation only moves up, down,
-          left, or right, so a sticky filter at the top can’t be accessed until
+          left, or right, so a sticky filter at the top can't be accessed until
           users scroll back up, defeating its purpose.
         </p>
       </div>
@@ -139,11 +151,14 @@ const showOriginal = ref(false);
           <p>tv version</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/disney-plus/tv-version.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/disney-plus/tv-version.png"
+        />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             On a TV, the focus doesn't reach the sticky filter until scrolling
-            to the top of the page... <strong>defeating it’s purpose</strong>
+            to the top of the page... <strong>defeating it's purpose</strong>
           </template>
           <template #bottom-text>
             How else could this problem be solved?
@@ -159,14 +174,18 @@ const showOriginal = ref(false);
           <p>tv version</p>
         </span>
 
-        <NuxtImg class="display-image" src="/images/case-studies/disney-plus/remote.png" />
+        <NuxtImg
+          class="display-image"
+          src="/images/case-studies/disney-plus/remote.png"
+        />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             The remote's <strong>back button</strong> can be used to navigate:
           </template>
           <template #bottom-text>
             One press scrolls to the top where the filter is, and a second press
-            takes the user to the previous page</template>
+            takes the user to the previous page</template
+          >
         </Tooltip>
       </div>
       <div class="card" style="--accent: var(--disney-blue)">
@@ -210,30 +229,50 @@ main {
 }
 
 section {
-  height: rem(850);
+  min-height: rem(850);
   margin-bottom: var(--common-gap);
+
+  .card.borderless {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: width(1060)) {
+      flex-direction: column;
+      gap: rem(64);
+      padding-top: rem(128);
+
+      :deep(.tooltip) {
+        bottom: 0;
+        left: 0;
+        position: relative;
+      }
+    }
+  }
+
+  .display-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: relative;
+  }
 }
 
 .intro {
   display: grid;
   grid-template: 1fr / 5fr 7fr;
   gap: var(--common-gap);
+
+  @media (max-width: width(1060)) {
+    grid-template: auto auto / 1fr;
+    height: auto;
+  }
 }
 
 .solution-preview {
   position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    height: rem(80);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom,
-        transparent,
-        var(--color-background-card-dark));
-  }
+  min-height: initial;
+  display: block;
 
   .img-swapper {
     display: flex;
@@ -241,9 +280,27 @@ section {
     align-items: center;
     gap: rem(32);
     padding-top: rem(64);
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      height: rem(80);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--color-background-card-dark)
+      );
+    }
 
     img {
-      width: 80%;
+      width: 100%;
+      aspect-ratio: 920/444;
+      object-fit: cover;
+      object-position: top;
     }
 
     .button-group {
@@ -273,11 +330,26 @@ section {
 .original-design {
   display: grid;
   grid-template: 1fr 1fr / 5fr 7fr;
+  gap: var(--common-gap);
   grid-template-areas:
     "insight image"
     "theory image";
 
-  gap: var(--common-gap);
+  @media (max-width: width(1060)) {
+    grid-template: auto auto / 1fr 1fr;
+    grid-template-areas:
+      "insight theory"
+      "image image";
+    height: auto;
+  }
+
+  @media (max-width: width(960)) {
+    grid-template: auto auto auto / 1fr;
+    grid-template-areas:
+      "insight"
+      "theory"
+      "image";
+  }
 
   :deep(.tooltip) {
     --tooltip-width: #{rem(350)};
@@ -297,21 +369,21 @@ section {
   .card:nth-of-type(3) {
     grid-area: theory;
   }
-
-  .display-image {
-    max-width: 70%;
-    max-height: 70%;
-    position: absolute;
-    bottom: rem(64);
-    right: rem(64);
-  }
 }
 
 .results-filter {
-  height: rem(536);
+  min-height: rem(536);
   display: grid;
   grid-template: 1fr / 7fr 5fr;
+  grid-template-areas: "image card";
   gap: var(--common-gap);
+
+  @media (max-width: width(1060)) {
+    grid-template: auto auto / 1fr;
+    grid-template-areas:
+      "card"
+      "image";
+  }
 
   :deep(.tooltip) {
     --tooltip-width: #{rem(350)};
@@ -320,53 +392,56 @@ section {
     position: absolute;
   }
 
-  .card.borderless {
-    display: flex;
-    justify-content: center;
-    align-items: end;
+  .card {
+    grid-area: card;
+  }
 
-    img {
-      width: 100%;
-    }
+  .card.borderless {
+    grid-area: image;
   }
 }
 
 .tv-version-one {
-  height: rem(536);
+  min-height: rem(536);
   display: grid;
-  grid-template: 1fr / 5fr 7fr;
   gap: var(--common-gap);
+  grid-template: 1fr / 5fr 7fr;
+
+  @media (max-width: width(1060)) {
+    grid-template: auto auto / 1fr;
+  }
 
   :deep(.tooltip) {
     --tooltip-width: #{rem(350)};
     bottom: rem(64);
     left: rem(64);
     position: absolute;
-  }
-
-  .card.borderless {
-    display: flex;
-    justify-content: center;
-    align-items: end;
-
-    .display-image {
-      max-width: 70%;
-      max-height: 70%;
-      position: absolute;
-      bottom: rem(64);
-      right: rem(64);
-    }
   }
 }
 
 .tv-version-two {
   display: grid;
   grid-template: 1fr 1fr / 7fr 5fr;
+  gap: var(--common-gap);
   grid-template-areas:
     "image insight"
     "image theory";
 
-  gap: var(--common-gap);
+  @media (max-width: width(1060)) {
+    grid-template: auto auto / 1fr 1fr;
+    grid-template-areas:
+      "insight theory"
+      "image image";
+    height: auto;
+  }
+
+  @media (max-width: width(960)) {
+    grid-template: auto auto auto / 1fr;
+    grid-template-areas:
+      "insight"
+      "theory"
+      "image";
+  }
 
   :deep(.tooltip) {
     --tooltip-width: #{rem(350)};
@@ -385,14 +460,6 @@ section {
 
   .card:nth-of-type(3) {
     grid-area: theory;
-  }
-
-  .display-image {
-    max-width: 70%;
-    max-height: 70%;
-    position: absolute;
-    bottom: rem(64);
-    left: rem(64);
   }
 }
 </style>
