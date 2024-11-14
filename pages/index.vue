@@ -9,34 +9,19 @@ const matrixDisplayReady = ref(false);
       <div class="socials">
         <ul>
           <li>
-            <NuxtLink
-              v-wave
-              v-kinesis
-              to="https://github.com/livmarolf"
-              target="_blank"
-            >
+            <NuxtLink v-wave v-kinesis to="https://github.com/livmarolf" target="_blank">
               <h3>github</h3>
               <IconButton icon="arrow-angled" />
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink
-              v-wave
-              v-kinesis
-              to="/https://www.linkedin.com/in/oliviamarolf/"
-              target="_blank"
-            >
+            <NuxtLink v-wave v-kinesis to="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
               <h3>linked</h3>
               <IconButton icon="arrow-angled" />
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink
-              v-wave
-              v-kinesis
-              to="https://www.figma.com/@livmarolf"
-              target="_blank"
-            >
+            <NuxtLink v-wave v-kinesis to="https://www.figma.com/@livmarolf" target="_blank">
               <h3>figma</h3>
               <IconButton icon="arrow-angled" />
             </NuxtLink>
@@ -197,14 +182,12 @@ main {
 
     --border-width: #{rem(1)};
     position: relative;
-    background: radial-gradient(
-      rem(128) at var(--x) var(--y),
-      var(--color-text-primary),
-      var(--color-background-card)
-    );
+    background: radial-gradient(rem(128) at var(--x) var(--y),
+        var(--color-text-primary),
+        var(--color-background-card));
     border-radius: rem(8);
 
-    & > * {
+    &>* {
       z-index: 2;
     }
 
@@ -217,11 +200,9 @@ main {
       width: calc(100% - var(--border-width) * 2);
       height: calc(100% - var(--border-width) * 2);
       background-color: var(--color-background-card-dark);
-      background-image: radial-gradient(
-        rem(128) at var(--x) var(--y),
-        #222,
-        var(--color-background-card-dark)
-      );
+      background-image: radial-gradient(rem(128) at var(--x) var(--y),
+          #222,
+          var(--color-background-card-dark));
       border-radius: rem(8);
       z-index: 1;
     }
@@ -236,13 +217,11 @@ main {
     display: block;
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      to right,
-      var(--color-background),
-      rgba(var(--color-background_rgb), 0) 10%,
-      rgba(var(--color-background_rgb), 0) 90%,
-      var(--color-background)
-    );
+    background: linear-gradient(to right,
+        var(--color-background),
+        rgba(var(--color-background_rgb), 0) 10%,
+        rgba(var(--color-background_rgb), 0) 90%,
+        var(--color-background));
     z-index: 1;
   }
 
