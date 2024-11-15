@@ -8,6 +8,8 @@ const backToTop = () => {
   if (!showBackToTop.value) return
   y.value = 0
 }
+
+const dropdownOpen = ref(false)
 </script>
 
 <template>
@@ -16,16 +18,30 @@ const backToTop = () => {
       <Icon :class="{ hidden: !showBackToTop }" name="arrow-up" />
       <Icon :class="{ hidden: showBackToTop }" name="logo" />
     </button>
-    <nav v-kinesis>
+    <nav>
       <ul>
         <li>
-          <NuxtLink v-wave to="/">Home</NuxtLink>
+          <NuxtLink v-wave to="/" v-kinesis>Home</NuxtLink>
         </li>
-        <li>
-          <NuxtLink v-wave to="/case-studies/spotify">Case Studies</NuxtLink>
+        <li @click="dropdownOpen = !dropdownOpen" :class="{ open: dropdownOpen }">
+          <button v-kinesis v-wave>Projects
+            <Icon name="arrow-down" />
+          </button>
+          <ul class="dropdown-contents">
+            <li>
+              <NuxtLink class="zero" to="/case-studies/zero" v-kinesis v-wave>Zero</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink class="disney" v-wave to="/case-studies/disney-plus" v-kinesis>Disney Plus</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink class="spotify" v-wave to="/case-studies/spotify" v-kinesis>Spotify Wrapped</NuxtLink>
+            </li>
+          </ul>
         </li>
       </ul>
     </nav>
+    <div class="spacer"></div>
 
     <ul>
       <li>
@@ -34,7 +50,8 @@ const backToTop = () => {
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink v-wave v-kinesis class="icon-link" to="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
+        <NuxtLink v-wave v-kinesis class="icon-link show-on-mobile" to="https://www.linkedin.com/in/oliviamarolf/"
+          target="_blank">
           <Icon name="linked-in" />
         </NuxtLink>
       </li>
@@ -60,14 +77,56 @@ header {
   right: 20px;
   height: rem(56);
   border-radius: rem(8);
-  display: grid;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: rem(4);
-  grid-template: 1fr / auto 1fr;
-  grid-auto-flow: column;
-  grid-auto-columns: auto;
   gap: rem(4);
+
   z-index: 999999;
+
+  .spacer {
+    width: 100%;
+  }
+
+  @media (max-width: width(900)) {
+    display: grid;
+    grid-template: 1fr / auto 1fr 1fr auto;
+
+    &:has(li.open) {
+      height: rem(104);
+      grid-template: 1fr 1fr / auto 1fr 1fr auto;
+
+      button>.icon {
+        transform: rotate(-180deg);
+      }
+    }
+
+    .icon-link:not(.show-on-mobile) {
+      display: none;
+    }
+
+    .icon-link {
+      grid-row: 1/2;
+      grid-column: 4;
+    }
+
+    .spacer {
+      display: none;
+    }
+
+    .dropdown-contents {
+      display: flex;
+      grid-row: 2/3;
+      grid-column: span 4;
+      height: 100%;
+      gap: rem(4);
+
+      a {
+        width: 100%;
+      }
+    }
+  }
 }
 
 ul,
@@ -75,16 +134,16 @@ li {
   display: contents;
 }
 
-button,
-nav,
-.icon-link {
+.action-button,
+.icon-link,
+.spacer {
   height: 100%;
   border-radius: rem(5);
   background: var(--color-background-card-dark);
 }
 
 .action-button {
-  width: rem(48);
+  min-width: rem(48);
   display: grid;
   place-items: center;
   border: none;
@@ -114,31 +173,59 @@ nav,
 }
 
 nav {
-  display: flex;
-  align-items: center;
-  padding: rem(4) rem(12);
-
+  display: contents;
   font-size: rem(12);
 
+  li:not(.open)>ul {
+    display: none;
 
-  a {
+  }
+
+  li.open {
+    .icon {
+      transform: rotate(-90deg);
+    }
+  }
+
+  a,
+  button {
     color: inherit;
     text-decoration: none;
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: rem(4);
     height: 100%;
     padding: 0 rem(12);
     border-radius: rem(5);
+    border: none;
+    outline: none;
+    font-size: inherit;
+    white-space: nowrap;
+    text-transform: uppercase;
+    cursor: pointer;
 
-    &.router-link-active {
-      color: var(--color-text-secondary);
-      pointer-events: none;
+    .icon {
+      font-size: 2em;
+      transition: transform 0.2s ease-out;
+    }
+
+    &.zero {
+      color: #04d190;
+    }
+
+    &.disney {
+      color: #00b5da;
+    }
+
+    &.spotify {
+      color: #adf83f;
     }
   }
 }
 
 .icon-link {
-  width: rem(48);
+  min-width: rem(48);
   font-size: rem(12);
 
   .icon {
@@ -146,7 +233,7 @@ nav {
   }
 
   &.resume {
-    width: auto;
+    min-width: auto;
     padding: 0 rem(12);
     gap: rem(12);
   }

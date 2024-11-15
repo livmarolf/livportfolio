@@ -3,6 +3,7 @@
 // <% BEGIN_ICON_IMPORT %>
 import Affinity from '~/assets/icons/affinity.svg?component'
 import ArrowAngled from '~/assets/icons/arrow-angled.svg?component'
+import ArrowDown from '~/assets/icons/arrow-down.svg?component'
 import ArrowRight from '~/assets/icons/arrow-right.svg?component'
 import ArrowUp from '~/assets/icons/arrow-up.svg?component'
 import Clickup from '~/assets/icons/clickup.svg?component'
@@ -32,6 +33,7 @@ const icons = {
   // <% BEGIN_ICON_MAP %>
   'affinity': Affinity,
   'arrow-angled': ArrowAngled,
+  'arrow-down': ArrowDown,
   'arrow-right': ArrowRight,
   'arrow-up': ArrowUp,
   'clickup': Clickup,
