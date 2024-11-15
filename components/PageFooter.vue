@@ -149,7 +149,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 $colors: (
-  zero: #04d190,
+  zero: #2DD867,
   disney: #00b5da,
   spotify: #adf83f,
   lets-connect: #6e67ff,

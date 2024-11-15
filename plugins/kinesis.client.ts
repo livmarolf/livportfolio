@@ -4,6 +4,8 @@ const trackedElements = new Set<HTMLElement>();
 const LIGHT_SIZE = 128;
 const OFF_SCREEN = "-99999px";
 
+const onTap = window.matchMedia("(hover: none)").matches;
+
 const outOfBounds = (rect: DOMRect, relativeX: number, relativeY: number) => {
 	if (rect.top > window.innerHeight) return true;
 	if (rect.bottom < 0) return true;
@@ -16,45 +18,101 @@ const outOfBounds = (rect: DOMRect, relativeX: number, relativeY: number) => {
 	return false;
 };
 
-document.addEventListener("mouseleave", () => {
-	for (const el of kinesisSubscriber) {
-		el.style.setProperty("--x", OFF_SCREEN);
-		el.style.setProperty("--y", OFF_SCREEN);
-		trackedElements.delete(el);
-	}
-});
-
-window.addEventListener("pointermove", (e) => {
-	const { x, y } = e;
-
-	const els = [...kinesisSubscriber];
-	const rects = [];
-
-	for (const el of els) {
-		rects.push(el.getBoundingClientRect());
-	}
-
-	for (let i = 0; i < els.length; i++) {
-		const el = els[i];
-		const rect = rects[i];
-
-		const relativeX = x - rect.left;
-		const relativeY = y - rect.top;
-
-		if (trackedElements.has(el) && outOfBounds(rect, relativeX, relativeY)) {
+if (!onTap) {
+	document.addEventListener("mouseleave", () => {
+		for (const el of kinesisSubscriber) {
 			el.style.setProperty("--x", OFF_SCREEN);
 			el.style.setProperty("--y", OFF_SCREEN);
 			trackedElements.delete(el);
+		}
+	});
 
-			continue;
+	window.addEventListener("pointermove", (e) => {
+		const { x, y } = e;
+
+		const els = [...kinesisSubscriber];
+		const rects = [];
+
+		for (const el of els) {
+			rects.push(el.getBoundingClientRect());
 		}
 
-		trackedElements.add(el);
+		for (let i = 0; i < els.length; i++) {
+			const el = els[i];
+			const rect = rects[i];
 
-		el.style.setProperty("--x", `${relativeX}px`);
-		el.style.setProperty("--y", `${relativeY}px`);
-	}
-});
+			const relativeX = x - rect.left;
+			const relativeY = y - rect.top;
+
+			if (trackedElements.has(el) && outOfBounds(rect, relativeX, relativeY)) {
+				el.style.setProperty("--x", OFF_SCREEN);
+				el.style.setProperty("--y", OFF_SCREEN);
+				trackedElements.delete(el);
+
+				continue;
+			}
+
+			trackedElements.add(el);
+
+			el.style.setProperty("--x", `${relativeX}px`);
+			el.style.setProperty("--y", `${relativeY}px`);
+		}
+	});
+}
+
+if (onTap) {
+	document.addEventListener("pointerup", () => {
+		setTimeout(() => {
+			for (const el of kinesisSubscriber) {
+				el.style.setProperty("--x", OFF_SCREEN);
+				el.style.setProperty("--y", OFF_SCREEN);
+				trackedElements.delete(el);
+			}
+		}, 250);
+	});
+
+	document.addEventListener("pointercancel", () => {
+		setTimeout(() => {
+			for (const el of kinesisSubscriber) {
+				el.style.setProperty("--x", OFF_SCREEN);
+				el.style.setProperty("--y", OFF_SCREEN);
+				trackedElements.delete(el);
+			}
+		}, 250);
+	});
+
+	window.addEventListener("pointerdown", (e) => {
+		const { x, y } = e;
+
+		const els = [...kinesisSubscriber];
+		const rects = [];
+
+		for (const el of els) {
+			rects.push(el.getBoundingClientRect());
+		}
+
+		for (let i = 0; i < els.length; i++) {
+			const el = els[i];
+			const rect = rects[i];
+
+			const relativeX = x - rect.left;
+			const relativeY = y - rect.top;
+
+			if (trackedElements.has(el) && outOfBounds(rect, relativeX, relativeY)) {
+				el.style.setProperty("--x", OFF_SCREEN);
+				el.style.setProperty("--y", OFF_SCREEN);
+				trackedElements.delete(el);
+
+				continue;
+			}
+
+			trackedElements.add(el);
+
+			el.style.setProperty("--x", `${relativeX}px`);
+			el.style.setProperty("--y", `${relativeY}px`);
+		}
+	});
+}
 
 export default defineNuxtPlugin((nuxtApp) => {
 	nuxtApp.vueApp.directive("kinesis", {

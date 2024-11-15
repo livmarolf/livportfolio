@@ -70,13 +70,15 @@ const matrixDisplayReady = ref(false);
       <NuxtImg class="card" src="/images/home/zero.svg" />
       <div v-wave class="card" style="--accent: var(--accent-zero)">
         <span class="card--label">Case Studies</span>
-        <h2 v-wave-trigger class="card--title">
-          Designing
-          <span class="no-wrap">
-            <span class="accent">Zero</span>
-            <IconButton icon="arrow-right" />
-          </span>
-        </h2>
+        <NuxtLink to="/case-studies/zero">
+          <h2 v-wave-trigger class="card--title">
+            Designing
+            <span class="no-wrap">
+              <span class="accent">Zero</span>
+              <IconButton icon="arrow-right" />
+            </span>
+          </h2>
+        </NuxtLink>
         <p class="card--text">
           A local cardboard recycling company hired us to design their first
           website to build brand awareness, promote sustainability, and
@@ -87,13 +89,16 @@ const matrixDisplayReady = ref(false);
     <section class="card-group left">
       <div v-wave class="card" style="--accent: var(--accent-disney)">
         <span class="card--label">Case Studies</span>
-        <h2 v-wave-trigger class="card--title">
-          <span class="accent">Disney plus</span> movies
-          <span class="no-wrap">
-            <span>filter</span>
-            <IconButton icon="arrow-right" />
-          </span>
-        </h2>
+        <NuxtLink to="/case-studies/disney-plus">
+          <h2 v-wave-trigger class="card--title">
+            <span class="accent">Disney plus</span> movies
+            <span class="no-wrap">
+              <span>filter</span>
+              <IconButton icon="arrow-right" />
+            </span>
+          </h2>
+        </NuxtLink>
+
         <p class="card--text">
           Disney Plus' "Movies" page has a usability issue: the filter
           disappears when scrolling, forcing users to scroll back up to use it.
@@ -107,13 +112,15 @@ const matrixDisplayReady = ref(false);
       <NuxtImg class="card" src="/images/home/spotify.svg" />
       <div v-wave class="card" style="--accent: var(--accent-spotify)">
         <span class="card--label">Case Studies</span>
-        <h2 v-wave-trigger class="card--title">
-          <span class="accent">spotify{{ " " }}</span>
-          <span class="no-wrap">
-            <span>wrapped</span>
-            <IconButton icon="arrow-right" />
-          </span>
-        </h2>
+        <NuxtLink to="/case-studies/spotify">
+          <h2 v-wave-trigger class="card--title">
+            <span class="accent">spotify{{ " " }}</span>
+            <span class="no-wrap">
+              <span>wrapped</span>
+              <IconButton icon="arrow-right" />
+            </span>
+          </h2>
+        </NuxtLink>
         <p class="card--text">
           How does a simple year-end recap become a viral sensation? This case
           study explores the design choices behind one of Spotify's most
@@ -126,7 +133,7 @@ const matrixDisplayReady = ref(false);
 
 <style lang="scss" scoped>
 $colors: (
-  zero: #04d190,
+  zero: #2DD867,
   disney: #00b5da,
   spotify: #adf83f,
   lets-connect: #6e67ff,

@@ -94,7 +94,7 @@ header {
     grid-template: 1fr / auto 1fr 1fr auto;
 
     &:has(li.open) {
-      height: rem(104);
+      height: rem(108);
       grid-template: 1fr 1fr / auto 1fr 1fr auto;
 
       button>.icon {
@@ -195,7 +195,7 @@ nav {
     align-items: center;
     justify-content: center;
     gap: rem(4);
-    height: 100%;
+    min-height: rem(48);
     padding: 0 rem(12);
     border-radius: rem(5);
     border: none;
@@ -204,6 +204,7 @@ nav {
     white-space: nowrap;
     text-transform: uppercase;
     cursor: pointer;
+    background: var(--color-background-card-dark);
 
     .icon {
       font-size: 2em;
@@ -211,7 +212,7 @@ nav {
     }
 
     &.zero {
-      color: #04d190;
+      color: #2DD867;
     }
 
     &.disney {
