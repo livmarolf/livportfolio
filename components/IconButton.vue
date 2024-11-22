@@ -5,7 +5,7 @@ const props = defineProps<{ icon: IconName }>()
 </script>
 
 <template>
-  <button v-kinesis class="icon-button">
+  <button v-kinesis class="icon-button" :aria-label="props.icon">
     <Icon :name="props.icon" />
   </button>
 </template>

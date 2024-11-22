@@ -3,6 +3,10 @@ const matrixDisplayReady = ref(false);
 </script>
 
 <template>
+
+  <Head>
+    <Title>Olivia Marolf's UI/UX Portfolio</Title>
+  </Head>
   <main :class="{ hidden: !matrixDisplayReady }">
     <MatrixDisplay @ready="matrixDisplayReady = true" class="matrix-display" />
     <section class="socials-and-skills">
@@ -16,7 +20,7 @@ const matrixDisplayReady = ref(false);
           </li>
           <li>
             <NuxtLink v-wave v-kinesis to="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
-              <h3>linked</h3>
+              <h3>linkedin</h3>
               <IconButton icon="arrow-angled" />
             </NuxtLink>
           </li>
@@ -27,10 +31,10 @@ const matrixDisplayReady = ref(false);
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink v-wave v-kinesis to="/resume">
+            <a v-wave v-kinesis href="/resume.pdf" download="Olivia Marolf's Resume">
               <h3>resume</h3>
               <IconButton icon="download" />
-            </NuxtLink>
+            </a>
           </li>
         </ul>
       </div>
@@ -67,7 +71,7 @@ const matrixDisplayReady = ref(false);
       </div>
     </section>
     <section class="card-group">
-      <NuxtImg class="card" src="/images/home/zero.svg" />
+      <NuxtImg alt="Zero logo" class="card" src="/images/home/zero.svg" />
       <div v-wave class="card" style="--accent: var(--accent-zero)">
         <span class="card--label">Case Studies</span>
         <NuxtLink to="/case-studies/zero">
@@ -106,10 +110,10 @@ const matrixDisplayReady = ref(false);
           clicks.
         </p>
       </div>
-      <NuxtImg class="card" src="/images/home/disney-plus.svg" />
+      <NuxtImg alt="Disney Plus Logo" class="card" src="/images/home/disney-plus.svg" />
     </section>
     <section class="card-group">
-      <NuxtImg class="card" src="/images/home/spotify.svg" />
+      <NuxtImg alt="Spotify Wrapped Logo" class="card" src="/images/home/spotify.svg" />
       <div v-wave class="card" style="--accent: var(--accent-spotify)">
         <span class="card--label">Case Studies</span>
         <NuxtLink to="/case-studies/spotify">

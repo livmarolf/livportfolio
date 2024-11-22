@@ -84,18 +84,19 @@ onMounted(() => {
     <div class="dot-matrix-display" ref="footer-matrix-display" />
     <section v-wave class="card lets-connect" style="--accent: var(--accent-lets-connect)">
       <span class="card--label">Contact</span>
-      <h2 v-wave-trigger class="card--title large">
-        <span class="force-wrap">Drop me a line and let's</span>
-        <span class="no-wrap">
-          <span class="accent">connect</span>
-          <IconButton icon="arrow-right" />
-        </span>
-      </h2>
+      <NuxtLink to="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
+        <h2 v-wave-trigger class="card--title large">
+          <span class="force-wrap">Drop me a line and let's</span>
+          <span class="no-wrap">
+            <span class="accent">connect</span>
+            <IconButton icon="arrow-right" />
+          </span>
+        </h2>
+      </NuxtLink>
     </section>
     <section class="links">
       <div class="card borderless socials">
         <h3>Olivia Marolf</h3>
-
         <ul>
           <li>
             <NuxtLink to="https://github.com/livmarolf" target="_blank">

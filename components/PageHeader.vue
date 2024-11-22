@@ -14,7 +14,7 @@ const dropdownOpen = ref(false)
 
 <template>
   <header class="glass">
-    <button v-wave @click="backToTop" class="action-button" v-kinesis>
+    <button aria-label="back to top" v-wave @click="backToTop" class="action-button" v-kinesis>
       <Icon :class="{ hidden: !showBackToTop }" name="arrow-up" />
       <Icon :class="{ hidden: showBackToTop }" name="logo" />
     </button>
@@ -41,29 +41,31 @@ const dropdownOpen = ref(false)
         </li>
       </ul>
     </nav>
-    <div class="spacer"></div>
+    <div class="spacer" v-kinesis></div>
 
     <ul>
       <li>
-        <NuxtLink v-wave v-kinesis class="icon-link" to="https://github.com/livmarolf" target="_blank">
+        <NuxtLink aria-label="Olivia's Github" v-wave v-kinesis class="icon-link" to="https://github.com/livmarolf"
+          target="_blank">
           <Icon name="github" />
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink v-wave v-kinesis class="icon-link show-on-mobile" to="https://www.linkedin.com/in/oliviamarolf/"
-          target="_blank">
+        <NuxtLink aria-label="Olivia's LinkedIn" v-wave v-kinesis class="icon-link show-on-mobile"
+          to="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
           <Icon name="linked-in" />
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink v-wave v-kinesis class="icon-link" to="https://www.figma.com/@livmarolf" target="_blank">
+        <NuxtLink aria-label="Olivia's Figma" v-wave v-kinesis class="icon-link" to="https://www.figma.com/@livmarolf"
+          target="_blank">
           <Icon name="figma" />
         </NuxtLink>
       </li>
       <li>
-        <NuxtLink v-wave v-kinesis class="icon-link resume" to="/">
+        <a v-wave v-kinesis class="icon-link resume" href="/resume.pdf" download="Olivia Marolf's Resume">
           <Icon name="resume" /> RESUME
-        </NuxtLink>
+        </a>
       </li>
     </ul>
   </header>

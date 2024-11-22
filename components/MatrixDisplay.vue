@@ -71,9 +71,9 @@ const mouthClosed: GlyphMatrix = [
   [4, 6],
 ]
 
-const textScanOn: Scene = [
+const oliviaMarolf: Scene = [
   {
-    duration: 5000,
+    duration: 4000,
     start: 0,
     minResolution: {
       horizontal: 25,
@@ -163,13 +163,14 @@ const uxDesigner: Scene = [
     render(t) {
       const scanIndex = Math.floor(this.size * t)
       for (let i = 0; i < this.size; i++) {
+        const x = i % this.width
+        const colorMix = x / this.width
+        const color = this.lerpRGB([106, 213, 116], [109, 103, 246], colorMix)
+
         if (i < scanIndex) {
-          const x = i % this.width
-          const colorMix = x / this.width
-          const color = this.lerpRGB([182, 37, 128], [0, 131, 178], colorMix)
-          if (this.get(i) === Colors.OFF) this.set(i, color)
+          if (this.get(i) === '#fff') this.set(i, color)
         }
-        if (i === scanIndex) this.set(i, Colors.ON)
+        if (i === scanIndex) this.set(i, color)
         if (i > scanIndex) this.set(i, Colors.OFF)
       }
     },
@@ -180,7 +181,7 @@ const matrixDisplayEl = useTemplateRef('dot-matrix-display');
 
 onMounted(() => {
   if (!matrixDisplayEl.value) return
-  const display = new Display(matrixDisplayEl.value, [textScanOn, pacMan, uxDesigner, pacMan]);
+  const display = new Display(matrixDisplayEl.value, [oliviaMarolf, pacMan, uxDesigner, pacMan]);
   // display.playbackControls();`
   display.play();
   // display.edit();

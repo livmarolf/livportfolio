@@ -10,6 +10,10 @@ const currentImage = ref(0);
 </script>
 
 <template>
+
+  <Head>
+    <Title>Zero Case Study | Olivia Marolf's UI/UX Portfolio</Title>
+  </Head>
   <main>
     <!-- INTRO -->
     <section class="intro">
@@ -32,21 +36,11 @@ const currentImage = ref(0);
 
     <!-- GALLERY -->
     <section class="gallery">
-      <NuxtImg
-        v-for="(image, i) in images"
-        v-show="currentImage === i"
-        class="card"
-        :src="image"
-        :key="image"
-      />
+      <NuxtImg v-for="(image, i) in images" v-show="currentImage === i" class="card" :src="image" :key="image" />
       <ul>
         <li v-for="(image, i) in images" :key="image">
           <button @click="currentImage = i" type="button">
-            <NuxtImg
-              class="card"
-              :class="{ active: currentImage === i }"
-              :src="image"
-            />
+            <NuxtImg class="card" :class="{ active: currentImage === i }" :src="image" />
           </button>
         </li>
       </ul>
@@ -60,10 +54,7 @@ const currentImage = ref(0);
           <p>early ideation</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/early-ideation.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/early-ideation.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Taking notes and brainstorming is an important part of the process!
@@ -108,10 +99,7 @@ const currentImage = ref(0);
           <p>documented research</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/documented-research.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/documented-research.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Now that objectives are defined, it’s time to
@@ -158,10 +146,7 @@ const currentImage = ref(0);
           <p>branding</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/branding.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/branding.png" />
       </div>
 
       <div class="card" style="--accent: var(--zero-cyan)">
@@ -200,10 +185,7 @@ const currentImage = ref(0);
           <p>tv version</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/educational-content.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/educational-content.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Incorporating components from
@@ -224,10 +206,7 @@ const currentImage = ref(0);
           <p>conversion</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/conversion.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/conversion.png" />
         <Tooltip width="var(--tooltip-width)">
           <template #top-text>
             Each page includes one or more calls to action (CTAs)
@@ -262,10 +241,7 @@ const currentImage = ref(0);
           <p>measuring success</p>
         </span>
 
-        <NuxtImg
-          class="display-image"
-          src="/images/case-studies/zero/measuring-success.png"
-        />
+        <NuxtImg class="display-image" src="/images/case-studies/zero/measuring-success.png" />
       </div>
       <div class="card" style="--accent: var(--zero-green)">
         <span class="card--label">results</span>

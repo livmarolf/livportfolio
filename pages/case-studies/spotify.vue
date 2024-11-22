@@ -1,4 +1,8 @@
 <template>
+
+  <Head>
+    <Title>Spotify Wrapped Case Study | Olivia Marolf's UI/UX Portfolio</Title>
+  </Head>
   <main>
     <!-- INTRO -->
     <section>
