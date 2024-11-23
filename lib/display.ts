@@ -31,7 +31,8 @@ export const MAX_PIXEL_SIZE = 24;
 export const MIN_VERTICAL_RESOLUTION = 1;
 
 export class Display {
-	private el: HTMLElement;
+	private canvasEl: HTMLCanvasElement;
+	private ctx: CanvasRenderingContext2D;
 
 	private running = false;
 	private scenes: Scene[] = [];
@@ -68,11 +69,12 @@ export class Display {
 	}
 
 	constructor(
-		el: HTMLElement,
+		el: HTMLCanvasElement,
 		scenes: Scene[],
 		options: { loopOffset?: number } = { loopOffset: 0 },
 	) {
-		this.el = el;
+		this.canvasEl = el;
+		this.ctx = el.getContext('2d')!
 		this.scenes = scenes;
 
 		this.render = this.render.bind(this);
@@ -92,14 +94,14 @@ export class Display {
 	}
 
 	private buildDOM() {
-		const { height } = this.el.getBoundingClientRect();
+		const { height } = this.canvasEl.getBoundingClientRect();
 
-		this.el.style.height = `${height}px`;
-		this.el.innerHTML = "";
+		this.canvasEl.style.height = `${height}px`;
+		this.canvasEl.innerHTML = "";
 
-		const rect = this.el.getBoundingClientRect();
+		const rect = this.canvasEl.getBoundingClientRect();
 
-		this.el.style.height = "";
+		this.canvasEl.style.height = "";
 
 		const minRes = this.getMinResolution(this.scenes);
 
@@ -110,26 +112,14 @@ export class Display {
 		this.writeBuffer = new Array(this.width * this.height).fill(Colors.OFF);
 		this.previousFrame = new Array(this.width * this.height).fill(Colors.OFF);
 
-		this.el.style.setProperty("--size", `${this.pixelSize}px`);
 
-		for (let i = 0; i < this.writeBuffer.length; i++) {
-			const x = i % this.width;
-			const y = Math.floor(i / this.width);
-
-			const pixel = document.createElement("div");
-
-			pixel.dataset.loc = `${x},${y}`;
-			pixel.style.setProperty("color", Colors.OFF);
-			pixel.classList.add("pixel");
-
-			this.el.appendChild(pixel);
-		}
+		this.canvasEl.width = rect.width;
+		this.canvasEl.height = (this.height * (this.pixelSize + this.getPixelGap())) - this.getPixelGap() / 2;
 	}
 
 	getPixelGap = () => {
-		return Number.parseInt(
-			window.getComputedStyle(this.el).getPropertyValue("--pixel-gap"),
-			10,
+		return Number.parseFloat(
+			window.getComputedStyle(this.canvasEl).getPropertyValue("--pixel-gap")
 		);
 	};
 
@@ -272,22 +262,32 @@ export class Display {
 	}
 
 	private flushBuffer() {
-		for (let i = 0; i < this.writeBuffer.length; i++) {
-			if (this.previousFrame[i] === this.writeBuffer[i]) continue;
+		this.canvasEl.width = this.canvasEl.width
+		const borderRadius = parseFloat(window.getComputedStyle(this.canvasEl).getPropertyValue('--pixel-border-radius'));
+		const borderWidth = parseFloat(window.getComputedStyle(this.canvasEl).getPropertyValue('--border-width'));
 
+		for (let i = 0; i < this.writeBuffer.length; i++) {
 			const x = i % this.width;
 			const y = Math.floor(i / this.width);
 
-			const pixel = this.el.querySelector(
-				`[data-loc="${x},${y}"]`,
-			) as HTMLDivElement;
-			if (!pixel) throw new Error(`No pixel at location ${x},${y}`);
+			const gap = this.getPixelGap();
+			const ctxX = x * (this.pixelSize + gap);
+			const ctxY = y * (this.pixelSize + gap);
 
-			pixel.style.setProperty("color", this.writeBuffer[i]);
-			pixel.classList.toggle("on", this.writeBuffer[i] !== Colors.OFF);
+			this.ctx.fillStyle = this.writeBuffer[i];
+			this.ctx.beginPath();
+			this.ctx.roundRect(ctxX, ctxY, this.pixelSize, this.pixelSize, borderRadius)
+			this.ctx.fill();
+
+			if (this.writeBuffer[i] === Colors.OFF) {
+				const borderOffset = borderWidth / 2;
+				this.ctx.beginPath();
+				this.ctx.roundRect(ctxX + borderOffset, ctxY + borderOffset, this.pixelSize - borderWidth, this.pixelSize - borderWidth, borderRadius)
+				this.ctx.strokeStyle = '#191919';
+				this.ctx.lineWidth = borderWidth;
+				this.ctx.stroke();
+			}
 		}
-
-		this.previousFrame = this.writeBuffer;
 	}
 
 	play() {
@@ -408,7 +408,7 @@ export class Display {
 
 	edit() {
 		this.stop();
-		this.el.addEventListener("click", (e) => {
+		this.canvasEl.addEventListener("click", (e) => {
 			const target = e.target as HTMLElement;
 
 			if (!target.dataset.loc) return;

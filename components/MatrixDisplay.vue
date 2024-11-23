@@ -193,7 +193,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="dot-matrix-display" ref="dot-matrix-display"></div>
+  <canvas class="dot-matrix-display" ref="dot-matrix-display" />
 </template>
 
 <style lang="scss">

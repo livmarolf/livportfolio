@@ -29,7 +29,7 @@ const ribbons: Scene = [
       const end = Math.floor((this.width + length) * t);
 
       for (let x = start; x < end; x++) {
-        this.set(x, store.y[x], "var(--accent-lets-connect)");
+        this.set(x, store.y[x], '#6e67ff');
       }
     },
   },
@@ -45,7 +45,7 @@ const ribbons: Scene = [
       const end = Math.floor((this.width + length) * t);
 
       for (let x = start; x < end; x++) {
-        this.set(x, store.y[x], "var(--accent-zero)");
+        this.set(x, store.y[x], '#2DD867');
       }
     },
   },
@@ -61,7 +61,7 @@ const ribbons: Scene = [
       const end = Math.floor((this.width + length) * t);
 
       for (let x = start; x < end; x++) {
-        this.set(x, store.y[x], "var(--accent-disney)");
+        this.set(x, store.y[x], "#00b5da");
       }
     },
   },
@@ -81,7 +81,7 @@ onMounted(() => {
 
 <template>
   <footer>
-    <div class="dot-matrix-display" ref="footer-matrix-display" />
+    <canvas class="dot-matrix-display" ref="footer-matrix-display" />
     <section v-wave class="card lets-connect" style="--accent: var(--accent-lets-connect)">
       <span class="card--label">Contact</span>
       <NuxtLink to="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
