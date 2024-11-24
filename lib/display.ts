@@ -94,14 +94,11 @@ export class Display {
 	}
 
 	private buildDOM() {
-		const { height } = this.canvasEl.getBoundingClientRect();
-
-		this.canvasEl.style.height = `${height}px`;
-		this.canvasEl.innerHTML = "";
-
-		const rect = this.canvasEl.getBoundingClientRect();
-
-		this.canvasEl.style.height = "";
+		const r = this.canvasEl.getBoundingClientRect();
+		const rect = {
+			width: r.width * window.devicePixelRatio,
+			height: r.height * window.devicePixelRatio,
+		}
 
 		const minRes = this.getMinResolution(this.scenes);
 
@@ -120,11 +117,11 @@ export class Display {
 	getPixelGap = () => {
 		return Number.parseFloat(
 			window.getComputedStyle(this.canvasEl).getPropertyValue("--pixel-gap")
-		);
+		) * window.devicePixelRatio;
 	};
 
 	horizontalResolutionWithMaxPixelSize = (elWidth: number) => {
-		const res = Math.floor(elWidth / (MAX_PIXEL_SIZE + this.getPixelGap()));
+		const res = Math.floor(elWidth / ((MAX_PIXEL_SIZE * window.devicePixelRatio) + this.getPixelGap()));
 
 		return res % 2 === 0 ? res + 1 : res;
 	};
@@ -263,8 +260,8 @@ export class Display {
 
 	private flushBuffer() {
 		this.canvasEl.width = this.canvasEl.width
-		const borderRadius = parseFloat(window.getComputedStyle(this.canvasEl).getPropertyValue('--pixel-border-radius'));
-		const borderWidth = parseFloat(window.getComputedStyle(this.canvasEl).getPropertyValue('--border-width'));
+		const borderRadius = parseFloat(window.getComputedStyle(this.canvasEl).getPropertyValue('--pixel-border-radius')) * window.devicePixelRatio;
+		const borderWidth = parseFloat(window.getComputedStyle(this.canvasEl).getPropertyValue('--border-width')) * window.devicePixelRatio;
 
 		for (let i = 0; i < this.writeBuffer.length; i++) {
 			const x = i % this.width;
