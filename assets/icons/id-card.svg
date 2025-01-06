@@ -1,8 +1,8 @@
 <svg viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17 21.2852H7C3 21.2852 2 20.2852 2 16.2852V8.28516C2 4.28516 3 3.28516 7 3.28516H17C21 3.28516 22 4.28516 22 8.28516V16.2852C22 20.2852 21 21.2852 17 21.2852Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="fill: currentColor;"></path>
-<path d="M14 8.28516H19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="fill: currentColor;"></path>
-<path d="M15 12.2852H19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="fill: currentColor;"></path>
-<path d="M17 16.2852H19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="fill: currentColor;"></path>
-<path d="M8.50141 11.5751C9.50104 11.5751 10.3114 10.7647 10.3114 9.76508C10.3114 8.76544 9.50104 7.95508 8.50141 7.95508C7.50177 7.95508 6.69141 8.76544 6.69141 9.76508C6.69141 10.7647 7.50177 11.5751 8.50141 11.5751Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="fill: currentColor;"></path>
-<path d="M12 16.6149C11.86 15.1649 10.71 14.0249 9.26 13.8949C8.76 13.8449 8.25 13.8449 7.74 13.8949C6.29 14.0349 5.14 15.1649 5 16.6149" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="fill: currentColor;"></path>
+<path d="M17 21.2852H7C3 21.2852 2 20.2852 2 16.2852V8.28516C2 4.28516 3 3.28516 7 3.28516H17C21 3.28516 22 4.28516 22 8.28516V16.2852C22 20.2852 21 21.2852 17 21.2852Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="stroke: currentColor;"></path>
+<path d="M14 8.28516H19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="stroke: currentColor;"></path>
+<path d="M15 12.2852H19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="stroke: currentColor;"></path>
+<path d="M17 16.2852H19" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="stroke: currentColor;"></path>
+<path d="M8.50141 11.5751C9.50104 11.5751 10.3114 10.7647 10.3114 9.76508C10.3114 8.76544 9.50104 7.95508 8.50141 7.95508C7.50177 7.95508 6.69141 8.76544 6.69141 9.76508C6.69141 10.7647 7.50177 11.5751 8.50141 11.5751Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="stroke: currentColor;"></path>
+<path d="M12 16.6149C11.86 15.1649 10.71 14.0249 9.26 13.8949C8.76 13.8449 8.25 13.8449 7.74 13.8949C6.29 14.0349 5.14 15.1649 5 16.6149" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="stroke: currentColor;"></path>
 </svg>
