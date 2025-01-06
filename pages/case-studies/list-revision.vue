@@ -24,8 +24,8 @@ const items: SectionLink[] = [
   <div>
     <main>
       <!-- INTRO -->
-      <section id="#introduction">
-        <div class="card" style="--accent: var(--spotify-yellow)">
+      <section>
+        <div id="#introduction" class="card" style="--accent: var(--spotify-yellow)">
           <span class="card--label">case study</span>
           <h1 class="card--title"><span class="accent">list revision</span> to data table</h1>
 
@@ -38,11 +38,11 @@ const items: SectionLink[] = [
         <NuxtImg class="card" src="/images/case-studies/list-revision/list-revision.png" />
       </section>
       <!-- INITIAL TASK -->
-      <section id="#initial-task">
+      <section>
         <div class="card borderless dark">
           <NuxtImg class="display-image" src="/images/case-studies/list-revision/list-view-original.png" />
         </div>
-        <div class="card" style="--accent: var(--spotify-yellow)">
+        <div id="#initial-task" class="card" style="--accent: var(--spotify-yellow)">
           <span class="card--label">INITIAL TASK</span>
           <h2 class="card--topic">re-design the list </h2>
           <p class="card--title">
@@ -53,7 +53,7 @@ const items: SectionLink[] = [
             experience.
           </p>
         </div>
-        <div class="card" style="--accent: var(--spotify-orange)">
+        <div id="#responsibilities" class="card" style="--accent: var(--spotify-orange)">
           <span class="card--label">RESPONSIBILITIES</span>
           <h3 class="card--topic">my roles</h3>
           <ul>
@@ -64,11 +64,11 @@ const items: SectionLink[] = [
         </div>
       </section>
       <!-- DEFINING THE PROBLEM -->
-      <section id="#defining-the-problem">
+      <section>
         <div class="card borderless dark">
           <NuxtImg class="display-image" src="/images/case-studies/list-revision/list-problem-indicators.png" />
         </div>
-        <div class="card" style="--accent: var(--spotify-pink)">
+        <div id="#defining-the-problem" class="card" style="--accent: var(--spotify-pink)">
           <span class="card--label">DEFINING THE PROBLEM</span>
           <h2 class="card--topic">why a redesign?</h2>
           <p class="card--title">
@@ -87,11 +87,11 @@ const items: SectionLink[] = [
         </div>
       </section>
       <!-- ANALYZING CONSTRAINTS -->
-      <section id="#analyzing-constraints">
+      <section>
         <div class="card borderless dark">
           <NuxtImg class="display-image" src="/images/case-studies/list-revision/list-constraints.png" />
         </div>
-        <div class="card" style="--accent: var(--spotify-yellow)">
+        <div id="#analyzing-constraints" class="card" style="--accent: var(--spotify-yellow)">
           <span class="card--label">ANALYZING CONSTRAINTS</span>
           <h2 class="card--topic">designing within constraints</h2>
           <p class="card--title">
@@ -116,7 +116,7 @@ const items: SectionLink[] = [
         <div class="card borderless dark">
           <NuxtImg class="display-image" src="/images/case-studies/list-revision/list-defining-success.png" />
         </div>
-        <div class="card" style="--accent: var(--spotify-pink)">
+        <div id="#defining-success" class="card" style="--accent: var(--spotify-pink)">
           <span class="card--label">DEFINING SUCCESS</span>
           <h2 class="card--topic">success metrics</h2>
           <p class="card--title">
@@ -146,7 +146,7 @@ const items: SectionLink[] = [
         <div class="card borderless dark">
           <NuxtImg class="display-image" src="/images/case-studies/list-revision/nesting-research.png" />
         </div>
-        <div class="card" style="--accent: var(--spotify-yellow)">
+        <div id="#highlighting-nesting" class="card" style="--accent: var(--spotify-yellow)">
           <span class="card--label">HIGHLIGHTING NESTING</span>
           <h2 class="card--topic">let's talk about nesting</h2>
           <p class="card--title">
@@ -157,7 +157,7 @@ const items: SectionLink[] = [
             I solved.
           </p>
         </div>
-        <div class="card" style="--accent: var(--spotify-orange)">
+        <div id="#research" class="card" style="--accent: var(--spotify-orange)">
           <span class="card--label">RESEARCH</span>
           <h3 class="card--topic">nesting examples</h3>
           <p class="card--title">
@@ -174,7 +174,7 @@ const items: SectionLink[] = [
         <div class="card borderless dark">
           <NuxtImg class="display-image" src="/images/case-studies/list-revision/list-sketches.png" />
         </div>
-        <div class="card" style="--accent: var(--spotify-pink)">
+        <div id="#sketching" class="card" style="--accent: var(--spotify-pink)">
           <span class="card--label">SKETCHING</span>
           <h2 class="card--topic">getting ideas on the page</h2>
           <p class="card--title">
@@ -185,7 +185,7 @@ const items: SectionLink[] = [
             task and see what worked.
           </p>
         </div>
-        <div class="card" style="--accent: var(--spotify-light-green)">
+        <div id="#crazy-8s" class="card" style="--accent: var(--spotify-light-green)">
           <span class="card--label">CRAZY 8S</span>
           <h3 class="card--topic">sketching workshop</h3>
           <p class="card--title">
@@ -203,7 +203,7 @@ const items: SectionLink[] = [
         <div class="card borderless dark">
           <NuxtImg class="display-image" src="/images/case-studies/list-revision/list-view-wireframe.png" />
         </div>
-        <div class="card" style="--accent: var(--spotify-yellow)">
+        <div id="#wireframes" class="card" style="--accent: var(--spotify-yellow)">
           <span class="card--label">WIREFRAMES</span>
           <h2 class="card--topic">initial wireframe</h2>
           <p class="card--title">
@@ -227,7 +227,7 @@ const items: SectionLink[] = [
         <div class="card borderless dark">
           <NuxtImg class="display-image" src="/images/case-studies/list-revision/list-revision-1.png" />
         </div>
-        <div class="card" style="--accent: var(--spotify-pink)">
+        <div id="#revision-one" class="card" style="--accent: var(--spotify-pink)">
           <span class="card--label">REVISION 1</span>
           <h2 class="card--topic">a more “table”-like feel</h2>
           <p class="card--title">
@@ -249,7 +249,7 @@ const items: SectionLink[] = [
         <div class="card borderless dark">
           <NuxtImg class="display-image" src="/images/case-studies/list-revision/list-view-wireframe.png" />
         </div>
-        <div class="card" style="--accent: var(--spotify-yellow)">
+        <div id="#revision-two" class="card" style="--accent: var(--spotify-yellow)">
           <span class="card--label">REVISION 2</span>
           <h2 class="card--topic">deeper nesting</h2>
           <p class="card--title">
@@ -272,7 +272,7 @@ const items: SectionLink[] = [
         <div class="card borderless dark">
           <NuxtImg class="display-image" src="/images/case-studies/list-revision/list-revision-1.png" />
         </div>
-        <div class="card" style="--accent: var(--spotify-pink)">
+        <div id="#revision-three" class="card" style="--accent: var(--spotify-pink)">
           <span class="card--label">REVISION 3</span>
           <h2 class="card--topic">compact and efficient</h2>
           <p class="card--title">
@@ -294,7 +294,7 @@ const items: SectionLink[] = [
         <div class="card borderless dark">
           <NuxtImg class="display-image" src="/images/case-studies/list-revision/list-view-wireframe.png" />
         </div>
-        <div class="card" style="--accent: var(--spotify-yellow)">
+        <div id="#final-design" class="card" style="--accent: var(--spotify-yellow)">
           <span class="card--label">FINAL DESIGN</span>
           <h2 class="card--topic">nesting solution</h2>
           <p class="card--title">
