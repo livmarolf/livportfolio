@@ -47,6 +47,7 @@ export class Display {
 	}
 	private previousFrame: string[] = [];
 	private writeBuffer: string[] = [];
+
 	private animationFrameId: number | null = null;
 	private sceneStore = new Map<Actor, Record<string, unknown>>();
 	private finalActor: Actor | null = null;
@@ -74,7 +75,7 @@ export class Display {
 		options: { loopOffset?: number } = { loopOffset: 0 },
 	) {
 		this.canvasEl = el;
-		this.ctx = el.getContext('2d')!
+		this.ctx = el.getContext("2d", { alpha: false })!;
 		this.scenes = scenes;
 
 		this.render = this.render.bind(this);
@@ -98,7 +99,7 @@ export class Display {
 		const rect = {
 			width: r.width * window.devicePixelRatio,
 			height: r.height * window.devicePixelRatio,
-		}
+		};
 
 		const minRes = this.getMinResolution(this.scenes);
 
@@ -109,19 +110,28 @@ export class Display {
 		this.writeBuffer = new Array(this.width * this.height).fill(Colors.OFF);
 		this.previousFrame = new Array(this.width * this.height).fill(Colors.OFF);
 
-
 		this.canvasEl.width = rect.width;
-		this.canvasEl.height = (this.height * (this.pixelSize + this.getPixelGap())) - this.getPixelGap() / 2;
+		this.canvasEl.height =
+			this.height * (this.pixelSize + this.getPixelGap()) -
+			this.getPixelGap() / 2;
+
+		this.previousFrame = new Array(this.width * this.height).fill(Colors.ON);
+		this.writeBuffer = new Array(this.width * this.height).fill(Colors.OFF);
+		this.flushBuffer();
 	}
 
 	getPixelGap = () => {
-		return Number.parseFloat(
-			window.getComputedStyle(this.canvasEl).getPropertyValue("--pixel-gap")
-		) * window.devicePixelRatio;
+		return Math.round(
+			Number.parseFloat(
+				window.getComputedStyle(this.canvasEl).getPropertyValue("--pixel-gap"),
+			) * window.devicePixelRatio,
+		);
 	};
 
 	horizontalResolutionWithMaxPixelSize = (elWidth: number) => {
-		const res = Math.floor(elWidth / ((MAX_PIXEL_SIZE * window.devicePixelRatio) + this.getPixelGap()));
+		const res = Math.floor(
+			elWidth / (MAX_PIXEL_SIZE * window.devicePixelRatio + this.getPixelGap()),
+		);
 
 		return res % 2 === 0 ? res + 1 : res;
 	};
@@ -139,7 +149,7 @@ export class Display {
 
 	getPixelSize = (elWidth: number, horizontalResolution: number) => {
 		const horizontalGaps = (horizontalResolution - 1) * this.getPixelGap();
-		return (elWidth - horizontalGaps) / horizontalResolution;
+		return Math.round((elWidth - horizontalGaps) / horizontalResolution);
 	};
 
 	getMinResolution = (scenes: Scene[]) => {
@@ -194,7 +204,9 @@ export class Display {
 			return typeof d === "number" ? d : d(this.width, this.height);
 		};
 
-		this.writeBuffer = new Array(this.width * this.height).fill(Colors.OFF);
+		for (let i = 0; i < this.writeBuffer.length; i++) {
+			this.writeBuffer[i] = Colors.OFF;
+		}
 
 		const sceneDuration = Math.max(
 			...this.currentScene.map(
@@ -259,28 +271,58 @@ export class Display {
 	}
 
 	private flushBuffer() {
-		this.canvasEl.width = this.canvasEl.width
-		const borderRadius = parseFloat(window.getComputedStyle(this.canvasEl).getPropertyValue('--pixel-border-radius')) * window.devicePixelRatio;
-		const borderWidth = parseFloat(window.getComputedStyle(this.canvasEl).getPropertyValue('--border-width')) * window.devicePixelRatio;
+		const borderRadius = Math.round(
+			Number.parseFloat(
+				window
+					.getComputedStyle(this.canvasEl)
+					.getPropertyValue("--pixel-border-radius"),
+			) * window.devicePixelRatio,
+		);
+		const borderWidth = Math.round(
+			Number.parseFloat(
+				window
+					.getComputedStyle(this.canvasEl)
+					.getPropertyValue("--border-width"),
+			) * window.devicePixelRatio,
+		);
+		const gap = this.getPixelGap();
 
 		for (let i = 0; i < this.writeBuffer.length; i++) {
+			if (this.writeBuffer[i] === this.previousFrame[i]) continue;
+
+			this.previousFrame[i] = this.writeBuffer[i];
+
 			const x = i % this.width;
 			const y = Math.floor(i / this.width);
 
-			const gap = this.getPixelGap();
 			const ctxX = x * (this.pixelSize + gap);
 			const ctxY = y * (this.pixelSize + gap);
 
+			this.ctx.clearRect(ctxX, ctxY, this.pixelSize, this.pixelSize);
+
 			this.ctx.fillStyle = this.writeBuffer[i];
 			this.ctx.beginPath();
-			this.ctx.roundRect(ctxX, ctxY, this.pixelSize, this.pixelSize, borderRadius)
+			this.ctx.roundRect(
+				ctxX,
+				ctxY,
+				this.pixelSize,
+				this.pixelSize,
+				borderRadius,
+			);
 			this.ctx.fill();
 
 			if (this.writeBuffer[i] === Colors.OFF) {
-				const borderOffset = borderWidth / 2;
+				const borderOffset = Math.round(borderWidth / 2);
+
 				this.ctx.beginPath();
-				this.ctx.roundRect(ctxX + borderOffset, ctxY + borderOffset, this.pixelSize - borderWidth, this.pixelSize - borderWidth, borderRadius)
-				this.ctx.strokeStyle = '#191919';
+				this.ctx.roundRect(
+					ctxX + borderOffset,
+					ctxY + borderOffset,
+					this.pixelSize - borderWidth,
+					this.pixelSize - borderWidth,
+					borderRadius,
+				);
+				this.ctx.strokeStyle = "#191919";
 				this.ctx.lineWidth = borderWidth;
 				this.ctx.stroke();
 			}
