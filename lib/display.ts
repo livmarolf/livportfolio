@@ -121,10 +121,10 @@ export class Display {
 	}
 
 	getPixelGap = () => {
-		return Math.round(
+		return (
 			Number.parseFloat(
 				window.getComputedStyle(this.canvasEl).getPropertyValue("--pixel-gap"),
-			) * window.devicePixelRatio,
+			) * window.devicePixelRatio
 		);
 	};
 
@@ -149,7 +149,7 @@ export class Display {
 
 	getPixelSize = (elWidth: number, horizontalResolution: number) => {
 		const horizontalGaps = (horizontalResolution - 1) * this.getPixelGap();
-		return Math.round((elWidth - horizontalGaps) / horizontalResolution);
+		return (elWidth - horizontalGaps) / horizontalResolution;
 	};
 
 	getMinResolution = (scenes: Scene[]) => {
@@ -271,20 +271,18 @@ export class Display {
 	}
 
 	private flushBuffer() {
-		const borderRadius = Math.round(
+		const borderRadius =
 			Number.parseFloat(
 				window
 					.getComputedStyle(this.canvasEl)
 					.getPropertyValue("--pixel-border-radius"),
-			) * window.devicePixelRatio,
-		);
-		const borderWidth = Math.round(
+			) * window.devicePixelRatio;
+		const borderWidth =
 			Number.parseFloat(
 				window
 					.getComputedStyle(this.canvasEl)
 					.getPropertyValue("--border-width"),
-			) * window.devicePixelRatio,
-		);
+			) * window.devicePixelRatio;
 		const gap = this.getPixelGap();
 
 		for (let i = 0; i < this.writeBuffer.length; i++) {
@@ -298,7 +296,12 @@ export class Display {
 			const ctxX = x * (this.pixelSize + gap);
 			const ctxY = y * (this.pixelSize + gap);
 
-			this.ctx.clearRect(ctxX, ctxY, this.pixelSize, this.pixelSize);
+			this.ctx.clearRect(
+				ctxX - 1,
+				ctxY - 1,
+				this.pixelSize + 2,
+				this.pixelSize + 2,
+			);
 
 			this.ctx.fillStyle = this.writeBuffer[i];
 			this.ctx.beginPath();
@@ -312,7 +315,7 @@ export class Display {
 			this.ctx.fill();
 
 			if (this.writeBuffer[i] === Colors.OFF) {
-				const borderOffset = Math.round(borderWidth / 2);
+				const borderOffset = borderWidth / 2;
 
 				this.ctx.beginPath();
 				this.ctx.roundRect(
