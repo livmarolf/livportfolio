@@ -372,13 +372,15 @@ const items: SectionLink[] = [
       </section>
 
     </main>
-    <!-- <TableOfContents :items="items" /> -->
+    <TableOfContents :items="items" />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .page-container {
   margin: calc(var(--common-gap) * 2 + rem(56)) var(--common-gap) 0 var(--common-gap);
+  display: flex;
+  gap: var(--common-gap);
 }
 
 main {
@@ -396,6 +398,10 @@ section {
   display: grid;
   grid-template: 1fr / 5fr 7fr;
   gap: var(--common-gap);
+
+  img.card {
+    object-position: top left;
+  }
 }
 
 .section-two,
