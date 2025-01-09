@@ -70,6 +70,27 @@ const matrixDisplayReady = ref(false);
         </div>
       </div>
     </section>
+    <section class="card-group left">
+      <div v-wave class="card" style="--accent: var(--accent-list-revision)">
+        <span class="card--label">Case Study</span>
+        <NuxtLink to="/case-studies/list-revision">
+          <h2 v-wave-trigger class="card--title">
+            <span class="accent">List revision</span> to
+            <span class="no-wrap">
+              <span>data table</span>
+              <IconButton icon="arrow-right" />
+            </span>
+          </h2>
+        </NuxtLink>
+
+        <p class="card--text">
+          This case study shows how I transformed a basic list into a data table. The final design is clean,
+          user-friendly, and efficiently handles large datasets.
+        </p>
+      </div>
+      <NuxtImg alt="List revision Logo" class="card list-revision"
+        src="/images/case-studies/list-revision/list-revision.png" />
+    </section>
     <section class="card-group">
       <NuxtImg alt="Zero logo" class="card" src="/images/home/zero.svg" />
       <div v-wave class="card" style="--accent: var(--accent-zero)">
@@ -140,6 +161,7 @@ $colors: (
   zero: #2DD867,
   disney: #00b5da,
   spotify: #adf83f,
+  list-revision: #6E67FF,
   lets-connect: #6e67ff,
 );
 
@@ -265,6 +287,10 @@ main {
   margin-bottom: var(--common-gap);
   gap: var(--common-gap);
   height: clamp(rem(600), 75vh, rem(750));
+
+  img.list-revision {
+    object-position: top left;
+  }
 
   &:nth-of-type(odd) {
     grid-template-columns: 5fr 7fr;

@@ -37,6 +37,9 @@ const dropdownOpen = ref(false)
             <li>
               <NuxtLink class="spotify" v-wave to="/case-studies/spotify" v-kinesis>Spotify Wrapped</NuxtLink>
             </li>
+            <li>
+              <NuxtLink class="list-revision" v-wave to="/case-studies/list-revision" v-kinesis>List Revision</NuxtLink>
+            </li>
           </ul>
         </li>
       </ul>
@@ -223,6 +226,10 @@ nav {
 
     &.spotify {
       color: #adf83f;
+    }
+
+    &.list-revision {
+      color: #6E67FF;
     }
   }
 }

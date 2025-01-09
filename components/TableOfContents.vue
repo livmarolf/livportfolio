@@ -69,6 +69,10 @@ aside {
   padding: rem(4);
   border-radius: rem(8);
 
+  @media (max-width: width(675)) {
+    display: none;
+  }
+
   >div {
     display: flex;
   }

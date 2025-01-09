@@ -406,6 +406,11 @@ section {
   img.card {
     object-position: top left;
   }
+
+  @media (max-width: width(1160)) {
+    grid-template: auto auto / 1fr;
+    height: auto;
+  }
 }
 
 .section-two,
@@ -417,13 +422,75 @@ section {
     "image insight"
     "image theory";
 
+
+  @media (max-width: width(1430)) {
+    grid-template: auto auto / 1fr 1fr;
+    grid-template-areas:
+      "insight theory"
+      "image image";
+    height: auto;
+  }
+
+  @media (max-width: width(960)) {
+    grid-template: auto auto auto / 1fr;
+    grid-template-areas:
+      "insight"
+      "theory"
+      "image";
+  }
+
   .card.borderless {
     grid-area: image;
     display: flex;
     justify-content: center;
     align-items: center;
 
-    // ???????? 0_0 ????????
+    img {
+      width: 100%;
+    }
+
+  }
+
+  .card:nth-of-type(2) {
+    grid-area: insight;
+  }
+
+  .card:nth-of-type(3) {
+    grid-area: theory;
+  }
+}
+
+.section-seven {
+  display: grid;
+  grid-template: 1fr 1fr / 5fr 7fr;
+  gap: var(--common-gap);
+  grid-template-areas:
+    "insight image"
+    "theory image";
+
+
+  @media (max-width: width(1430)) {
+    grid-template: auto auto / 1fr 1fr;
+    grid-template-areas:
+      "insight theory"
+      "image image";
+    height: auto;
+  }
+
+  @media (max-width: width(960)) {
+    grid-template: auto auto auto / 1fr;
+    grid-template-areas:
+      "insight"
+      "theory"
+      "image";
+  }
+
+  .card.borderless {
+    grid-area: image;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     img {
       width: 100%;
     }
@@ -448,6 +515,13 @@ section {
   grid-template: 1fr / 5fr 7fr;
   grid-template-areas: "card image";
   height: min-content;
+
+  @media (max-width: width(1200)) {
+    grid-template: auto auto / 1fr;
+    grid-template-areas:
+      "card"
+      "image";
+  }
 
   .card {
     grid-area: card;
@@ -476,6 +550,13 @@ section {
   grid-template-areas: "image card";
   height: min-content;
 
+  @media (max-width: width(1200)) {
+    grid-template: auto auto / 1fr;
+    grid-template-areas:
+      "card"
+      "image";
+  }
+
   .card {
     grid-area: card;
   }
@@ -491,36 +572,6 @@ section {
       max-width: 100%;
       max-height: 100%;
     }
-  }
-}
-
-.section-seven {
-  display: grid;
-  grid-template: 1fr 1fr / 5fr 7fr;
-  gap: var(--common-gap);
-  grid-template-areas:
-    "insight image"
-    "theory image";
-
-  .card.borderless {
-    grid-area: image;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    // ???????? 0_0 ????????
-    img {
-      width: 100%;
-    }
-
-  }
-
-  .card:nth-of-type(2) {
-    grid-area: insight;
-  }
-
-  .card:nth-of-type(3) {
-    grid-area: theory;
   }
 }
 </style>
