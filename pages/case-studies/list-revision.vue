@@ -392,6 +392,10 @@ main {
 section {
   height: rem(850);
   margin-bottom: var(--common-gap);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .intro {
