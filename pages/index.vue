@@ -75,9 +75,9 @@ const matrixDisplayReady = ref(false);
         <span class="card--label">Case Study</span>
         <NuxtLink to="/case-studies/list-revision">
           <h2 v-wave-trigger class="card--title">
-            <span class="accent">List revision</span> to
+            <span class="accent">List revision</span> to data
             <span class="no-wrap">
-              <span>data table</span>
+              <span>table</span>
               <IconButton icon="arrow-right" />
             </span>
           </h2>
@@ -94,7 +94,7 @@ const matrixDisplayReady = ref(false);
     <section class="card-group">
       <NuxtImg alt="Zero logo" class="card" src="/images/home/zero.svg" />
       <div v-wave class="card" style="--accent: var(--accent-zero)">
-        <span class="card--label">Case Studies</span>
+        <span class="card--label">Case Study</span>
         <NuxtLink to="/case-studies/zero">
           <h2 v-wave-trigger class="card--title">
             Designing
@@ -113,7 +113,7 @@ const matrixDisplayReady = ref(false);
     </section>
     <section class="card-group left">
       <div v-wave class="card" style="--accent: var(--accent-disney)">
-        <span class="card--label">Case Studies</span>
+        <span class="card--label">Case Study</span>
         <NuxtLink to="/case-studies/disney-plus">
           <h2 v-wave-trigger class="card--title">
             <span class="accent">Disney plus</span> movies
@@ -136,7 +136,7 @@ const matrixDisplayReady = ref(false);
     <section class="card-group">
       <NuxtImg alt="Spotify Wrapped Logo" class="card" src="/images/home/spotify.svg" />
       <div v-wave class="card" style="--accent: var(--accent-spotify)">
-        <span class="card--label">Case Studies</span>
+        <span class="card--label">Case Study</span>
         <NuxtLink to="/case-studies/spotify">
           <h2 v-wave-trigger class="card--title">
             <span class="accent">spotify{{ " " }}</span>
@@ -283,31 +283,37 @@ main {
 
 .card-group {
   display: grid;
-  grid-template-columns: 7fr 5fr;
+  grid-template-columns: 5fr 7fr;
   margin-bottom: var(--common-gap);
   gap: var(--common-gap);
   height: clamp(rem(600), 75vh, rem(750));
+  grid-template-areas: "card image";
 
   img.list-revision {
     object-position: top left;
   }
 
+  .card:not(img) {
+    grid-area: card;
+  }
+
+  img {
+    grid-area: image;
+  }
+
   &:nth-of-type(odd) {
-    grid-template-columns: 5fr 7fr;
+    grid-template-columns: 7fr 5fr;
+    grid-template-areas: "image card";
   }
 
   @media (max-width: width(1060)) {
-    // grid-template-columns: 7fr 5fr;
     grid-template: auto auto / 1fr;
     height: auto;
-
-    img {
-      grid-row: 1;
-    }
+    grid-template-areas: "card" "image";
 
     &:nth-of-type(odd) {
-      // grid-template-columns: 5fr 7fr;
       grid-template: auto auto / 1fr;
+      grid-template-areas: "card" "image";
     }
   }
 }
