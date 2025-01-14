@@ -7,6 +7,7 @@ export const Colors = {
 } as const;
 
 export type Actor = {
+	index?: number;
 	duration: number | ((width: number, height: number) => number);
 	start: number;
 	clip?: boolean;
@@ -50,8 +51,13 @@ export class Display {
 
 	private animationFrameId: number | null = null;
 	private sceneStore = new Map<Actor, Record<string, unknown>>();
-	private finalActor: Actor | null = null;
-	private loopOffset: number;
+	private finalActors: Actor[] | null = null;
+	private _loopOffset: number | ((width: number, height: number) => number);
+	get loopOffset(): number {
+		return typeof this._loopOffset === "function"
+			? this._loopOffset(this.width, this.height)
+			: this._loopOffset;
+	}
 
 	text: TextRenderer = new TextRenderer(this);
 
@@ -72,14 +78,16 @@ export class Display {
 	constructor(
 		el: HTMLCanvasElement,
 		scenes: Scene[],
-		options: { loopOffset?: number } = { loopOffset: 0 },
+		options: {
+			loopOffset?: number | ((width: number, height: number) => number);
+		} = { loopOffset: 0 },
 	) {
 		this.canvasEl = el;
 		this.ctx = el.getContext("2d", { alpha: false })!;
 		this.scenes = scenes;
 
 		this.render = this.render.bind(this);
-		this.loopOffset = options.loopOffset ?? 0;
+		this._loopOffset = options.loopOffset ?? 0;
 
 		this.buildDOM();
 
@@ -183,17 +191,26 @@ export class Display {
 	};
 
 	private prepareFinalActor(sceneDuration: number) {
-		if (this.loopOffset >= 0 || this.finalActor) return;
+		if (this.loopOffset >= 0 || this.finalActors) return;
 
-		this.finalActor = {
-			...this.scenes[0][0],
-			start: sceneDuration + this.loopOffset,
-		};
+		this.finalActors = [];
 
-		this.sceneStore.set(
-			this.finalActor,
-			this.finalActor.initializeStore?.call(this) ?? {},
-		);
+		for (const actor of this.scenes[0]) {
+			if (actor.start > 0) continue;
+
+			const finalActor = {
+				...actor,
+				start: sceneDuration + this.loopOffset,
+				index: this.scenes[0].indexOf(actor),
+			};
+
+			this.finalActors.push(finalActor);
+
+			this.sceneStore.set(
+				finalActor,
+				finalActor.initializeStore?.call(this) ?? {},
+			);
+		}
 	}
 
 	private render() {
@@ -223,8 +240,9 @@ export class Display {
 		let prevRenderInfo: unknown = null;
 
 		const actors =
-			this.currentSceneIndex === this.scenes.length - 1 && this.finalActor
-				? [...this.currentScene, this.finalActor]
+			this.currentSceneIndex === this.scenes.length - 1 &&
+			this.finalActors?.length
+				? [...this.currentScene, ...this.finalActors]
 				: this.currentScene;
 
 		for (const actor of actors) {
@@ -248,9 +266,19 @@ export class Display {
 	private nextScene() {
 		if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
 
-		const finalActorStore =
-			this.finalActor && this.sceneStore.get(this.finalActor);
-		this.finalActor = null;
+		const finalActorStore: { store: Record<string, unknown>; index: number }[] =
+			[];
+
+		if (this.finalActors) {
+			for (const actor of this.finalActors) {
+				const store = this.sceneStore.get(actor);
+				if (!store || actor.index === undefined) continue;
+
+				finalActorStore.push({ store, index: actor.index });
+			}
+		}
+
+		this.finalActors = null;
 
 		this.sceneStore.clear();
 
@@ -265,8 +293,10 @@ export class Display {
 			this.sceneStore.set(actor, actor.initializeStore?.call(this) ?? {});
 		}
 
-		if (finalActorStore) {
-			this.sceneStore.set(this.currentScene[0], finalActorStore);
+		for (const store of finalActorStore) {
+			if (store.index === undefined) continue;
+
+			this.sceneStore.set(this.currentScene[store.index], store.store);
 		}
 	}
 

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Colors, Display, type Scene } from "~/lib/display";
+import { Display, type Scene } from "~/lib/display";
 
 const generateRibbon = (width: number, height: number) => {
   const y = [Math.floor(height * Math.random())];

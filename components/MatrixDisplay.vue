@@ -146,7 +146,7 @@ const pacMan: Scene = [
 
 const uxDesigner: Scene = [
   {
-    duration: 8000,
+    duration: 6000,
     start: 0,
     clip: true,
     minResolution: {
@@ -165,7 +165,7 @@ const uxDesigner: Scene = [
       for (let i = 0; i < this.size; i++) {
         const x = i % this.width
         const colorMix = x / this.width
-        const color = this.lerpRGB([106, 213, 116], [109, 103, 246], colorMix)
+        const color = this.lerpRGB([0, 181, 218], [45, 216, 103], colorMix)
 
         if (i < scanIndex) {
           if (this.get(i) === '#fff') this.set(i, color)
@@ -177,12 +177,69 @@ const uxDesigner: Scene = [
   },
 ]
 
+function easeOutCubic(x: number): number {
+  return 1 - (1 - x) ** 3;
+}
+
+const ripple: Scene = [
+  {
+    duration: (w) => Math.min(5000, w * 100),
+    start: 700,
+    render(t) {
+      const [cX, cY] = this.center
+
+      const eT = easeOutCubic(t)
+
+      const r = eT * (this.width / 2)
+
+      for (let theta = 0; theta < 360; theta += 1) {
+        const x = Math.floor(r * Math.cos(theta))
+        const y = Math.floor(r * Math.sin(theta))
+        this.set(cX + x, cY + y, '#6e67ff')
+      }
+    },
+  },
+  {
+    duration: (w) => Math.min(5000, w * 100),
+    start: 1400,
+    render(t) {
+      const [cX, cY] = this.center
+      const eT = easeOutCubic(t)
+      const r = eT * (this.width / 2)
+
+      for (let theta = 0; theta < 360; theta += 1) {
+        const x = Math.floor(r * Math.cos(theta))
+        const y = Math.floor(r * Math.sin(theta))
+        this.set(cX + x, cY + y, '#2DD867')
+      }
+    },
+  },
+  {
+    duration: (w) => Math.min(5000, w * 100),
+    start: 0,
+    render(t) {
+      const [cX, cY] = this.center
+      const eT = easeOutCubic(t)
+      const r = eT * (this.width / 2)
+
+      for (let theta = 0; theta < 360; theta += 1) {
+        const x = Math.floor(r * Math.cos(theta))
+        const y = Math.floor(r * Math.sin(theta))
+        this.set(cX + x, cY + y, '#00b5da')
+      }
+    },
+  }
+];
+
+
 const matrixDisplayEl = useTemplateRef('dot-matrix-display');
 
 onMounted(() => {
   if (!matrixDisplayEl.value) return
-  const display = new Display(matrixDisplayEl.value, [oliviaMarolf, pacMan, uxDesigner, pacMan]);
-  // display.playbackControls();
+  const display = new Display(matrixDisplayEl.value, [oliviaMarolf, pacMan, uxDesigner, ripple], {
+    loopOffset: (w) => -Math.min(4000, 1200 + ((w - 31) * 110)),
+  });
+  display.playbackControls();
   display.play();
   emit('ready')
 })
