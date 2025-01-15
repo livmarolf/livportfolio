@@ -183,8 +183,12 @@ const a11yFocused: Scene = [
   {
     duration: 5000,
     start: 0,
+    minResolution: {
+      horizontal: 29,
+      vertical: 11,
+    },
     render() {
-      return this.text.box(...this.center, ["a11y", "focused"], Colors.ON, ['center', 'center'])
+      return this.text.box(...this.center, ["a11y", "matters"], Colors.ON, ['center', 'center'])
     },
   },
   {
@@ -275,7 +279,7 @@ onMounted(() => {
   const display = new Display(matrixDisplayEl.value, [oliviaMarolf, uxDesigner, pacMan, a11yFocused, ripple], {
     loopOffset: (w) => -Math.min(4000, 1200 + ((w - 31) * 110)),
   });
-  // display.playbackControls();
+  display.playbackControls();
   display.play();
   emit('ready')
 })
