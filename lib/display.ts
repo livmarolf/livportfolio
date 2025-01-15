@@ -9,7 +9,7 @@ export const Colors = {
 export type Actor = {
 	index?: number;
 	duration: number | ((width: number, height: number) => number);
-	start: number;
+	start: number | ((width: number, height: number) => number);
 	clip?: boolean;
 	minResolution?: {
 		horizontal: number;
@@ -22,7 +22,7 @@ export type Actor = {
 		// biome-ignore lint/suspicious/noExplicitAny: I don't want to type this
 		prevObjInfo: any,
 		// biome-ignore lint/suspicious/noExplicitAny: I don't want to type this
-		store: Record<string, any>,
+		store: any,
 	) => unknown;
 };
 
@@ -190,13 +190,17 @@ export class Display {
 		return minRes;
 	};
 
+	private computeDuration = (d: Actor["duration"]) => {
+		return typeof d === "number" ? d : d(this.width, this.height);
+	};
+
 	private prepareFinalActor(sceneDuration: number) {
 		if (this.loopOffset >= 0 || this.finalActors) return;
 
 		this.finalActors = [];
 
 		for (const actor of this.scenes[0]) {
-			if (actor.start > 0) continue;
+			if (this.computeDuration(actor.start) > 0) continue;
 
 			const finalActor = {
 				...actor,
@@ -217,17 +221,14 @@ export class Display {
 		if (!this.currentScene) return;
 		this.running = true;
 
-		const computeDuration = (d: Actor["duration"]) => {
-			return typeof d === "number" ? d : d(this.width, this.height);
-		};
-
 		for (let i = 0; i < this.writeBuffer.length; i++) {
 			this.writeBuffer[i] = Colors.OFF;
 		}
 
 		const sceneDuration = Math.max(
 			...this.currentScene.map(
-				({ start, duration }) => start + computeDuration(duration),
+				({ start, duration }) =>
+					this.computeDuration(start) + this.computeDuration(duration),
 			),
 		);
 
@@ -248,7 +249,9 @@ export class Display {
 		for (const actor of actors) {
 			const { start, duration, render, clip } = actor;
 
-			const t = (this.elapsed - start) / computeDuration(duration);
+			const t =
+				(this.elapsed - this.computeDuration(start)) /
+				this.computeDuration(duration);
 			if (t < 0 || (t > 1 && clip)) continue;
 
 			prevRenderInfo = render.bind(this)(
@@ -293,10 +296,12 @@ export class Display {
 			this.sceneStore.set(actor, actor.initializeStore?.call(this) ?? {});
 		}
 
-		for (const store of finalActorStore) {
-			if (store.index === undefined) continue;
+		if (this.currentScene === this.scenes[0]) {
+			for (const store of finalActorStore) {
+				if (store.index === undefined) continue;
 
-			this.sceneStore.set(this.currentScene[store.index], store.store);
+				this.sceneStore.set(this.currentScene[store.index], store.store);
+			}
 		}
 	}
 

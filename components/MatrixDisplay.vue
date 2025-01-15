@@ -1,79 +1,14 @@
 <script setup lang="ts">
 import { Colors, Display, type Scene } from '~/lib/display';
-import { pacManGhost, pacManGhostAlt } from '~/lib/text/art';
-import type { GlyphMatrix } from '~/lib/text/glyphs';
+import { mouthClosed, mouthOpen, pacManGhost, pacManGhostAlt } from '~/lib/text/art';
 
 const emit = defineEmits<(e: 'ready') => void>()
 
-const mouthOpen: GlyphMatrix = [
-  [2, 0],
-  [3, 0],
-  [4, 0],
-  [1, 1],
-  [2, 1],
-  [3, 1],
-  [4, 1],
-  [5, 1],
-  [0, 2],
-  [1, 2],
-  [2, 2],
-  [0, 3],
-  [1, 3],
-  [0, 4],
-  [1, 4],
-  [2, 4],
-  [1, 5],
-  [2, 5],
-  [3, 5],
-  [4, 5],
-  [5, 5],
-  [2, 6],
-  [3, 6],
-  [4, 6],
-]
-const mouthClosed: GlyphMatrix = [
-  [2, 0],
-  [3, 0],
-  [4, 0],
-  [1, 1],
-  [2, 1],
-  [3, 1],
-  [4, 1],
-  [5, 1],
-  [0, 2],
-  [1, 2],
-  [2, 2],
-  [3, 2],
-  [4, 2],
-  [5, 2],
-  [6, 2],
-  [0, 3],
-  [1, 3],
-  [2, 3],
-  [3, 3],
-  [4, 3],
-  [5, 3],
-  [6, 3],
-  [0, 4],
-  [1, 4],
-  [2, 4],
-  [3, 4],
-  [4, 4],
-  [5, 4],
-  [6, 4],
-  [1, 5],
-  [2, 5],
-  [3, 5],
-  [4, 5],
-  [5, 5],
-  [2, 6],
-  [3, 6],
-  [4, 6],
-]
+
 
 const oliviaMarolf: Scene = [
   {
-    duration: 4000,
+    duration: 3000,
     start: 0,
     minResolution: {
       horizontal: 25,
@@ -81,6 +16,175 @@ const oliviaMarolf: Scene = [
     },
     render() {
       return this.text.box(...this.center, ['OLIVIA', 'MAROLF'], Colors.ON, ['center', 'center'])
+    },
+  },
+  {
+    duration: 2000,
+    start: 0,
+    initializeStore() {
+      return { states: [], pixels: [] }
+    },
+    render(t, _, store: { states: ('on' | number)[], pixels: number[] }) {
+      if (!store.pixels.length) {
+        for (let i = 0; i < this.size; i++)
+          if (this.get(i) === Colors.ON)
+            store.pixels.push(i)
+      }
+
+      const shownPixelCount = Math.round(t * store.pixels.length)
+
+      if (shownPixelCount > store.pixels.length) return;
+
+      store.states = store.states.map((s) => {
+        if (typeof s !== 'number') return s
+        if (s > 5) return 'on'
+        return s + 1
+      })
+
+      const numberOfPreviouslyShownPixels = store.states.filter((s) => !!s).length
+      const remainingPixelCount = shownPixelCount - numberOfPreviouslyShownPixels
+
+      for (let i = 0; i < remainingPixelCount; i++) {
+        const remainingPixels = store.pixels.map((_, i) => i).filter(i => !store.states[i])
+
+        const i = Math.round(Math.random() * Math.max(0, remainingPixels.length - 1))
+
+        store.states[remainingPixels[i]] = 1
+      }
+
+      for (let i = 0; i < store.pixels.length; i++) {
+        if (!store.states[i]) this.set(store.pixels[i], Colors.OFF)
+        if (typeof store.states[i] === 'number') this.set(store.pixels[i], '#6e67ff')
+      }
+    },
+  }
+]
+
+const pacMan: Scene = [
+  {
+    duration: (width) => width * 75,
+    start: 0,
+    render(t) {
+      const pacManWidth = this.text.glyphWidth(pacManGhost)
+
+      const pacManX = Math.floor((this.width + pacManWidth) * t)
+      const [, y] = this.center
+
+      for (let dotX = 0; dotX < this.width; dotX += 7) {
+        if (dotX > pacManX - 3) {
+          this.set(dotX, y, Colors.ON)
+        }
+      }
+
+      const pacManGlyph = Math.abs(pacManX) % 4 < 2 ? mouthOpen : mouthClosed
+
+      this.text.glyph(pacManX, y, pacManGlyph, 'yellow', ['right', 'center'])
+      return [pacManX]
+    },
+  },
+  {
+    duration: 1000,
+    clip: true,
+    start: 0,
+    render(t) {
+      const wipePoint = Math.floor(t * this.width)
+      const [, y] = this.center
+
+      for (let x = wipePoint; x < this.width; x++) {
+        this.set(x, y, Colors.OFF)
+      }
+    },
+  },
+  {
+    duration: (width) => width * 75,
+    start: 1000,
+    render(_, pacManX) {
+      const [, y] = this.center
+
+      const ghostGlyph = Math.abs(pacManX) % 4 < 2 ? pacManGhost : pacManGhostAlt
+
+      this.text.glyph(pacManX - 14, y, ghostGlyph, 'none', ['right', 'center'])
+    }
+  }
+]
+
+const uxDesigner: Scene = [
+  {
+    duration: (width) => width * 100 + 1500,
+    start: 0,
+    clip: true,
+    minResolution: {
+      horizontal: 31,
+      vertical: 11,
+    },
+    render() {
+      this.text.box(...this.center, ['UI/UX', 'DESIGNER'], '#fff', ['center', 'center'])
+
+      for (let i = 0; i < this.size; i++) {
+        const x = i % this.width
+        const colorMix = x / this.width
+        const color = this.lerpRGB([0, 181, 218], [45, 216, 103], colorMix)
+
+        if (this.get(i) === '#fff') this.set(i, color)
+      }
+    },
+  },
+  {
+    duration: (width) => width * 50,
+    start: 0,
+    render(t) {
+      const [, cY] = this.center
+
+      const x = Math.floor(t * this.width)
+
+      for (let y = 0; y < this.height; y++) {
+        const colorMix = x / this.width
+        const color = this.lerpRGB([0, 181, 218], [45, 216, 103], colorMix)
+
+        const adjustedY = y - cY
+
+        const xOffset = Math.abs(adjustedY)
+
+        this.set(x - xOffset, y, (x - xOffset) % 2 === 0 ? color : Colors.OFF)
+
+        for (let wiperX = (x - xOffset) + 1; wiperX < this.width; wiperX++) {
+          this.set(wiperX, y, Colors.OFF)
+        }
+      }
+    }
+  },
+  {
+    duration: (width) => width * 50,
+    start: (width) => (width * 50) + 1000,
+    render(t) {
+      const [, cY] = this.center
+
+      const x = this.width - Math.floor(t * this.width)
+
+      for (let y = 0; y < this.height; y++) {
+        const colorMix = x / this.width
+        const color = this.lerpRGB([0, 181, 218], [45, 216, 103], colorMix)
+
+        const adjustedY = y - cY
+
+        const xOffset = Math.abs(adjustedY)
+
+        this.set(x + xOffset, y, (x + xOffset) % 2 === 0 ? color : Colors.OFF)
+
+        for (let wiperX = (x + xOffset) + 1; wiperX <= this.width; wiperX++) {
+          this.set(wiperX, y, Colors.OFF)
+        }
+      }
+    }
+  }
+]
+
+const a11yFocused: Scene = [
+  {
+    duration: 5000,
+    start: 0,
+    render() {
+      return this.text.box(...this.center, ["a11y", "focused"], Colors.ON, ['center', 'center'])
     },
   },
   {
@@ -106,75 +210,7 @@ const oliviaMarolf: Scene = [
         }
       }
     },
-  },
-]
-
-const pacMan: Scene = [
-  {
-    duration: (width) => width * 100,
-    start: 0,
-    render(t) {
-      const pacManWidth = this.text.glyphWidth(pacManGhost)
-
-      const pacManX = Math.floor((this.width + pacManWidth) * t)
-      const [, y] = this.center
-
-      for (let dotX = 0; dotX < this.width; dotX += 7) {
-        if (dotX > pacManX - 3) {
-          this.set(dotX, y, Colors.ON)
-        }
-      }
-
-      const pacManGlyph = Math.abs(pacManX) % 4 < 2 ? mouthOpen : mouthClosed
-
-      this.text.glyph(pacManX, y, pacManGlyph, 'yellow', ['right', 'center'])
-      return [pacManX]
-    },
-  },
-  {
-    duration: (width) => width * 100,
-    start: 1300,
-    render(_, pacManX) {
-      const [, y] = this.center
-
-      const ghostGlyph = Math.abs(pacManX) % 4 < 2 ? pacManGhost : pacManGhostAlt
-
-      this.text.glyph(pacManX - 14, y, ghostGlyph, 'none', ['right', 'center'])
-    }
   }
-]
-
-const uxDesigner: Scene = [
-  {
-    duration: 6000,
-    start: 0,
-    clip: true,
-    minResolution: {
-      horizontal: 31,
-      vertical: 11,
-    },
-    render() {
-      this.text.box(...this.center, ['UI/UX', 'DESIGNER'], '#fff', ['center', 'center'])
-    },
-  },
-  {
-    duration: 5000,
-    start: 0,
-    render(t) {
-      const scanIndex = Math.floor(this.size * t)
-      for (let i = 0; i < this.size; i++) {
-        const x = i % this.width
-        const colorMix = x / this.width
-        const color = this.lerpRGB([0, 181, 218], [45, 216, 103], colorMix)
-
-        if (i < scanIndex) {
-          if (this.get(i) === '#fff') this.set(i, color)
-        }
-        if (i === scanIndex) this.set(i, color)
-        if (i > scanIndex) this.set(i, Colors.OFF)
-      }
-    },
-  },
 ]
 
 function easeOutCubic(x: number): number {
@@ -182,6 +218,21 @@ function easeOutCubic(x: number): number {
 }
 
 const ripple: Scene = [
+  {
+    duration: (w) => Math.min(5000, w * 100),
+    start: 0,
+    render(t) {
+      const [cX, cY] = this.center
+      const eT = easeOutCubic(t)
+      const r = eT * (this.width / 2)
+
+      for (let theta = 0; theta < 360; theta += 1) {
+        const x = Math.round(r * Math.cos(theta))
+        const y = Math.round(r * Math.sin(theta))
+        this.set(cX + x, cY + y, '#00b5da')
+      }
+    },
+  },
   {
     duration: (w) => Math.min(5000, w * 100),
     start: 700,
@@ -193,8 +244,8 @@ const ripple: Scene = [
       const r = eT * (this.width / 2)
 
       for (let theta = 0; theta < 360; theta += 1) {
-        const x = Math.floor(r * Math.cos(theta))
-        const y = Math.floor(r * Math.sin(theta))
+        const x = Math.round(r * Math.cos(theta))
+        const y = Math.round(r * Math.sin(theta))
         this.set(cX + x, cY + y, '#6e67ff')
       }
     },
@@ -208,24 +259,9 @@ const ripple: Scene = [
       const r = eT * (this.width / 2)
 
       for (let theta = 0; theta < 360; theta += 1) {
-        const x = Math.floor(r * Math.cos(theta))
-        const y = Math.floor(r * Math.sin(theta))
+        const x = Math.round(r * Math.cos(theta))
+        const y = Math.round(r * Math.sin(theta))
         this.set(cX + x, cY + y, '#2DD867')
-      }
-    },
-  },
-  {
-    duration: (w) => Math.min(5000, w * 100),
-    start: 0,
-    render(t) {
-      const [cX, cY] = this.center
-      const eT = easeOutCubic(t)
-      const r = eT * (this.width / 2)
-
-      for (let theta = 0; theta < 360; theta += 1) {
-        const x = Math.floor(r * Math.cos(theta))
-        const y = Math.floor(r * Math.sin(theta))
-        this.set(cX + x, cY + y, '#00b5da')
       }
     },
   }
@@ -236,7 +272,7 @@ const matrixDisplayEl = useTemplateRef('dot-matrix-display');
 
 onMounted(() => {
   if (!matrixDisplayEl.value) return
-  const display = new Display(matrixDisplayEl.value, [oliviaMarolf, pacMan, uxDesigner, ripple], {
+  const display = new Display(matrixDisplayEl.value, [oliviaMarolf, uxDesigner, pacMan, a11yFocused, ripple], {
     loopOffset: (w) => -Math.min(4000, 1200 + ((w - 31) * 110)),
   });
   display.playbackControls();
