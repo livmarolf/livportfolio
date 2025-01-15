@@ -224,7 +224,7 @@ const ripple: Scene = [
     render(t) {
       const [cX, cY] = this.center
       const eT = easeOutCubic(t)
-      const r = eT * (this.width / 2)
+      const r = eT * ((this.width + 4) / 2)
 
       for (let theta = 0; theta < 360; theta += 1) {
         const x = Math.round(r * Math.cos(theta))
@@ -241,7 +241,7 @@ const ripple: Scene = [
 
       const eT = easeOutCubic(t)
 
-      const r = eT * (this.width / 2)
+      const r = eT * ((this.width + 4) / 2)
 
       for (let theta = 0; theta < 360; theta += 1) {
         const x = Math.round(r * Math.cos(theta))
@@ -256,7 +256,7 @@ const ripple: Scene = [
     render(t) {
       const [cX, cY] = this.center
       const eT = easeOutCubic(t)
-      const r = eT * (this.width / 2)
+      const r = eT * ((this.width + 4) / 2)
 
       for (let theta = 0; theta < 360; theta += 1) {
         const x = Math.round(r * Math.cos(theta))
@@ -275,7 +275,7 @@ onMounted(() => {
   const display = new Display(matrixDisplayEl.value, [oliviaMarolf, uxDesigner, pacMan, a11yFocused, ripple], {
     loopOffset: (w) => -Math.min(4000, 1200 + ((w - 31) * 110)),
   });
-  display.playbackControls();
+  // display.playbackControls();
   display.play();
   emit('ready')
 })
