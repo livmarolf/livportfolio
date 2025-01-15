@@ -279,7 +279,7 @@ onMounted(() => {
   const display = new Display(matrixDisplayEl.value, [oliviaMarolf, uxDesigner, pacMan, a11yFocused, ripple], {
     loopOffset: (w) => -Math.min(4000, 1200 + ((w - 31) * 110)),
   });
-  display.playbackControls();
+  // display.playbackControls();
   display.play();
   emit('ready')
 })
