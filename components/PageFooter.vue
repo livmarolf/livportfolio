@@ -120,6 +120,13 @@ onMounted(() => {
       </div>
       <ul class="projects">
         <li>
+          <NuxtLink v-kinesis v-wave to="/case-studies/list-revision" style="--accent: var(--accent-lets-connect)"
+            class="card project">
+            <h3><span class="accent">list revision</span> to data table</h3>
+            <IconButton icon="arrow-right" />
+          </NuxtLink>
+        </li>
+        <li>
           <NuxtLink v-kinesis v-wave to="/case-studies/zero" style="--accent: var(--accent-zero)" class="card project">
             <h3>designing <span class="accent">zero</span></h3>
             <IconButton icon="arrow-right" />
@@ -246,24 +253,14 @@ footer {
   grid-template: repeat(4, min-content) / auto 2fr;
   gap: var(--common-gap);
 
-  &:has(.router-link-exact-active) {
-    grid-template: repeat(3, min-content) / auto 2fr;
-
-    .socials {
-      grid-row: span 3;
+  &:not(:has(.router-link-exact-active)) {
+    .projects>li:nth-child(n+4) {
+      display: none;
     }
   }
 
   @media (max-width: width(1030)) {
     grid-template: repeat(5, min-content) / 1fr;
-
-    &:has(.router-link-exact-active) {
-      grid-template: repeat(4, min-content) / 1fr;
-
-      .socials {
-        grid-row: 1;
-      }
-    }
   }
 }
 
