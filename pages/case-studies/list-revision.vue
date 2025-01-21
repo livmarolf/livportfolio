@@ -196,7 +196,7 @@ const items: SectionLink[] = [
         </div>
         <div id="sketching" class="card">
           <span class="card--label">SKETCHING</span>
-          <h class="card--topic">getting ideas on the page</h>
+          <h3 class="card--topic">getting ideas on the page</h3>
           <p class="card--title">
             After gathering my research, I translated those ideas into sketches
           </p>
