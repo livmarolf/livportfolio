@@ -4,7 +4,9 @@ const trackedElements = new Set<HTMLElement>();
 const LIGHT_SIZE = 128;
 const OFF_SCREEN = "-99999px";
 
-const onTap = window.matchMedia("(hover: none)").matches;
+const trackPointer = window.matchMedia(
+	"(hover: hover) and (pointer: fine)",
+).matches;
 
 const outOfBounds = (rect: DOMRect, relativeX: number, relativeY: number) => {
 	if (rect.top > window.innerHeight) return true;
@@ -18,7 +20,7 @@ const outOfBounds = (rect: DOMRect, relativeX: number, relativeY: number) => {
 	return false;
 };
 
-if (!onTap) {
+if (trackPointer) {
 	document.addEventListener("mouseleave", () => {
 		for (const el of kinesisSubscriber) {
 			el.style.setProperty("--x", OFF_SCREEN);
@@ -60,7 +62,7 @@ if (!onTap) {
 	});
 }
 
-if (onTap) {
+if (!trackPointer) {
 	document.addEventListener("pointerup", () => {
 		setTimeout(() => {
 			for (const el of kinesisSubscriber) {
