@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "TMPDIR=/tmp nuxt dev",
+    "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview"
   },
@@ -13,7 +13,9 @@
     "@nuxt/fonts": "0.14.0",
     "@nuxt/image": "2.0.0",
     "@vueuse/nuxt": "14.3.0",
-    "nuxt": "^4.4.7",
+    "better-sqlite3": "^12.10.0",
+    "nuxt": "^4.4.8",
+    "v-wave": "^3.1.0",
     "vue": "^3.5.35",
     "vue-router": "^5.1.0"
   }
