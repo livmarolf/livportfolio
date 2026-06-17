@@ -151,20 +151,19 @@ onUnmounted(() => {
       <div>
         <header class="mono">
           <h2>Case Studies</h2>
-          <span></span>
+          <span class="card-hover-indicator-group">
+            <div class="card-hover-indicator" />
+            <div class="card-hover-indicator" />
+          </span>
         </header>
         <div class="section-content case-studies">
           <article class="case-study">
             <div class="preview">
-              <div class="corners" />
-
-              <PhoneScreen>
-                <video
-                  autoplay
-                  muted
-                  loop
-                  src="~/assets/videos/instagram-reels-interaction.mp4"></video>
-              </PhoneScreen>
+              <video
+                autoplay
+                muted
+                loop
+                src="~/assets/videos/instagram-reels-interaction.mp4"></video>
             </div>
             <h2>
               SEEING MORE WITH GESTURES
@@ -174,12 +173,13 @@ onUnmounted(() => {
           </article>
           <article class="case-study">
             <div class="preview">
-              <div class="corners" />
-
-              <PhoneScreen>
-                <video autoplay muted loop src="~/assets/videos/mini-nav-behavior.mp4"></video>
-              </PhoneScreen>
+              <video autoplay muted loop src="~/assets/videos/mini-nav-behavior.mp4"></video>
             </div>
+            <h2>
+              SEEING MORE WITH GESTURES
+              <span class="secondary">and making them better</span>
+            </h2>
+            <LinkButton href="/case-studies/seeing-more-with-gestures">view</LinkButton>
           </article>
         </div>
       </div>
@@ -401,51 +401,30 @@ section {
 .case-studies {
   display: grid;
   grid-template: 1fr / 1fr 1fr;
-  place-items: stretch;
   gap: 20px;
 
-  .case-study {
-    display: grid;
-  }
-
   .preview {
-    width: 100%;
-    padding: 40px;
+    --padding: 40px;
     display: grid;
+    aspect-ratio: 1/1;
     place-items: center;
     position: relative;
     background: var(--item-background);
     border: 1px solid var(--stroke);
     background: radial-gradient(circle, var(--stroke) 1px, transparent 1px) 0 0 / 14px 14px
       var(--item-background);
+    margin-bottom: 20px;
     animation: dots-scroll 4s linear infinite;
 
-    /* .corners {
+    video {
+      height: calc(100% - var(--padding) * 2);
       position: absolute;
-      inset: 8px;
-      border: 1px solid var(--stroke);
-      &::before,
-      &::after {
-        content: '';
-        display: block;
-        background: var(--item-background);
-        position: absolute;
-      }
+    }
+  }
 
-      &::before {
-        top: -1px;
-        left: 26px;
-        width: calc(100% - 26px * 2);
-        height: calc(100% + 2px);
-      }
-
-      &::after {
-        left: -1px;
-        top: 26px;
-        height: calc(100% - 26px * 2);
-        width: calc(100% + 2px);
-      }
-    } */
+  h2 {
+    font-size: 22px;
+    margin-bottom: 16px;
   }
 }
 

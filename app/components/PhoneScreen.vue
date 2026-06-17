@@ -32,7 +32,7 @@
   corner-shape: superellipse(1.2);
    */
   display: block;
-  height: 500px;
+  /* height: 500px; */
   /* box-shadow:
     0 0 0 9px var(--item-background),
     0 0 0 10px var(--stroke); */

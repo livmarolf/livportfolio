@@ -147,6 +147,10 @@ body {
   letter-spacing: 0.1em;
 }
 
+.secondary {
+  color: var(--text-secondary);
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
