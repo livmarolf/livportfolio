@@ -5,7 +5,7 @@ const showResume = 'resume' in query
 </script>
 <template>
   <footer class="page-footer">
-    <section>
+    <div>
       <svg
         width="153"
         height="153"
@@ -21,48 +21,110 @@ const showResume = 'resume' in query
           fill="black" />
       </svg>
       <h2 class="mono">Olivia Marolf</h2>
-      <li>
-        <NuxtLink href="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
-          LinkedIn
-          <NewTabIcon />
-        </NuxtLink>
-      </li>
-      <li v-if="showResume">
-        <NuxtLink href="/resume.pdf" target="_blank">
-          Resume
-          <NewTabIcon />
-        </NuxtLink>
-      </li>
-    </section>
-    <section>
-      <h2 class="mono">Case Studies</h2>
       <ul>
         <li>
-          <NuxtLink>Seeing more with gestures</NuxtLink>
+          <NuxtLink href="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
+            LinkedIn
+            <NewTabIcon />
+          </NuxtLink>
         </li>
-        <li>
-          <NuxtLink>Challenging design paradigms</NuxtLink>
-        </li>
-      </ul>
-    </section>
-    <section>
-      <h2 class="mono">Articles</h2>
-      <ul>
-        <li>
-          <NuxtLink>Could, Should, Might, Don't</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink>The Case for Risk</NuxtLink>
-        </li>
-        <li>
-          <NuxtLink>Beyond Existing Frameworks</NuxtLink>
+        <li v-if="showResume">
+          <NuxtLink href="/resume.pdf" target="_blank">
+            Resume
+            <NewTabIcon />
+          </NuxtLink>
         </li>
       </ul>
-    </section>
+    </div>
+    <div class="link-lists">
+      <div>
+        <h2 class="mono">Case Studies</h2>
+        <ul>
+          <li>
+            <NuxtLink href="#">
+              Seeing more with gestures
+              <ArrowRightIcon />
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink href="#">
+              Challenging design paradigms
+              <ArrowRightIcon />
+            </NuxtLink>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="mono">Articles</h2>
+        <ul>
+          <li>
+            <NuxtLink href="#">
+              Could, Should, Might, Don't
+              <ArrowRightIcon />
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink href="#">
+              Beyond Existing Frameworks
+              <ArrowRightIcon />
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink href="#">
+              The Case for Risk
+              <ArrowRightIcon />
+            </NuxtLink>
+          </li>
+        </ul>
+      </div>
+    </div>
   </footer>
 </template>
 <style scoped>
 .page-footer {
-  background-color: var(--item-background);
+  display: grid;
+  grid-template: 1fr / 1fr auto;
+  background: var(--item-background);
+  gap: 48px;
+  padding: 48px 60px 48px 120px;
+
+  .link-lists {
+    display: grid;
+    grid-template: 1fr / 1fr 1fr;
+    gap: 48px;
+  }
+
+  ul,
+  li {
+    display: contents;
+  }
+
+  h2 {
+    color: var(--text-label);
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  a {
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--stroke);
+    height: 28px;
+    gap: 100px;
+    margin-bottom: 8px;
+    padding: 0 0 8px 0;
+    text-decoration: none;
+
+    transition: border-color 0.75s ease-out;
+
+    &:hover {
+      transition: border-color 0s;
+      border-color: var(--text-primary);
+    }
+  }
 }
 </style>
