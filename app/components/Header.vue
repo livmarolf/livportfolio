@@ -49,46 +49,55 @@ const resolveColors = () => {
   document.body.removeChild(el)
 }
 
-watch(mode, () => nextTick(resolveColors))
+let ctx: CanvasRenderingContext2D | null = null
+
+const paintWave = () => {
+  if (!ctx) return
+
+  const progress =
+    window.scrollY / (document.documentElement.scrollHeight - document.documentElement.clientHeight)
+  const phase = progress * 40
+  const maxX = Math.round(progress * (canvasWidth - 4))
+
+  ctx.clearRect(0, 0, canvasWidth, 10)
+
+  if (maxX > 0) {
+    ctx.beginPath()
+    for (let x = 0; x <= maxX; x += x < maxX - 10 ? 3 : 1) {
+      const y = centerY - amplitude * Math.sin(x * frequency + phase)
+      x === 0 ? ctx.moveTo(x + 2, y) : ctx.lineTo(x + 2, y)
+    }
+    ctx.strokeStyle = progress > 0.999 ? greenColor : primaryColor
+    ctx.stroke()
+  }
+
+  const lineCapWidth = 3
+
+  const borderWidth = canvasWidth * progress + Math.sign(progress) * 8 + lineCapWidth
+  if (canvasWidth - (borderWidth + lineCapWidth) > 0) {
+    ctx.beginPath()
+    ctx.moveTo(canvasWidth - lineCapWidth, centerY)
+    ctx.lineTo(borderWidth, centerY)
+    ctx.strokeStyle = borderColor
+    ctx.stroke()
+  }
+}
+
+watch(mode, async () => {
+  await nextTick()
+  resolveColors()
+  paintWave()
+})
 
 onMounted(() => {
   const canvas = canvasRef.value!
-  const ctx = canvas.getContext('2d')!
+  ctx = canvas.getContext('2d')!
 
   resolveColors()
 
-  const paintWave = () => {
-    const progress =
-      window.scrollY /
-      (document.documentElement.scrollHeight - document.documentElement.clientHeight)
-    const phase = progress * 40
-    const maxX = Math.round(progress * (canvasWidth - 4))
-
-    ctx.clearRect(0, 0, canvasWidth, 10)
-
-    if (maxX > 0) {
-      ctx.beginPath()
-      for (let x = 0; x <= maxX; x += x < maxX - 10 ? 3 : 1) {
-        const y = centerY - amplitude * Math.sin(x * frequency + phase)
-        x === 0 ? ctx.moveTo(x + 2, y) : ctx.lineTo(x + 2, y)
-      }
-      ctx.strokeStyle = progress > 0.999 ? greenColor : primaryColor
-      ctx.stroke()
-    }
-
-    const lineCapWidth = 3
-
-    const borderWidth = canvasWidth * progress + Math.sign(progress) * 8 + lineCapWidth
-    if (canvasWidth - (borderWidth + lineCapWidth) > 0) {
-      ctx.beginPath()
-      ctx.moveTo(canvasWidth - lineCapWidth, centerY)
-      ctx.lineTo(borderWidth, centerY)
-      ctx.strokeStyle = borderColor
-      ctx.stroke()
-    }
-  }
-
   const updateSize = () => {
+    if (!ctx) return
+
     const dpr = window.devicePixelRatio || 1
     canvasWidth = (window.visualViewport?.width ?? 0) - 8
     canvas.width = canvasWidth * dpr
