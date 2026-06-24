@@ -6,7 +6,7 @@ export type Layer<S> = {
   duration: number | ((this: MatrixDisplay) => number)
   offset?: number | ((this: MatrixDisplay) => number)
   overshoot?: boolean
-  store?: (this: MatrixDisplay) => S
+  store?: (this: MatrixDisplay, prevValue?: any) => S
   render: (this: MatrixDisplay, t: number, store: S, previousLayerOutput: any) => void
 }
 
@@ -35,6 +35,7 @@ export abstract class Adapter {
   abstract style: {
     defaultPixel: Pixel
   }
+  abstract canCommitFrame: boolean
   abstract onResize?: (width: number, height: number, cleanBuffer: Frame) => void
   abstract reflow(): void
   abstract render(buffer: Frame, width: number, height: number): void
@@ -62,6 +63,7 @@ export class MatrixDisplay {
       this._height = height
       this.writeBuffer = cleanBuffer
 
+      this.initStores(true)
       this.start()
     }
 
@@ -71,11 +73,13 @@ export class MatrixDisplay {
 
   private scenes: Scene[]
   private loopOffset = 0
+  private onLoop = () => {}
 
-  constructor(scenes: Scene[], options?: { loopOffset?: number }) {
+  constructor(scenes: Scene[], options?: { loopOffset?: number; onLoop: () => void }) {
     this.scenes = scenes
 
     this.loopOffset = options?.loopOffset ?? 0
+    if (options?.onLoop) this.onLoop = options.onLoop
 
     this.render = this.render.bind(this)
   }
@@ -205,10 +209,9 @@ export class MatrixDisplay {
 
   private start() {
     this.running = true
-    this.frameId = requestAnimationFrame((now) => {
-      this.startTime = now
-      this.render(now)
-    })
+    const now = +(document.timeline.currentTime ?? 0)
+    if (!this.startTime) this.startTime = now
+    this.render(now)
   }
 
   private stop() {
@@ -248,10 +251,15 @@ export class MatrixDisplay {
 
   private stores = new WeakMap<Layer<any>, any>()
 
-  private initStores() {
+  private initStores(fromInterrupt = false) {
     this.stores = new WeakMap(
       this.scenes.flatMap((scene) =>
-        scene.filter((l) => !!l.store).map((layer) => [layer, layer.store!.call(this)])
+        scene
+          .filter((l) => !!l.store)
+          .map((layer) => [
+            layer,
+            layer.store!.call(this, fromInterrupt ? this.stores.get(layer) : undefined),
+          ])
       )
     )
 
@@ -293,6 +301,7 @@ export class MatrixDisplay {
     this.renderGhostScene(now)
 
     if (!scene) {
+      this.onLoop()
       this.startTime = now
       elapsed = now - this.startTime
       const [_scene] = this.activeScene(0)
@@ -303,6 +312,11 @@ export class MatrixDisplay {
 
       this.initStores()
       if (!scene) throw new Error('No scene found for time 0')
+    }
+
+    if (!this.adapter.canCommitFrame) {
+      if (this.running) this.frameId = requestAnimationFrame(this.render)
+      return
     }
 
     let _lIdx = 0

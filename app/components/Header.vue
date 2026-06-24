@@ -6,7 +6,7 @@ const showResume = 'resume' in query
 const mode = useColorMode()
 const themeToggle = useTemplateRef('themeToggle')
 
-const handleChange = (event: Event) => {
+const handleThemeToggle = async (event: Event) => {
   const target = event.target as HTMLInputElement
   if (!target) return (mode.value = 'auto')
 
@@ -18,70 +18,97 @@ const handleChange = (event: Event) => {
     document.documentElement.style.setProperty('--transition-y', `${y}px`)
   }
 
-  if (!document.startViewTransition) {
-    mode.value = target.value as 'light' | 'dark'
-  } else {
-    document.startViewTransition(() => {
-      mode.value = target.value as 'light' | 'dark'
-    })
-  }
+  document.documentElement.classList.add('theme-view-transition-active')
+
+  await transition(() => (mode.value = target.value as 'light' | 'dark')).finished
+
+  document.documentElement.classList.remove('theme-view-transition-active')
 }
 
-const width = ref(0)
-const scrollProgress = ref(0)
+const canvasRef = useTemplateRef('progressCanvas')
 
 const centerY = 5
 const amplitude = 1.5
 const frequency = 0.3
 
-const pathData = computed(() => {
-  const phase = scrollProgress.value * 40
-  let points = []
+let canvasWidth = 0
+let primaryColor = ''
+let greenColor = ''
+let borderColor = ''
 
-  for (let x = 0; x <= width.value - 4; x++) {
-    // Calculate y using the sine formula: y = A*sin(Bx + C) + D
-    // B = frequency (controls wave density)
-    // x * frequency converts pixel position to radians for the sine function
-    const angle = x * frequency + phase
-    const y = centerY - amplitude * Math.sin(angle)
-
-    points.push({ x, y })
+const resolveColors = () => {
+  const el = document.createElement('div')
+  document.body.appendChild(el)
+  const resolve = (variable: string) => {
+    el.style.color = `var(${variable})`
+    return getComputedStyle(el).color
   }
-
-  if (!points.length) return ''
-
-  // Start the path at the first point (M = "move to")
-  let d = `M ${points[0]!.x},${points[0]!.y}`
-  // Add "line to" commands for all remaining points
-  for (let i = 1; i < points.length; i++) {
-    d += ` L ${points[i]!.x},${points[i]!.y}`
-  }
-
-  return d
-})
-
-const updateWidth = () => {
-  width.value = (window.visualViewport?.width ?? 0) - 8
+  primaryColor = resolve('--text-primary')
+  greenColor = resolve('--colors-green')
+  borderColor = resolve('--stroke')
+  document.body.removeChild(el)
 }
 
+watch(mode, () => nextTick(resolveColors))
+
 onMounted(() => {
-  onScroll(() => {
-    scrollProgress.value =
+  const canvas = canvasRef.value!
+  const ctx = canvas.getContext('2d')!
+
+  resolveColors()
+
+  const paintWave = () => {
+    const progress =
       window.scrollY /
       (document.documentElement.scrollHeight - document.documentElement.clientHeight)
-  })
+    const phase = progress * 40
+    const maxX = Math.round(progress * (canvasWidth - 4))
 
-  window.addEventListener('resize', updateWidth)
-  updateWidth()
+    ctx.clearRect(0, 0, canvasWidth, 10)
+
+    if (maxX > 0) {
+      ctx.beginPath()
+      for (let x = 0; x <= maxX; x += x < maxX - 10 ? 3 : 1) {
+        const y = centerY - amplitude * Math.sin(x * frequency + phase)
+        x === 0 ? ctx.moveTo(x + 2, y) : ctx.lineTo(x + 2, y)
+      }
+      ctx.strokeStyle = progress > 0.999 ? greenColor : primaryColor
+      ctx.stroke()
+    }
+
+    const lineCapWidth = 3
+
+    const borderWidth = canvasWidth * progress + Math.sign(progress) * 8 + lineCapWidth
+    if (canvasWidth - (borderWidth + lineCapWidth) > 0) {
+      ctx.beginPath()
+      ctx.moveTo(canvasWidth - lineCapWidth, centerY)
+      ctx.lineTo(borderWidth, centerY)
+      ctx.strokeStyle = borderColor
+      ctx.stroke()
+    }
+  }
+
+  const updateSize = () => {
+    const dpr = window.devicePixelRatio || 1
+    canvasWidth = (window.visualViewport?.width ?? 0) - 8
+    canvas.width = canvasWidth * dpr
+    canvas.height = 10 * dpr
+    canvas.style.width = `${canvasWidth}px`
+    canvas.style.height = '10px'
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    ctx.lineWidth = 4
+    ctx.lineCap = 'round'
+    ctx.lineJoin = 'round'
+    paintWave()
+  }
+
+  window.addEventListener('resize', updateSize)
+  updateSize()
+
+  onScroll(paintWave)
+
+  onUnmounted(() => window.removeEventListener('resize', updateSize))
 })
-
-onUnmounted(() => {
-  window.removeEventListener('resize', updateWidth)
-})
-
-const progressColor = computed(() =>
-  scrollProgress.value > 0.999 ? 'var(--colors-green)' : 'var(--text-primary)'
-)
 </script>
 
 <template>
@@ -129,9 +156,10 @@ const progressColor = computed(() =>
         </li>
       </ul>
       <div ref="themeToggle" role="radiogroup" aria-label="Toggle theme" class="theme-toggle">
+        <div class="indicator" />
         <label aria-label="light" class="light-btn">
           <input
-            @change="handleChange"
+            @change="handleThemeToggle"
             type="radio"
             value="light"
             name="theme-toggle"
@@ -167,7 +195,7 @@ const progressColor = computed(() =>
         </label>
         <label aria-label="dark" class="dark-btn">
           <input
-            @change="handleChange"
+            @change="handleThemeToggle"
             type="radio"
             value="dark"
             name="theme-toggle"
@@ -189,42 +217,21 @@ const progressColor = computed(() =>
       </div>
     </div>
     <div class="scroll-progress">
-      <div class="border" />
-      <svg
-        :width="width"
-        height="10"
-        :viewBox="`0 0 ${width} 10`"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          pathLength="1"
-          stroke-dasharray="1"
-          :stroke-dashoffset="1 - scrollProgress"
-          :d="pathData"
-          fill="none"
-          :stroke="progressColor"
-          stroke-width="4"
-          stroke-linecap="round"
-          transform="translate(2, 0)" />
-      </svg>
+      <!-- <div class="border" ref="border" /> -->
+      <canvas ref="progressCanvas" />
     </div>
   </header>
 </template>
 <style>
-.light .light-btn {
-  background: var(--colors-yellow);
-}
-
-.dark .dark-btn {
-  background: var(--colors-dark-blue);
-}
-
 .page-header {
   position: sticky;
   top: 0;
   left: 0;
   right: 0;
   padding: 20px 60px 20px 120px;
+  margin-bottom: 6px;
   z-index: 99999999;
+  contain: layout;
 
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -233,7 +240,6 @@ const progressColor = computed(() =>
 
   background: color-mix(in srgb, transparent 10%, var(--background));
   backdrop-filter: blur(8px);
-  /* border-bottom: 4px solid var(--item-background); */
   font-size: 16px;
   line-height: 100%;
   text-transform: uppercase;
@@ -275,8 +281,18 @@ const progressColor = computed(() =>
       border: 1px solid var(--stroke);
       border-radius: 999px;
       padding: 1px;
+      position: relative;
 
-      view-transition-name: theme-toggle;
+      .indicator {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        padding: 2px 10px;
+        border-radius: 999px;
+        cursor: pointer;
+        height: 100%;
+        width: 50%;
+      }
 
       label {
         display: grid;
@@ -284,6 +300,7 @@ const progressColor = computed(() =>
         padding: 2px 10px;
         border-radius: 999px;
         cursor: pointer;
+        position: relative;
 
         &:has(:focus-visible) {
           outline: 2px solid currentColor;
@@ -294,15 +311,6 @@ const progressColor = computed(() =>
           opacity: 0;
           outline: none;
           pointer-events: none;
-        }
-
-        &:has(:checked) {
-          &.light-btn {
-            background: var(--colors-yellow);
-          }
-          &.dark-btn {
-            background: var(--colors-dark-blue);
-          }
         }
       }
     }
@@ -322,23 +330,42 @@ const progressColor = computed(() =>
     margin-left: 4px;
     overflow: hidden;
 
-    .border {
+    /* .border {
       position: absolute;
       right: 0;
-      /* centered with the wave */
       top: 50%;
       transform: translateY(-50%);
       height: 4px;
-      width: calc(100% * (1 - v-bind(scrollProgress)) - sign(v-bind(scrollProgress)) * 8px);
+      width: 100%;
       border-radius: 4px;
       background: var(--stroke);
-    }
+    } */
 
-    svg {
+    canvas {
       position: absolute;
       top: 0;
       left: 0;
     }
   }
+}
+
+.theme-view-transition-active .page-header .theme-toggle .indicator {
+  view-transition-name: theme-toggle;
+}
+.theme-view-transition-active .page-header .theme-toggle .light-btn {
+  view-transition-name: theme-toggle-light-btn;
+}
+.theme-view-transition-active .page-header .theme-toggle .dark-btn {
+  view-transition-name: theme-toggle-dark-btn;
+}
+
+.light .page-header .theme-toggle .indicator {
+  background: var(--colors-yellow);
+  left: 0;
+}
+
+.dark .page-header .theme-toggle .indicator {
+  background: var(--colors-dark-blue);
+  right: 0;
 }
 </style>

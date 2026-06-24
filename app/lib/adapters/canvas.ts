@@ -3,9 +3,12 @@ import { Adapter, SKIP, type Frame, type Pixel } from '../display.js'
 export class CanvasAdapter implements Adapter {
   private canvas: HTMLCanvasElement
   private ctx: CanvasRenderingContext2D
-  private observer: ResizeObserver
+  private resizeObserver: ResizeObserver
+  private intersectionObserver: IntersectionObserver
+  private prevWindowWidth = -1
 
   onResize?: (width: number, height: number, cleanBuffer: Frame) => void
+  canCommitFrame = true
 
   style: {
     gap: number
@@ -27,14 +30,25 @@ export class CanvasAdapter implements Adapter {
 
     this.style = style as CanvasAdapter['style']
 
-    this.observer = new ResizeObserver(this.reflow.bind(this))
+    this.resizeObserver = new ResizeObserver(() => {
+      if (this.prevWindowWidth === window.innerWidth) return
 
-    this.observer.observe(document.body)
+      this.prevWindowWidth = window.innerWidth
+
+      this.reflow()
+    })
+
+    this.resizeObserver.observe(document.documentElement)
+
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      this.canCommitFrame = entries[0]?.isIntersecting ?? true
+    })
+
+    this.intersectionObserver.observe(this.canvas)
   }
 
   reflow() {
     const { pixel, gap } = this.style
-
     const r = this.canvas.getBoundingClientRect()
     const cssWidth = r.width
     const width = cssWidth * window.devicePixelRatio
@@ -167,7 +181,8 @@ export class CanvasAdapter implements Adapter {
   }
 
   disconnect() {
-    this.observer.disconnect()
+    this.resizeObserver.disconnect()
+    this.intersectionObserver.disconnect()
     this.canvas = null as any
   }
 }

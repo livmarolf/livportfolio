@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { CanvasAdapter } from '~/lib/adapters/canvas'
-import { defineLayer, easing, MatrixDisplay, type Scene } from '~/lib/display'
 import {
   mouthClosed,
   mouthClosedLeft,
@@ -11,6 +10,8 @@ import {
   pacManGhostAltScared,
   pacManGhostScared,
 } from '~/lib/art/pacman'
+import { defineLayer, easing, MatrixDisplay, type Scene } from '~/lib/display'
+import { circle, cross, mixedShapes, triangle } from '~/lib/pixel-shapes'
 
 const getColors = () => {
   const el = document.createElement('div')
@@ -60,7 +61,7 @@ const randomColor = () => {
     'PINK',
   ] satisfies (keyof typeof COLORS)[]
 
-  const key = colors[Math.round(Math.random() * colors.length)]!
+  const key = colors[Math.floor(Math.random() * colors.length)]!
   return COLORS[key]
 }
 
@@ -70,8 +71,7 @@ watch(mode, () => {
   queueMicrotask(() => (COLORS = getColors()))
 })
 
-const canvas = useTemplateRef('canvas')
-
+/*
 const RIBBON_SIZE = (width: number) => Math.floor(width / 3)
 const generateRibbon = (width: number, height: number) => {
   const y = [Math.floor(height * Math.random())]
@@ -83,11 +83,23 @@ const generateRibbon = (width: number, height: number) => {
   }
 
   return y
-}
+} */
+
+let looped = false
+const easings = [
+  easing.linear,
+  easing.easeInQuint,
+  easing.easeInSine,
+  easing.easeInCubic,
+  easing.easeInCirc,
+  easing.easeInQuad,
+  easing.easeInQuart,
+  easing.easeInExpo,
+]
 
 const countDown: Scene = [
   {
-    duration: 6000,
+    duration: () => (looped ? 0 : 6000),
     render(t) {
       this.text.box(
         ...this.center,
@@ -102,25 +114,22 @@ const countDown: Scene = [
   },
 ]
 
-const start = [
-  defineLayer({
-    duration: 2000,
-    render(t) {
-      const show = Math.ceil(t * 5) % 2
-
-      this.text.box(...this.center, ['[start]' /*  : '[          ]' */], {
-        fill: show ? COLORS.GREEN : COLORS.TEXT_SECONDARY,
-      })
-    },
-  }),
-]
-
 const rippleAndName: Scene = [
   defineLayer({
     duration: 3000,
     offset: 1300,
     render() {
       return this.text.box(...this.center, ['OLIVIA', 'MAROLF'], { fill: COLORS.TEXT_PRIMARY })
+    },
+  }),
+  defineLayer({
+    duration: 1500,
+    offset: 4300,
+    render(t) {
+      const text = 'OLIVIA MAROLF'.substring(0, Math.floor(easing.easeInCubic(1 - t) * 12))
+      return this.text.box(...this.center, [...text.split(' ').filter(Boolean)], {
+        fill: COLORS.TEXT_PRIMARY,
+      })
     },
   }),
   defineLayer({
@@ -141,7 +150,7 @@ const rippleAndName: Scene = [
 
       store.states = store.states.map((s) => {
         if (typeof s !== 'number') return s
-        if (s > 5) return 'on'
+        if (s > 15) return 'on'
         return s + 1
       })
 
@@ -161,7 +170,10 @@ const rippleAndName: Scene = [
         if (typeof store.states[i] === 'number') {
           if (!store.colors.has(i)) store.colors.set(i, randomColor())
 
-          this.set(pixels[i]!, { fill: store.colors.get(i) })
+          this.set(pixels[i]!, {
+            fill: store.colors.get(i),
+            draw: mixedShapes,
+          })
         }
       }
     },
@@ -215,77 +227,6 @@ const rippleAndName: Scene = [
         const x = Math.round(r * Math.cos(theta))
         const y = Math.round(r * Math.sin(theta))
         this.set(cX + x, cY + y, { fill: COLORS.GRAY_SHADOW })
-      }
-    },
-  }),
-]
-
-const easings = [
-  easing.linear,
-  easing.easeInQuint,
-  easing.easeInSine,
-  easing.easeInCubic,
-  easing.easeInCirc,
-  easing.easeInQuad,
-  easing.easeInQuart,
-  easing.easeInExpo,
-]
-
-const brat = [
-  defineLayer({
-    duration: 800,
-    store() {
-      const columnEasing = []
-
-      for (let x = 0; x < this.width; x++)
-        columnEasing.push(easings[Math.floor(Math.random() * easings.length)])
-
-      return { columnEasing }
-    },
-    render(t, store) {
-      for (let x = 0; x < this.width; x++) {
-        const ease = store.columnEasing[x]!
-
-        for (let y = 0; y < this.height; y++) {
-          if (this.height - y <= this.height * ease(t)) this.set(x, y, { fill: COLORS.BRAT })
-        }
-      }
-    },
-  }),
-  defineLayer({
-    duration: 2000 + 800,
-    offset: 800,
-    render() {
-      this.pixels().forEach((p) => this.set(p, { fill: COLORS.BRAT }))
-    },
-  }),
-  defineLayer({
-    duration: 500,
-    offset: 800,
-    overshoot: true,
-    render(t) {
-      const centerText = 'uxd'.substring(0, Math.floor(t * 2))
-      this.text.box(...this.center, [centerText], { fill: COLORS.BRAT_TEXT })
-    },
-  }),
-  defineLayer({
-    duration: 800,
-    offset: 800 + 2000,
-    store() {
-      const columnEasing = []
-
-      for (let x = 0; x < this.width; x++)
-        columnEasing.push(easings[Math.floor(Math.random() * easings.length)])
-
-      return { columnEasing }
-    },
-    render(t, store) {
-      for (let x = 0; x < this.width; x++) {
-        const ease = store.columnEasing[x]!
-
-        for (let y = 0; y < this.height; y++) {
-          if (this.height - y <= this.height * ease(t)) this.set(x, y, { fill: 'transparent' })
-        }
       }
     },
   }),
@@ -380,7 +321,7 @@ const a11yMatters = [
   defineLayer({
     duration: 3000,
     render(t) {
-      const text = 'a11y matters'
+      const text = 'a11y'
       const [, charHeight] = this.text.measure(text)
       const f = (_t: number) => Math.sin(Math.PI * _t)
       const c = f(t)
@@ -401,7 +342,7 @@ const a11yMatters = [
   }),
 ]
 
-const pixelPerfect = [
+const pixelPerfectAndBrat = [
   defineLayer({
     duration: 4000,
     render() {
@@ -443,13 +384,13 @@ const pixelPerfect = [
   }),
   defineLayer({
     duration: 2000,
-    store() {
+    store(prevValue) {
       const colors = [] as string[]
       const delays = [] as number[]
 
       for (let x = 0; x < this.width; x++) {
-        colors[x] = randomColor()
-        delays[x] = Math.random() * 500
+        colors[x] = prevValue?.colors[x] ?? randomColor()
+        delays[x] = prevValue?.delays[x] ?? Math.random() * 500
       }
 
       return { colors, delays }
@@ -463,11 +404,18 @@ const pixelPerfect = [
         const localT = localTime / 500
 
         for (let y = 0; y < this.height; y++) {
-          const yCutoff = this.height * easing.easeInSine(localT)
+          const yCutoff = (this.height + 1) * easing.easeInSine(localT) - 1
 
           if (y <= yCutoff) {
             const fill = y + 1 > yCutoff ? store.colors[x] : this.get(x, y).fill
-            this.set(x, y, { fill })
+            if (fill === COLORS.TEXT_PRIMARY) continue
+
+            this.set(x, y, {
+              fill,
+              draw(size) {
+                mixedShapes.call(this, size, x)
+              },
+            })
           } else {
             this.set(x, y, { fill: 'transparent' })
           }
@@ -475,35 +423,116 @@ const pixelPerfect = [
       }
     },
   }),
+  // brat intro
+  defineLayer({
+    duration: 800,
+    offset: 3200,
+    store(prevValue) {
+      const columnEasing = []
+
+      for (let x = 0; x < this.width; x++)
+        columnEasing.push(
+          prevValue?.columnEasing[x] ?? easings[Math.floor(Math.random() * easings.length)]
+        )
+
+      return { columnEasing }
+    },
+    render(t, store) {
+      for (let x = 0; x < this.width; x++) {
+        const ease = store.columnEasing[x]!
+
+        for (let y = 0; y < this.height; y++) {
+          if (this.height - y <= this.height * ease(t)) this.set(x, y, { fill: COLORS.BRAT })
+        }
+      }
+    },
+  }),
+  defineLayer({
+    duration: 3000,
+    offset: 3200 + 800,
+    render() {
+      this.pixels().forEach((p) => this.set(p, { fill: COLORS.BRAT }))
+    },
+  }),
+  defineLayer({
+    duration: 500,
+    offset: 800 + 3200,
+    overshoot: true,
+    render(t) {
+      const centerText = 'uxd'.substring(0, Math.floor(t * 2))
+      this.text.box(...this.center, [centerText], { fill: COLORS.BRAT_TEXT })
+    },
+  }),
+  defineLayer({
+    duration: 800,
+    offset: 3000 + 3200,
+    store(prevValue) {
+      const columnEasing = []
+
+      for (let x = 0; x < this.width; x++)
+        columnEasing.push(
+          prevValue?.columnEasing[x] ?? easings[Math.floor(Math.random() * easings.length)]
+        )
+
+      return { columnEasing }
+    },
+    render(t, store) {
+      for (let x = 0; x < this.width; x++) {
+        const ease = store.columnEasing[x]!
+
+        for (let y = 0; y < this.height; y++) {
+          if (this.height - y <= this.height * ease(t)) this.set(x, y, { fill: 'transparent' })
+        }
+      }
+    },
+  }),
+]
+
+const currentTime = [
+  defineLayer({
+    duration: 5000,
+    render() {
+      const date = new Date()
+      const hours = (date.getHours() % 12).toString().padStart(2, '0')
+      const minutes = date.getMinutes().toString().padStart(2, '0')
+      const showColon = date.getSeconds() % 2 === 0
+      const text = showColon ? `${hours}:${minutes}` : `${hours} ${minutes}`
+
+      this.text.box(...this.center, ['#fff'], {
+        fill: COLORS.TEXT_PRIMARY,
+      })
+    },
+  }),
 ]
 
 let display: MatrixDisplay
+const canvas = useTemplateRef('canvas')
 
 onMounted(() => {
   COLORS = getColors()
 
-  display = new MatrixDisplay([
-    countDown,
-    start,
-    rippleAndName,
-    pixelPerfect,
-    brat,
-    pacman,
-    a11yMatters,
-    pacmanReturns,
-  ])
+  display = new MatrixDisplay(
+    // [currentTime],
+    [countDown, rippleAndName, pixelPerfectAndBrat, pacman, a11yMatters, pacmanReturns],
+    {
+      onLoop() {
+        looped = true
+      },
+    }
+  )
 
   const adapter = new CanvasAdapter(canvas.value!, {
     gap: 4,
-    pixel: 24,
+    pixel: 32,
     defaultPixel: {
       fill: 'transparent',
       stroke: 'transparent',
       strokeWidth: 0,
       cornerRadius: 4,
     },
-    minWidth: 33,
-    height: 27,
+    minWidth: 29,
+    // fixme: should be reactive to the window width
+    height: window.innerWidth < 850 ? 37 : 23,
   })
 
   display.connect(adapter)

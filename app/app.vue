@@ -151,19 +151,25 @@ body {
   color: var(--text-secondary);
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
+.theme-view-transition-active {
+  &::view-transition-old(root),
+  &::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
 
-::view-transition-new(root) {
-  z-index: 1;
-  animation: theme-circle-expand 0.5s ease-in forwards;
-}
+  &::view-transition-new(root) {
+    z-index: 1;
+    animation: theme-circle-expand 0.5s ease-in forwards;
 
-::view-transition-old(root) {
-  z-index: 0;
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  &::view-transition-old(root) {
+    z-index: 0;
+  }
 }
 
 @keyframes theme-circle-expand {

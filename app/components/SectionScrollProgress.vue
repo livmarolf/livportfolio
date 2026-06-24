@@ -1,25 +1,65 @@
 <script setup lang="ts">
 const progress = ref(0)
 const trackerRef = useTemplateRef('tracker')
+const indicatorRef = useTemplateRef('indicator')
 
 onMounted(() => {
   const tracker = trackerRef.value!
+  const indicator = indicatorRef.value!
   const section = tracker.parentElement as HTMLElement
-  onScroll(() => {
-    const trackerRect = tracker.getBoundingClientRect()
-    const sectionRect = section.getBoundingClientRect()
+  const trackerHeight = tracker.offsetHeight
 
-    const percentage =
-      (trackerRect.top - sectionRect.top) / (sectionRect.height - trackerRect.height)
+  if (CSS.supports('animation-timeline: view()')) {
+    section.style.viewTimelineName = '--section-scroll'
 
-    progress.value = Math.min(1, Math.max(0, percentage))
-  })
+    const updateRange = () => {
+      const sectionHeight = section.offsetHeight
+      const vh = window.innerHeight
+      const total = vh + sectionHeight
+      const startPct = (vh / 2 / total) * 100
+      const endPct = ((vh / 2 + sectionHeight - trackerHeight) / total) * 100
+      indicator.style.animationRangeStart = `cover ${startPct}%`
+      indicator.style.animationRangeEnd = `cover ${endPct}%`
+    }
+
+    const ro = new ResizeObserver(updateRange)
+    ro.observe(section)
+    window.addEventListener('resize', updateRange)
+    updateRange()
+
+    onUnmounted(() => {
+      section.style.viewTimelineName = ''
+      ro.disconnect()
+      window.removeEventListener('resize', updateRange)
+    })
+  } else {
+    let sectionTop = 0
+    let sectionHeight = 0
+
+    const updateLayout = () => {
+      sectionTop = section.getBoundingClientRect().top + window.scrollY
+      sectionHeight = section.offsetHeight
+    }
+
+    const ro = new ResizeObserver(updateLayout)
+    ro.observe(section)
+    updateLayout()
+
+    onUnmounted(() => ro.disconnect())
+
+    onScroll(() => {
+      const percentage =
+        (window.innerHeight / 2 - sectionTop + window.scrollY) / (sectionHeight - trackerHeight)
+
+      progress.value = Math.min(1, Math.max(0, percentage))
+    })
+  }
 })
 </script>
 
 <template>
   <div class="wrapper" ref="tracker">
-    <div class="indicator" />
+    <div class="indicator" ref="indicator" />
   </div>
 </template>
 <style scoped>
@@ -30,6 +70,7 @@ onMounted(() => {
   width: 100%;
   display: flex;
   align-items: center;
+  contain: strict;
 }
 
 .indicator {
@@ -54,5 +95,21 @@ onMounted(() => {
     );
   background-size: calc(100% / (0.5 - var(--gap) / 2)) 100%;
   background-position-x: calc(v-bind(progress) * 100%);
+}
+
+@keyframes track-scroll-progress {
+  from {
+    background-position-x: 0%;
+  }
+  to {
+    background-position-x: 100%;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .indicator {
+    animation: track-scroll-progress linear both;
+    animation-timeline: --section-scroll;
+  }
 }
 </style>

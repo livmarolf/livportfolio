@@ -12,13 +12,17 @@ const colors = [
   'var(--colors-light-blue)',
 ]
 
-let activeColor = 0
+let activeColor = -1
 
 const trigger = wave.createTrigger()
 const color = ref(colors[0])
 
-const handlePointerEnter = (e: PointerEvent | FocusEvent) => {
+const handlePointerEnter = async (e: PointerEvent | FocusEvent) => {
+  if (activeColor < 0) activeColor = Math.floor(Math.random() * colors.length)
+
   color.value = colors[++activeColor % colors.length]
+
+  await nextTick()
   if ('x' in e) trigger.press(e)
   else trigger.press()
 }
@@ -26,8 +30,6 @@ const handlePointerEnter = (e: PointerEvent | FocusEvent) => {
 <template>
   <a
     @pointerenter="handlePointerEnter"
-    @focusin="handlePointerEnter"
-    @focusout="trigger.release"
     @pointerleave="trigger.release"
     class="button mono"
     v-wave="{
@@ -83,21 +85,18 @@ const handlePointerEnter = (e: PointerEvent | FocusEvent) => {
     z-index: 2;
   }
 
-  [v-wave-container] {
-    z-index: 1;
-  }
-
   svg {
     transition: transform 0.75s ease;
     position: relative;
     z-index: 2;
   }
 
-  transition: transform 0.75s ease;
+  /* transition: transform 0.75s ease; */
 
   &:hover {
-    transform: scale(1.05);
-    transition: transform 0.1s ease;
+    /* fixme: this causes the wave effect the fire rapidly due to pointerenter events being triggered during the transform */
+    /* transform: scale(1.05); */
+    /* transition: transform 0.1s ease; */
 
     svg {
       transition: transform 0.1s ease;
@@ -106,8 +105,8 @@ const handlePointerEnter = (e: PointerEvent | FocusEvent) => {
   }
 
   &:active {
-    transform: none;
-    transition: none;
+    /* transform: none; */
+    /* transition: none; */
     svg {
       transition: none;
       transform: none;
