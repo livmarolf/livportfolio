@@ -115,7 +115,10 @@ onMounted(() => {
     const scrollDist = vh - top
     const progress = Math.max(0, Math.min(1, scrollDist / vh))
 
-    if (progress < 0.0001 || progress > 0.9999) return
+    if (previousProgress === 0 || previousProgress === 1) {
+      previousProgress = progress
+      return
+    }
 
     const pivot = Math.floor(letters.length * progress)
 
