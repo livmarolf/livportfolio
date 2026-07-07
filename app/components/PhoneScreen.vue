@@ -1,40 +1,34 @@
 <template>
   <div class="phone-screen">
     <slot />
-    <!-- <img src="~/assets/iphone-frame.svg" alt="" /> -->
+    <img class="frame" src="~/assets/iphone-frame.svg" alt="" />
   </div>
 </template>
 
 <style scoped>
 .phone-screen {
   position: relative;
+  aspect-ratio: 0.489;
 
-  /* height: 100%; */
-  /* &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 20px;
-    background-color: #000;
-    z-index: 1;
-    border-radius: 40px;
-  } */
+  .frame {
+    position: relative;
+    height: 100%;
+  }
 }
 
-:deep(video) {
-  position: relative;
-  /* border-radius: 50px; */
-  /* 
-  corner-shape: superellipse(1.2);
-   */
-  display: block;
-  /* height: 500px; */
-  /* box-shadow:
-    0 0 0 9px var(--item-background),
-    0 0 0 10px var(--stroke); */
+.phone-screen :deep(img:not(.frame)) {
+  position: absolute;
+  --inset-left: 5%;
+  --inset-right: 5%;
+  --inset-top: 2%;
+  --inset-bottom: 2%;
+  top: var(--inset-top);
+  left: var(--inset-left);
+  width: calc(100% - (var(--inset-right) + var(--inset-left)));
+  height: calc(100% - (var(--inset-top) + var(--inset-bottom)));
+  object-fit: cover;
+  mask-image: url('~/assets/iphone-screen-mask.png');
+  mask-size: contain;
+  mask-repeat: no-repeat;
 }
 </style>

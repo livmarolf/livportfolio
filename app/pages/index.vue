@@ -435,6 +435,7 @@ const vIndicators = {
         </div>
       </div>
     </section>
+    <!-- GALLERY -->
     <section>
       <SectionScrollProgress color="var(--colors-orange)" />
       <div class="section-wrapper">
@@ -446,12 +447,37 @@ const vIndicators = {
           <GalleryItem
             :urls="['/gallery/viewpoint-co-management.png']"
             description="ViewPoint Co-Management: Marketing site for B2B SaaS startup"
-            orientation="landscape"
+            viewport="desktop"
             color-scheme="light" />
           <GalleryItem
-            :urls="['/gallery/viewpoint-co-management.png', '/gallery/viewpoint-co-management.png']"
+            :urls="[
+              '/gallery/huddleup/1.png',
+              '/gallery/huddleup/2.png',
+              '/gallery/huddleup/3.png',
+              '/gallery/huddleup/4.png',
+              '/gallery/huddleup/5.png',
+              '/gallery/huddleup/6.png',
+            ]"
             description="ViewPoint Co-Management: Marketing site for B2B SaaS startup"
-            orientation="landscape"
+            viewport="mobile"
+            color-scheme="light" />
+
+          <GalleryItem
+            :urls="[
+              '/gallery/huddleup/1.png',
+              '/gallery/huddleup/2.png',
+              '/gallery/huddleup/3.png',
+              '/gallery/huddleup/4.png',
+              '/gallery/huddleup/5.png',
+              '/gallery/huddleup/6.png',
+            ]"
+            description="ViewPoint Co-Management: Marketing site for B2B SaaS startup"
+            viewport="mobile"
+            color-scheme="light" />
+          <GalleryItem
+            :urls="['/gallery/viewpoint-co-management.png']"
+            description="ViewPoint Co-Management: Marketing site for B2B SaaS startup"
+            viewport="desktop"
             color-scheme="light" />
         </div>
       </div>
@@ -810,5 +836,6 @@ section {
   grid-template: 1fr / minmax(0, 1fr) minmax(0, 1fr);
   position: relative;
   width: 100%;
+  gap: 20px;
 }
 </style>
