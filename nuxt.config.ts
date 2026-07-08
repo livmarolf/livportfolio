@@ -6,4 +6,9 @@ export default defineNuxtConfig({
   image: {
     dir: 'assets/images',
   },
+  vite: {
+    optimizeDeps: {
+      include: [],
+    },
+  },
 })

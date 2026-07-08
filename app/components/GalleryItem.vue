@@ -108,7 +108,12 @@ const right = () => {
         <span class="secondary">/{{ urls.length.toString().padStart(2, '0') }}</span>
       </p>
       <button @click="handleClose" class="collapse-btn" type="button"><CollapseIcon /></button>
-      <button @click="left" v-wave class="arrow left" :disabled="activeUrl === 1">
+      <button
+        v-if="urls.length > 1"
+        @click="left"
+        v-wave
+        class="arrow left"
+        :disabled="activeUrl === 1">
         <svg
           width="48"
           height="48"
@@ -132,15 +137,16 @@ const right = () => {
         </svg>
       </button>
       <figure>
-        <div ref="scroller" class="scroller" v-if="viewport === 'desktop'">
+        <div ref="scroller" class="scroller desktop-scroller" v-if="viewport === 'desktop'">
           <BrowserChrome
             v-for="(url, i) in urls"
+            scrollable
             class="image"
             :class="{ thumbnail: i === activeUrl - 1 }">
             <NuxtImg :src="url" />
           </BrowserChrome>
         </div>
-        <div ref="scroller" class="scroller" v-else>
+        <div ref="scroller" class="scroller mobile-scroller" v-else>
           <PhoneScreen
             v-for="(url, i) in urls"
             class="image"
@@ -151,7 +157,12 @@ const right = () => {
 
         <figcaption class="secondary">{{ description }}</figcaption>
       </figure>
-      <button @click="right" v-wave class="arrow right" :disabled="activeUrl === urls.length">
+      <button
+        v-if="urls.length > 1"
+        @click="right"
+        v-wave
+        class="arrow right"
+        :disabled="activeUrl === urls.length">
         <svg
           width="48"
           height="48"
@@ -178,6 +189,12 @@ const right = () => {
   </div>
 </template>
 <style scoped>
+.gallery-item-container {
+  aspect-ratio: 1.3;
+  width: 100%;
+  min-height: 0;
+}
+
 .gallery-item-container > * {
   user-select: none;
 }
@@ -189,17 +206,19 @@ const right = () => {
 .gallery-item {
   background: var(--item-background);
   border: 1px solid var(--stroke);
+  box-sizing: border-box;
+  overflow: clip;
   display: grid;
-  grid-template: auto 1fr auto / auto 33%;
+  grid-template: auto minmax(0, 1fr) auto / auto 33%;
   grid-template-areas:
     'count  expand'
     'img       img'
-    '. description';
+    'description description';
   padding: 16px;
   gap: 16px;
 
   &.small {
-    aspect-ratio: 1.3;
+    height: 100%;
   }
 
   .count {
@@ -229,8 +248,13 @@ const right = () => {
 
   .desktop-thumbnail {
     grid-area: img;
-    margin: 0 24px;
+    margin: 0;
     color-scheme: v-bind(colorScheme);
+    width: auto;
+    height: 100%;
+    aspect-ratio: 1.44;
+    max-width: calc(100% - 48px);
+    place-self: center;
 
     img {
       width: 100%;
@@ -242,12 +266,22 @@ const right = () => {
 
   .phone-screen {
     grid-area: img;
+    width: auto;
+    height: 100%;
+    max-width: 100%;
     place-self: center;
   }
 
   figcaption {
     grid-area: description;
     font-size: 12px;
+    width: 100%;
+    text-align: right;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
   }
 }
 
@@ -260,7 +294,7 @@ const right = () => {
   background: var(--item-background);
   border: 1px solid var(--stroke);
   display: grid;
-  grid-template: auto 1fr auto / auto 1fr auto;
+  grid-template: auto minmax(0, 1fr) auto / auto 1fr auto;
   grid-template-areas:
     'count . expand'
     'arrow-l img arrow-r'
@@ -361,6 +395,21 @@ const right = () => {
       scroll-snap-align: center;
       max-width: 100%;
       max-height: 100%;
+      place-self: center;
+    }
+  }
+
+  .desktop-scroller {
+    .image {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .mobile-scroller {
+    .image {
+      width: auto;
+      height: 100%;
     }
   }
 
@@ -369,6 +418,18 @@ const right = () => {
     font-size: 12px;
     padding: 0 16px;
     text-align: right;
+  }
+
+  &:not(:has(.arrow)) {
+    grid-template-areas:
+      'count . expand'
+      'img img img'
+      'description description description';
+
+    .scroller {
+      width: calc(100% - 48px);
+      margin: 0;
+    }
   }
 }
 

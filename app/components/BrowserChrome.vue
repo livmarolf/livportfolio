@@ -26,6 +26,7 @@ defineProps<{ scrollable?: boolean }>()
   border: 1px solid var(--border);
   border-radius: 6px;
   height: min-content;
+  overflow: hidden;
 
   .controls {
     margin-bottom: 3px;

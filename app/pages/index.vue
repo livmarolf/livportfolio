@@ -201,36 +201,38 @@ const vIndicators = {
         </header>
         <div class="section-content case-studies">
           <article class="case-study">
-            <a href="/case-studies/seeing-more-with-gestures">
+            <NuxtLink to="/case-studies/seeing-more-with-gestures">
               <div class="preview">
                 <video
                   autoplay
                   muted
                   loop
-                  src="~/assets/videos/instagram-reels-interaction.mp4"></video>
+                  src="/case-studies/instagram-reels-interaction.mp4"></video>
               </div>
-            </a>
-            <a href="/case-studies/seeing-more-with-gestures">
+            </NuxtLink>
+            <NuxtLink to="/case-studies/seeing-more-with-gestures">
               <h2>
                 Reducing UI interference
                 <span class="secondary">in Instagram Reels</span>
               </h2>
-            </a>
+            </NuxtLink>
             <LinkButton href="/case-studies/seeing-more-with-gestures">view</LinkButton>
           </article>
           <article class="case-study">
-            <a href="/case-studies/seeing-more-with-gestures">
+            <NuxtLink to="/case-studies/reclaiming-space-through-compact-navigation">
               <div class="preview">
-                <video autoplay muted loop src="~/assets/videos/mini-nav-behavior.mp4"></video>
+                <video autoplay muted loop src="/case-studies/mini-nav-behavior.mp4"></video>
               </div>
-            </a>
-            <a href="/case-studies/seeing-more-with-gestures">
+            </NuxtLink>
+            <NuxtLink to="/case-studies/reclaiming-space-through-compact-navigation">
               <h2>
                 Reclaiming Space
                 <span class="secondary">Through Compact Navigation</span>
               </h2>
-            </a>
-            <LinkButton href="/case-studies/seeing-more-with-gestures">view</LinkButton>
+            </NuxtLink>
+            <LinkButton href="/case-studies/reclaiming-space-through-compact-navigation">
+              view
+            </LinkButton>
           </article>
         </div>
       </div>
@@ -316,7 +318,7 @@ const vIndicators = {
         </header>
         <div class="section-content articles">
           <article class="article">
-            <a href="/case-studies/seeing-more-with-gestures">
+            <NuxtLink to="/articles/could-should-might-dont">
               <div class="thumbnail">
                 <svg
                   width="200"
@@ -347,15 +349,15 @@ const vIndicators = {
                     fill="var(--colors-dark-blue)" />
                 </svg>
               </div>
-            </a>
-            <a href="/case-studies/seeing-more-with-gestures">
+            </NuxtLink>
+            <NuxtLink to="/articles/could-should-might-dont">
               <h2>Could, should, might, don't</h2>
               <p class="secondary">Four frames of thought that drive great ux decisions</p>
-            </a>
-            <LinkButton href="/case-studies/seeing-more-with-gestures">Read Article</LinkButton>
+            </NuxtLink>
+            <LinkButton href="/articles/could-should-might-dont">Read Article</LinkButton>
           </article>
           <article class="article">
-            <a href="/case-studies/seeing-more-with-gestures">
+            <NuxtLink to="/articles/the-case-for-risk">
               <div class="thumbnail">
                 <svg
                   width="200"
@@ -386,15 +388,15 @@ const vIndicators = {
                     fill="var(--colors-green)" />
                 </svg>
               </div>
-            </a>
-            <a href="/case-studies/seeing-more-with-gestures">
-              <h2>Could, should, might, don't</h2>
-              <p class="secondary">Four frames of thought that drive great ux decisions</p>
-            </a>
-            <LinkButton href="/case-studies/seeing-more-with-gestures">Read Article</LinkButton>
+            </NuxtLink>
+            <NuxtLink to="/articles/the-case-for-risk">
+              <h2>The case for risk</h2>
+              <p class="secondary">Why top-down design drives real innovation</p>
+            </NuxtLink>
+            <LinkButton href="/articles/the-case-for-risk">Read Article</LinkButton>
           </article>
           <article class="article">
-            <a href="/case-studies/seeing-more-with-gestures">
+            <NuxtLink to="/articles/from-following-frameworks-to-creating-them">
               <div class="thumbnail">
                 <svg
                   width="200"
@@ -425,12 +427,14 @@ const vIndicators = {
                     fill="var(--colors-orange)" />
                 </svg>
               </div>
-            </a>
-            <a href="/case-studies/seeing-more-with-gestures">
-              <h2>Could, should, might, don't</h2>
-              <p class="secondary">Four frames of thought that drive great ux decisions</p>
-            </a>
-            <LinkButton href="/case-studies/seeing-more-with-gestures">Read Article</LinkButton>
+            </NuxtLink>
+            <NuxtLink to="/articles/from-following-frameworks-to-creating-them">
+              <h2>From following frameworks to creating them</h2>
+              <p class="secondary">When the toolkit runs out, build your own</p>
+            </NuxtLink>
+            <LinkButton href="/articles/from-following-frameworks-to-creating-them">
+              Read Article
+            </LinkButton>
           </article>
         </div>
       </div>
