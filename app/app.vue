@@ -114,7 +114,6 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
-  text-wrap: balance;
 }
 
 /* 9. Improve line wrapping */

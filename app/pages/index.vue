@@ -189,7 +189,7 @@ const vIndicators = {
   <HeroDisplay />
   <main>
     <!-- CASE STUDIES -->
-    <section v-indicators>
+    <section id="case-studies" v-indicators>
       <SectionScrollProgress color="var(--colors-orange)" />
       <div class="section-wrapper">
         <header class="mono">
@@ -207,6 +207,7 @@ const vIndicators = {
                   autoplay
                   muted
                   loop
+                  playsinline
                   src="/case-studies/instagram-reels-interaction.mp4"></video>
               </div>
             </NuxtLink>
@@ -216,12 +217,17 @@ const vIndicators = {
                 <span class="secondary">in Instagram Reels</span>
               </h2>
             </NuxtLink>
-            <LinkButton href="/case-studies/seeing-more-with-gestures">view</LinkButton>
+            <LinkButton to="/case-studies/seeing-more-with-gestures">view</LinkButton>
           </article>
           <article class="case-study">
             <NuxtLink to="/case-studies/reclaiming-space-through-compact-navigation">
               <div class="preview">
-                <video autoplay muted loop src="/case-studies/mini-nav-behavior.mp4"></video>
+                <video
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  src="/case-studies/mini-nav-behavior.mp4"></video>
               </div>
             </NuxtLink>
             <NuxtLink to="/case-studies/reclaiming-space-through-compact-navigation">
@@ -230,7 +236,7 @@ const vIndicators = {
                 <span class="secondary">Through Compact Navigation</span>
               </h2>
             </NuxtLink>
-            <LinkButton href="/case-studies/reclaiming-space-through-compact-navigation">
+            <LinkButton to="/case-studies/reclaiming-space-through-compact-navigation">
               view
             </LinkButton>
           </article>
@@ -238,12 +244,12 @@ const vIndicators = {
       </div>
     </section>
     <!-- ABOUT -->
-    <section>
+    <section id="about">
       <SectionScrollProgress color="var(--colors-dark-blue)" />
       <div class="section-wrapper">
         <header class="mono">
           <h2>About</h2>
-          <span>{{ impacts.toString().padStart(3, '0') }}</span>
+          <span class="logo-animation-counter">{{ impacts.toString().padStart(3, '0') }}</span>
         </header>
 
         <div class="section-content about">
@@ -261,7 +267,16 @@ const vIndicators = {
             </p>
           </div>
           <div class="logo-animation">
-            <video ref="logo-animation" src="~/assets/videos/logo-animation.mp4" muted loop />
+            <span class="mono logo-animation-counter">
+              {{ impacts.toString().padStart(3, '0') }}
+            </span>
+            <video
+              ref="logo-animation"
+              src="~/assets/videos/logo-animation.mp4"
+              muted
+              loop
+              playsinline
+              autoplay />
             <menu class="mono">
               <svg
                 class="bracket-left"
@@ -305,7 +320,7 @@ const vIndicators = {
       </div>
     </section>
     <!-- ARTICLES -->
-    <section v-indicators>
+    <section id="articles" v-indicators>
       <SectionScrollProgress color="var(--colors-orange)" />
       <div class="section-wrapper">
         <header class="mono">
@@ -354,7 +369,7 @@ const vIndicators = {
               <h2>Could, should, might, don't</h2>
               <p class="secondary">Four frames of thought that drive great ux decisions</p>
             </NuxtLink>
-            <LinkButton href="/articles/could-should-might-dont">Read Article</LinkButton>
+            <LinkButton to="/articles/could-should-might-dont">Read Article</LinkButton>
           </article>
           <article class="article">
             <NuxtLink to="/articles/the-case-for-risk">
@@ -393,7 +408,7 @@ const vIndicators = {
               <h2>The case for risk</h2>
               <p class="secondary">Why top-down design drives real innovation</p>
             </NuxtLink>
-            <LinkButton href="/articles/the-case-for-risk">Read Article</LinkButton>
+            <LinkButton to="/articles/the-case-for-risk">Read Article</LinkButton>
           </article>
           <article class="article">
             <NuxtLink to="/articles/from-following-frameworks-to-creating-them">
@@ -432,7 +447,7 @@ const vIndicators = {
               <h2>From following frameworks to creating them</h2>
               <p class="secondary">When the toolkit runs out, build your own</p>
             </NuxtLink>
-            <LinkButton href="/articles/from-following-frameworks-to-creating-them">
+            <LinkButton to="/articles/from-following-frameworks-to-creating-them">
               Read Article
             </LinkButton>
           </article>
@@ -440,7 +455,7 @@ const vIndicators = {
       </div>
     </section>
     <!-- GALLERY -->
-    <section>
+    <section id="gallery">
       <SectionScrollProgress color="var(--colors-orange)" />
       <div class="section-wrapper">
         <header class="mono">
@@ -486,26 +501,6 @@ const vIndicators = {
         </div>
       </div>
     </section>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
   </main>
 </template>
 <style module>
@@ -587,6 +582,9 @@ const vIndicators = {
 <style scoped>
 main {
   padding: 60px 60px 0 40px;
+  @media (width < 760px) {
+    padding: 60px 20px 0 20px;
+  }
 }
 
 section {
@@ -594,10 +592,13 @@ section {
   grid-template: 1fr / 40px minmax(0, 1fr);
   gap: 40px;
   place-items: start stretch;
-
-  &:not(:last-child) {
-    margin-bottom: 200px;
+  scroll-margin-top: 110px;
+  @media (width < 760px) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0px;
   }
+
+  margin-bottom: 100px;
 
   .section-wrapper {
     display: grid;
@@ -612,6 +613,12 @@ section {
 
     * {
       font-size: 18px;
+    }
+
+    @media (width < 1100px) {
+      .logo-animation-counter {
+        display: none;
+      }
     }
   }
 
@@ -654,6 +661,10 @@ section {
   grid-template: 1fr / 1fr 1fr;
   gap: 20px;
 
+  @media screen and (width < 800px) {
+    grid-template-columns: 1fr;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
@@ -662,18 +673,33 @@ section {
     --padding: 40px;
     display: grid;
     aspect-ratio: 1.3;
+
+    @media screen and (800px < width < 1200px) {
+      aspect-ratio: 0.75;
+    }
+
     place-items: center;
     position: relative;
     background: var(--item-background);
     border: 1px solid var(--stroke);
-    /* fixme: this should probably be a pseudo element that translates so we're not constantly painting */
-    background: radial-gradient(circle, var(--stroke) 1px, transparent 1px) 0 0 / 14px 14px
-      var(--item-background);
+    overflow: hidden;
+    isolation: isolate;
     margin-bottom: 20px;
-    animation: dots-scroll 1s linear infinite;
 
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      bottom: -14px;
+      z-index: -1;
+      background: radial-gradient(circle, var(--stroke) 1px, transparent 1px) 0 0 / 14px 14px
+        var(--item-background);
+      animation: dots-scroll 1s linear infinite;
+      pointer-events: none;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
 
     video {
@@ -690,11 +716,8 @@ section {
 }
 
 @keyframes dots-scroll {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 0 -14px;
+  to {
+    transform: translateY(-14px);
   }
 }
 
@@ -702,6 +725,10 @@ section {
   display: grid;
   grid-template: 1fr / 1fr 1fr;
   gap: 20px;
+
+  @media (width < 1100px) {
+    grid-template-columns: 1fr;
+  }
 
   .bio {
     p:first-of-type {
@@ -719,6 +746,11 @@ section {
     }
 
     font-size: 32px;
+
+    @media (width < 1300px) {
+      font-size: 24px;
+    }
+
     max-width: 32ch;
     position: relative;
     contain: layout paint;
@@ -732,8 +764,28 @@ section {
     gap: 12px;
     font-size: 18px;
 
+    .logo-animation-counter {
+      color: var(--text-label);
+      display: none;
+
+      * {
+        font-size: 18px;
+      }
+    }
+
+    @media (width < 1100px) {
+      align-items: flex-start;
+
+      .logo-animation-counter {
+        display: inline;
+      }
+    }
+
     video {
       width: 66%;
+      @media (width < 1100px) {
+        width: 80%;
+      }
     }
 
     menu {
@@ -796,6 +848,13 @@ section {
   grid-template: 1fr / 1fr 1fr 1fr;
   gap: 20px;
 
+  @media (width < 1100px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (width < 760px) {
+    grid-template-columns: 1fr;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
@@ -808,14 +867,24 @@ section {
     position: relative;
     background: var(--item-background);
     border: 1px solid var(--stroke);
-    /* fixme: this should probably be a pseudo element that translates so we're not constantly painting */
-    background: radial-gradient(circle, var(--stroke) 1px, transparent 1px) 0 0 / 14px 14px
-      var(--item-background);
+    overflow: hidden;
+    isolation: isolate;
     margin-bottom: 20px;
-    animation: dots-scroll 1s linear infinite;
 
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      bottom: -14px;
+      z-index: -1;
+      background: radial-gradient(circle, var(--stroke) 1px, transparent 1px) 0 0 / 14px 14px
+        var(--item-background);
+      animation: dots-scroll 1s linear infinite;
+      pointer-events: none;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
 
     video {
@@ -841,5 +910,9 @@ section {
   position: relative;
   width: 100%;
   gap: 20px;
+
+  @media (width < 1000px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 </style>

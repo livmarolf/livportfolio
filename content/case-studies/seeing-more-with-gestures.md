@@ -9,7 +9,7 @@ A horizontal drag reveals a contextual side menu, followed by a vertical drag to
 The system reduces on-screen clutter while preserving fast access to engagement tools, with onboarding support, an optional legacy UI toggle, and reversible actions.
 
 <figure>
-<video width="300" style="border-radius: 12px;" autoplay loop muted>
+<video width="300"  autoplay loop muted playsinline>
 <source src="/case-studies/instagram-reels-interaction.mp4" type="video/mp4">
 </video>
 <figcaption>Figure 1. Rendered mockup of the proposed interaction.</figcaption>
@@ -29,7 +29,7 @@ This creates two key problems:
 - Engagement controls lose visibility depending on the video background beneath them due to low contrast.
 
 <figure>
-<img src="/case-studies/low-contrast.png" alt="instagram-reel-with-low-contrast" width="300" style="border-radius: 12px;">
+<img src="/case-studies/low-contrast.png" alt="instagram-reel-with-low-contrast" width="300" >
 <figcaption>Figure 2. Low-contrast engagement controls in the current Reels interface.</figcaption>
 </figure>
 

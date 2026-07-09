@@ -2,8 +2,10 @@
 const progress = ref(0)
 const trackerRef = useTemplateRef('tracker')
 const indicatorRef = useTemplateRef('indicator')
+const visible = ref(true)
 
 onMounted(() => {
+  visible.value = window.innerWidth >= 760
   const tracker = trackerRef.value!
   const indicator = indicatorRef.value!
   const section = tracker.parentElement as HTMLElement
@@ -20,6 +22,8 @@ onMounted(() => {
       const endPct = ((vh / 2 + sectionHeight - trackerHeight) / total) * 100
       indicator.style.animationRangeStart = `cover ${startPct}%`
       indicator.style.animationRangeEnd = `cover ${endPct}%`
+
+      visible.value = window.innerWidth >= 760
     }
 
     const ro = new ResizeObserver(updateRange)
@@ -58,7 +62,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="wrapper" ref="tracker">
+  <div class="wrapper" ref="tracker" v-if="visible">
     <div class="indicator" ref="indicator" />
   </div>
 </template>
@@ -71,6 +75,10 @@ onMounted(() => {
   display: flex;
   align-items: center;
   contain: strict;
+
+  @media (width < 760px) {
+    display: none;
+  }
 }
 
 .indicator {

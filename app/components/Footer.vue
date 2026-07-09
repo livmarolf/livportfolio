@@ -1,8 +1,4 @@
-<script setup lang="ts">
-const { query } = useRoute()
-
-const showResume = 'resume' in query
-</script>
+<script setup lang="ts"></script>
 <template>
   <footer class="page-footer">
     <div>
@@ -20,35 +16,26 @@ const showResume = 'resume' in query
           d="M65.8579 70.837C65.8711 68.0944 68.0912 65.8743 70.8339 65.8611L77.52 65.8288C85.7519 65.7891 89.8445 55.9055 84.0534 50.1145L80.0325 46.0935C78.0798 44.1408 74.9139 44.1408 72.9612 46.0935L46.0903 72.9644C44.1376 74.917 44.1376 78.083 46.0903 80.0356L57.241 91.1863C60.3827 94.328 65.7553 92.1178 65.7767 87.6748L65.8579 70.837Z"
           fill="black" />
       </svg>
+
       <h2 class="mono">Olivia Marolf</h2>
-      <ul>
-        <li>
-          <NuxtLink href="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
-            LinkedIn
-            <NewTabIcon />
-          </NuxtLink>
-        </li>
-        <li v-if="showResume">
-          <NuxtLink href="/resume.pdf" target="_blank">
-            Resume
-            <NewTabIcon />
-          </NuxtLink>
-        </li>
-      </ul>
+      <NuxtLink class="linked-in" href="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
+        LinkedIn
+        <NewTabIcon />
+      </NuxtLink>
     </div>
     <div class="link-lists">
       <div>
         <h2 class="mono">Case Studies</h2>
         <ul>
           <li>
-            <NuxtLink href="#">
-              Seeing more with gestures
+            <NuxtLink href="/case-studies/seeing-more-with-gestures">
+              Reducing UI interference in Instagram Reels
               <ArrowRightIcon />
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink href="#">
-              Challenging design paradigms
+            <NuxtLink href="/case-studies/reclaiming-space-through-compact-navigation">
+              Reclaiming Space Through Compact Navigation
               <ArrowRightIcon />
             </NuxtLink>
           </li>
@@ -58,20 +45,20 @@ const showResume = 'resume' in query
         <h2 class="mono">Articles</h2>
         <ul>
           <li>
-            <NuxtLink href="#">
-              Could, Should, Might, Don't
+            <NuxtLink href="/articles/could-should-might-dont">
+              Could, should, might, don't
               <ArrowRightIcon />
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink href="#">
-              Beyond Existing Frameworks
+            <NuxtLink href="/articles/from-following-frameworks-to-creating-them">
+              From following frameworks to creating them
               <ArrowRightIcon />
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink href="#">
-              The Case for Risk
+            <NuxtLink href="/articles/the-case-for-risk">
+              The case for risk
               <ArrowRightIcon />
             </NuxtLink>
           </li>
@@ -83,15 +70,34 @@ const showResume = 'resume' in query
 <style scoped>
 .page-footer {
   display: grid;
-  grid-template: 1fr / 1fr auto;
+  grid-template: 1fr / minmax(0, 1fr) auto;
+  align-items: start;
   background: var(--item-background);
   gap: 48px;
   padding: 48px 60px 48px 120px;
+
+  &,
+  > * {
+    text-transform: uppercase;
+  }
 
   .link-lists {
     display: grid;
     grid-template: 1fr / 1fr 1fr;
     gap: 48px;
+  }
+
+  > * {
+    min-width: 0;
+  }
+
+  .linked-in {
+    width: fit-content;
+
+    svg {
+      width: 12px;
+      height: 12px;
+    }
   }
 
   ul,
@@ -109,12 +115,12 @@ const showResume = 'resume' in query
     font-size: 16px;
     color: var(--text-primary);
     font-weight: 600;
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
+    column-gap: clamp(16px, 5vw, 100px);
     border-bottom: 1px solid var(--stroke);
-    height: 28px;
-    gap: 100px;
+    min-height: 28px;
     margin-bottom: 8px;
     padding: 0 0 8px 0;
     text-decoration: none;
@@ -124,6 +130,50 @@ const showResume = 'resume' in query
     &:hover {
       transition: border-color 0s;
       border-color: var(--text-primary);
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+
+  @media (width < 1480px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 40px 60px;
+
+    .link-lists {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px;
+    }
+  }
+
+  @media (width < 760px) {
+    gap: 32px;
+    padding: 32px 20px;
+
+    > div:first-child {
+      > svg {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
+    .link-lists {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+
+    h2 {
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    a {
+      font-size: 14px;
+      align-items: start;
+      min-height: 0;
+      padding-bottom: 10px;
     }
   }
 }

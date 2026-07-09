@@ -1,10 +1,60 @@
 <script setup lang="ts">
-const { query } = useRoute()
-
-const showResume = 'resume' in query
-
+const route = useRoute()
+const router = useRouter()
 const mode = useColorMode()
 const themeToggle = useTemplateRef('themeToggle')
+
+const navLinks = [
+  { label: 'Case Studies', hash: 'case-studies' },
+  { label: 'About', hash: 'about' },
+  { label: 'Articles', hash: 'articles' },
+  { label: 'Gallery', hash: 'gallery' },
+]
+
+const waitForTarget = async (hash: string) => {
+  const selector = `#${hash}`
+
+  for (let attempt = 0; attempt < 30; attempt++) {
+    const target = document.querySelector(selector)
+
+    if (target) return target as HTMLElement
+
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
+  }
+
+  return null
+}
+
+const scrollToTarget = async (hash: string) => {
+  const target = await waitForTarget(hash)
+
+  if (!target) return
+
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  window.history.replaceState(null, '', `/#${hash}`)
+}
+
+const handleNavClick = async (hash: string, event: MouseEvent) => {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return
+  }
+
+  event.preventDefault()
+
+  if (route.path !== '/') {
+    await router.push('/')
+  }
+
+  await nextTick()
+  await scrollToTarget(hash)
+}
 
 const handleThemeToggle = async (event: Event) => {
   const target = event.target as HTMLInputElement
@@ -142,10 +192,11 @@ onMounted(() => {
 
     <nav>
       <ul>
-        <li><a href="#">Case Studies</a></li>
-        <li><a href="#">Articles</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Gallery</a></li>
+        <li v-for="link in navLinks" :key="link.hash">
+          <a :href="`/#${link.hash}`" @click="handleNavClick(link.hash, $event)">
+            {{ link.label }}
+          </a>
+        </li>
       </ul>
     </nav>
 
@@ -154,12 +205,6 @@ onMounted(() => {
         <li>
           <NuxtLink href="https://www.linkedin.com/in/oliviamarolf/" target="_blank">
             LinkedIn
-            <NewTabIcon />
-          </NuxtLink>
-        </li>
-        <li v-if="showResume">
-          <NuxtLink href="/resume.pdf" target="_blank">
-            Resume
             <NewTabIcon />
           </NuxtLink>
         </li>
@@ -244,6 +289,7 @@ onMounted(() => {
 
   display: grid;
   grid-template-columns: auto 1fr auto;
+  grid-template-areas: 'logo nav socials';
   align-items: center;
   gap: 20px;
 
@@ -255,6 +301,10 @@ onMounted(() => {
 
   color: var(--text-primary);
 
+  .logo {
+    grid-area: logo;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
@@ -263,6 +313,7 @@ onMounted(() => {
   }
 
   nav {
+    grid-area: nav;
     display: flex;
     gap: 20px;
 
@@ -273,6 +324,7 @@ onMounted(() => {
   }
 
   .socials-and-theme {
+    grid-area: socials;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -354,6 +406,77 @@ onMounted(() => {
       position: absolute;
       top: 0;
       left: 0;
+    }
+  }
+}
+
+@media (width < 900px) {
+  .page-header {
+    padding: 12px 16px 2px;
+    margin-bottom: 0;
+    gap: 14px;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      'logo socials'
+      'nav nav';
+    align-items: center;
+
+    nav {
+      width: calc(100% + 32px);
+      margin-left: -16px;
+      border-top: 1px solid var(--stroke);
+      border-bottom: 1px solid var(--stroke);
+      padding: 16px;
+      background: var(--item-background);
+
+      ul {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        align-items: center;
+        justify-items: center;
+      }
+
+      a {
+        font-size: clamp(12px, 3.5vw, 18px);
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+      }
+    }
+
+    .socials-and-theme {
+      width: 100%;
+      justify-content: flex-end;
+      gap: 14px;
+
+      a {
+        gap: 6px;
+      }
+    }
+  }
+}
+
+@media (width < 520px) {
+  .page-header {
+    padding: 10px 10px 2px;
+
+    nav {
+      width: calc(100% + 20px);
+      margin-left: -10px;
+      padding: 14px 10px;
+
+      a {
+        font-size: 14px;
+        letter-spacing: 0.005em;
+      }
+    }
+
+    .socials-and-theme {
+      gap: 10px;
+
+      > ul {
+        font-size: 14px;
+      }
     }
   }
 }

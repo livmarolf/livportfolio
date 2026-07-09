@@ -90,9 +90,7 @@ const right = () => {
         <BrowserChrome v-if="viewport === 'desktop'" class="desktop-thumbnail thumbnail">
           <NuxtImg :src="urls[0]" />
         </BrowserChrome>
-        <PhoneScreen v-else class="thumbnail">
-          <NuxtImg :src="urls[0]" />
-        </PhoneScreen>
+        <PhoneScreen v-else class="thumbnail" :src="urls[0]" />
 
         <figcaption class="secondary">{{ description }}</figcaption>
       </figure>
@@ -149,10 +147,9 @@ const right = () => {
         <div ref="scroller" class="scroller mobile-scroller" v-else>
           <PhoneScreen
             v-for="(url, i) in urls"
+            :src="url"
             class="image"
-            :class="{ thumbnail: i === activeUrl - 1 }">
-            <NuxtImg :src="url" />
-          </PhoneScreen>
+            :class="{ thumbnail: i === activeUrl - 1 }" />
         </div>
 
         <figcaption class="secondary">{{ description }}</figcaption>
@@ -299,6 +296,17 @@ const right = () => {
     'count . expand'
     'arrow-l img arrow-r'
     'description description description';
+
+  @media (width < 760px) {
+    grid-template-areas:
+      'count . expand'
+      'img img img'
+      'description description description';
+    .arrow {
+      display: none;
+    }
+  }
+
   padding: 16px 0;
   gap: 16px;
 
@@ -410,7 +418,18 @@ const right = () => {
     .image {
       width: auto;
       height: 100%;
+      max-width: 100%;
+      max-height: 100%;
     }
+
+    /* @supports (width: 1cqw) {
+      container-type: size;
+
+      .image {
+        width: min(100cqw, calc(100cqh * 224 / 458));
+        height: auto;
+      }
+    } */
   }
 
   figcaption {

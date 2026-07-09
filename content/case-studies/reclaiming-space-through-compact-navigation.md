@@ -14,7 +14,7 @@ This concept compresses primary navigation into a compact pill-shaped control th
 The result increases available content space while preserving awareness of application structure, destination access, and spatial consistency.
 
 <figure>
-<video width="300" style="border-radius: 12px;" autoplay loop muted>
+<video width="300"  autoplay loop muted playsinline>
 <source src="/case-studies/mini-nav-behavior.mp4" type="video/mp4">
 </video>
 <figcaption>Figure 1. Navigation expands from a resting state into a compact interactive navigation bar</figcaption>
@@ -33,7 +33,7 @@ The resulting concept compresses multiple navigation destinations into a compact
 The video below demonstrates the proposed interaction, showing the replacement of the current Instagram navigation bar, and how the suggested navigation remains condensed during use.
 
 <figure>
-<video width="300" style="border-radius: 12px;" autoplay loop muted>
+<video width="300"  autoplay loop muted playsinline>
 <source src="/case-studies/mini-nav-behavior.mp4" type="video/mp4">
 </video>
 <figcaption>Figure 2. Full interaction flow of the compact navigation system.</figcaption>
@@ -55,7 +55,7 @@ While the vertical space occupied by a tab bar is relatively small, it is perman
 The example below illustrates a conventional navigation pattern where multiple destinations remain continuously visible.
 
 <figure>
-<video width="300" style="border-radius: 12px;" autoplay loop muted>
+<video width="300" autoplay loop muted playsinline>
 <source src="/case-studies/original-nav-behavior.mp4" type="video/mp4">
 </video>
 <figcaption>Figure 3. Traditional tab bar behavior with persistent destination visibility.</figcaption>
@@ -151,7 +151,7 @@ This reduces persistent interface complexity while preserving access to navigati
 The close-up below highlights how destination information is compressed while still communicating overall application structure.
 
 <figure>
-<video width="300" style="border-radius: 12px;" autoplay loop muted>
+<video width="300"  autoplay loop muted playsinline>
 <source src="/case-studies/mini-nav-closeup.mp4" type="video/mp4">
 </video>
 <figcaption>Figure 4. Close-up view of the condensed navigation control and expansion behavior.</figcaption>
@@ -211,9 +211,13 @@ Navigation does not need to be either fully visible or fully hidden.
 
 Representing only essential navigation information at rest can reduce interface overhead while preserving usability.
 
+---
+
 ### Information Density Can Be Increased Without Removing Functionality
 
 The project demonstrated that the visual representation of navigation can be compressed without reducing the number of available destinations.
+
+---
 
 ### Content-First Applications Benefit From Compact Navigation
 

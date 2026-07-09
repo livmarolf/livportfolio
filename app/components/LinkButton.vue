@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import wave from 'v-wave'
 
+defineProps<{ to: string }>()
+
 const colors = [
   'var(--colors-dark-blue)',
   'var(--colors-purple)',
@@ -28,7 +30,8 @@ const handlePointerEnter = async (e: PointerEvent | FocusEvent) => {
 }
 </script>
 <template>
-  <a
+  <NuxtLink
+    :to="to"
     @pointerenter="handlePointerEnter"
     @pointerleave="trigger.release"
     class="button mono"
@@ -59,7 +62,7 @@ const handlePointerEnter = async (e: PointerEvent | FocusEvent) => {
         stroke-linecap="round"
         stroke-linejoin="round" />
     </svg>
-  </a>
+  </NuxtLink>
 </template>
 
 <style scoped>

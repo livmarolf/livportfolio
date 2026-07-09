@@ -7,13 +7,14 @@ _This article was inspired by a presentation given by [Scott Jenson](https://you
 Good forward-thinking UX design draws on four distinct modes of thinking: Could, Should, Might, and Don't. Each serves a different purpose, and teams that move between them make better decisions about where a product is going and how to get there. Each mode also has a counterpart, a less productive version of itself that tends to show up in design and innovation work more than most people notice.
 
 <figure>
-<img src="/articles/csmd-chart.png" alt="chart" width="400" style="border-radius: 12px;">
+<img src="/articles/csmd-chart.png" alt="chart" width="400" >
 <figcaption>Figure 2. Low-contrast engagement controls in the current Reels interface.</figcaption>
 </figure>
 
+
 ### Could: The Visionary
 
-_Counterpart: The Fool_
+> _Counterpart: The Fool_
 
 "Could" is the Visionary mode: possibility thinking, future orientation, and the kind of brainstorming that asks what a product might become rather than what it is right now. Without it, design tends to stay incremental, responding to immediate needs rather than looking ahead.
 
@@ -25,7 +26,7 @@ The counterpart is **the Fool**: lots of vision, not much follow-through. In pra
 
 ### Should: The Executor
 
-_Counterpart: The Preacher_
+> _Counterpart: The Preacher_
 
 "Should" is the Executor mode: deciding what to actually do, and why. It asks what the business needs, what the metrics indicate, what users have told us matters, and what's necessary to move forward. It's where vision gets translated into decisions and tradeoffs.
 
@@ -37,7 +38,7 @@ The counterpart is **the Preacher**: someone who is certain about what matters a
 
 ### Might: The Consultant
 
-_Counterpart: The Fearmonger_
+> _Counterpart: The Fearmonger_
 
 "Might" is the Consultant mode: holding multiple paths open, mapping possibilities, and asking what could happen under different conditions before committing to a direction. The Consultant doesn't push toward a conclusion too quickly. Instead, it surfaces options that wouldn't come up if a team went straight to execution.
 
@@ -49,7 +50,7 @@ The counterpart is **the Fearmonger**: open-ended "what if" thinking that genera
 
 ### Don't: The Cornerstone
 
-_Counterpart: The Gatekeeper_
+> _Counterpart: The Gatekeeper_
 
 "Don't" is the Cornerstone mode: the values and commitments that define what a product stands for. It captures the things a team has decided not to do, data practices they won't adopt, tradeoffs they won't make, lines they won't cross. The Cornerstone isn't a list of restrictions so much as a statement of identity, and it gives the other three modes something stable to work from.
 
@@ -66,6 +67,7 @@ All four modes are necessary, and a good process draws on each of them at differ
 The counterpart side is what makes the framework especially useful in practice. These less productive versions of each mode are easy to miss because each one resembles the thing it's supposed to be. A team in Preacher mode looks like a team with focus. A team in Fool mode looks like a team with ambition. Being able to name the difference helps teams course-correct without it becoming personal.
 
 The goal isn't to apply this as a rigid process. It's to have a shared language for the kind of thinking a project needs at any given moment, and to notice when one mode has been doing all the work.
+
 ---
 
 _Each frame has its place. The goal is to know which one a conversation is in, and whether it's still serving the work._
