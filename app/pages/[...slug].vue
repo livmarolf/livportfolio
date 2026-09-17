@@ -76,16 +76,17 @@ if (!page.value) {
     border: none;
     height: 1px;
     background: var(--stroke);
-    margin: 0 0 48px 0;
+    margin: 0 0 24px 0;
   }
 
   h2 {
     font-size: 28px;
-    margin-bottom: 12px;
+    margin: 48px 0 12px 0;
   }
 
   h3 {
     font-size: 22px;
+    margin-top: 24px;
     margin-bottom: 8px;
   }
 

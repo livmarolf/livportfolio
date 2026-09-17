@@ -1,6 +1,6 @@
 # From following frameworks to creating them
 
-**TL;DR:** Frameworks are useful because they give us proven ways to work through problems, but they don't have all the answers. While working on a SaaS product, my co-worker, a software engineer, and I reached a point where the design methods we normally relied on weren't helping us move forward. By stepping back and asking a different set of questions, we came up with a simple framework that helped us clarify the problem and find a solution. The experience reminded us that the real value of a framework isn't in following it exactly. It's in understanding why it works. Once you understand that, you can adjust existing frameworks or create your own when a problem calls for a different approach.
+> **TL;DR:** Frameworks are useful because they give us proven ways to work through problems, but they don't have all the answers. While working on a SaaS product, my co-worker, a software engineer, and I reached a point where the design methods we normally relied on weren't helping us move forward. By stepping back and asking a different set of questions, we came up with a simple framework that helped us clarify the problem and find a solution. The experience reminded us that the real value of a framework isn't in following it exactly. It's in understanding why it works. Once you understand that, you can adjust existing frameworks or create your own when a problem calls for a different approach.
 
 ---
 
@@ -62,4 +62,4 @@ The designers and product thinkers I have learned the most from do not just know
 
 If you find yourself having run every play you know and still not moving, that is not a failure of process. That may be the moment your process is ready to grow. The frameworks you have internalized become raw material. The concepts you have borrowed become starting points. And the thing you build out of necessity, scrawled in the margins of a session that was not working, might be what you return to for years.
 
-WDID and WDIND are ours. They came from one afternoon of being genuinely stuck, with a co-worker who is a software engineer and who asked the simplest possible question. The version you build will come 
+WDID and WDIND are ours. They came from one afternoon of being genuinely stuck, with a co-worker who is a software engineer and who asked the simplest possible question. The version you build will come from your own stuck moment, your own problem, your own plain question that breaks through.
