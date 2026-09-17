@@ -33,8 +33,10 @@ jobs:
         uses: easingthemes/ssh-deploy@v2.1.5
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          ARGS: '-rltgoDzvO --delete --exclude ".env"'
-          SOURCE: "/"
+          ARGS: '-rltgoDzvO --delete'
+          # No trailing slash: rsync copies the .output directory itself into TARGET,
+          # so the server ends up with <TARGET>/.output/server/index.mjs (matches pm2 script path).
+          SOURCE: '.output'
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
@@ -42,6 +44,6 @@ jobs:
       - name: 🔃 Restart pm2 app
         uses: JimCronqvist/action-ssh@master
         with:
-          hosts: "${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}"
+          hosts: '${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}'
           privateKey: ${{ secrets.SERVER_SSH_KEY }}
           command: pm2 restart livmarolf
