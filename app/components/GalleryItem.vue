@@ -221,6 +221,7 @@ const right = () => {
   .count {
     grid-area: count;
     font-size: 30px;
+    width: fit-content;
     color: var(--text-primary);
     .secondary {
       font-size: 18px;
@@ -279,6 +280,8 @@ const right = () => {
     -webkit-line-clamp: 2;
     line-clamp: 2;
     overflow: hidden;
+    width: fit-content;
+    place-self: end;
   }
 }
 
@@ -324,6 +327,7 @@ const right = () => {
     margin-left: 16px;
     grid-area: count;
     font-size: 30px;
+    width: fit-content;
     color: var(--text-primary);
     .secondary {
       font-size: 18px;
@@ -435,8 +439,11 @@ const right = () => {
   figcaption {
     grid-area: description;
     font-size: 12px;
-    padding: 0 16px;
+    position: relative;
+    right: 16px;
     text-align: right;
+    width: fit-content;
+    place-self: end;
   }
 
   &:not(:has(.arrow)) {
@@ -458,16 +465,24 @@ const right = () => {
     view-transition-name: gallery-item-background;
   }
 
-  /* .count {
+  .count {
     view-transition-name: gallery-item-count;
-  } */
+  }
+
+  figcaption {
+    view-transition-name: gallery-item-description;
+  }
 
   .expand-btn,
   .collapse-btn {
     view-transition-name: gallery-item-expand-btn;
   }
 
-  .thumbnail {
+  .phone-screen.thumbnail {
+    view-transition-name: gallery-item-thumbnail;
+  }
+  .desktop-thumbnail,
+  .image.thumbnail {
     view-transition-name: gallery-item-thumbnail;
   }
 }
