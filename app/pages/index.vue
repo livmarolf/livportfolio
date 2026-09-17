@@ -460,27 +460,47 @@ const vIndicators = {
       <div class="section-wrapper">
         <header class="mono">
           <h2>Gallery</h2>
-          <span>06/06</span>
+          <span>08/08</span>
         </header>
         <div class="section-content gallery">
           <GalleryItem
-            :urls="['/gallery/viewpoint-co-management.png']"
-            description="ViewPoint Co-Management: Marketing site for B2B SaaS startup"
+            :urls="['/gallery/zero.png']"
+            description="Zero: Marketing site for B2C cardboard recycling company"
+            viewport="desktop"
+            color-scheme="dark" />
+          <GalleryItem
+            :urls="['/gallery/vouchd/billing-1.png', '/gallery/vouchd/billing-2.png']"
+            description="Vouchd: Billing screens designed for B2B2C SaaS startup"
+            viewport="desktop"
+            color-scheme="light" />
+          <GalleryItem
+            :urls="['/gallery/vouchd/company-profile.png']"
+            description="Vouchd: Company profile screen designed for B2B2C SaaS startup"
+            viewport="desktop"
+            color-scheme="light" />
+          <GalleryItem
+            :urls="['/gallery/vouchd/dashboard.png']"
+            description="Vouchd: Dashboard designed for B2B2C SaaS startup"
+            viewport="desktop"
+            color-scheme="light" />
+          <GalleryItem
+            :urls="['/gallery/vouchd/marketing-site.png']"
+            description="Vouchd: Marketing site designed for B2B2C SaaS startup"
             viewport="desktop"
             color-scheme="light" />
           <GalleryItem
             :urls="[
-              '/gallery/huddleup/1.png',
-              '/gallery/huddleup/2.png',
-              '/gallery/huddleup/3.png',
-              '/gallery/huddleup/4.png',
-              '/gallery/huddleup/5.png',
-              '/gallery/huddleup/6.png',
+              '/gallery/huddleup-signup/1.png',
+              '/gallery/huddleup-signup/2.png',
+              '/gallery/huddleup-signup/3.png',
+              '/gallery/huddleup-signup/4.png',
+              '/gallery/huddleup-signup/5.png',
+              '/gallery/huddleup-signup/6.png',
+              '/gallery/huddleup-signup/7.png',
             ]"
-            description="ViewPoint Co-Management: Marketing site for B2B SaaS startup"
+            description="HuddleUp: Mobile sign-up flow"
             viewport="mobile"
             color-scheme="light" />
-
           <GalleryItem
             :urls="[
               '/gallery/huddleup/1.png',
@@ -490,7 +510,7 @@ const vIndicators = {
               '/gallery/huddleup/5.png',
               '/gallery/huddleup/6.png',
             ]"
-            description="ViewPoint Co-Management: Marketing site for B2B SaaS startup"
+            description="HuddleUp: Mobile screens designed for B2C SaaS sports management company"
             viewport="mobile"
             color-scheme="light" />
           <GalleryItem
