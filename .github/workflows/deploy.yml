@@ -30,10 +30,12 @@ jobs:
         run: pnpm build
 
       # Ship the pm2 config inside .output so it's part of every rsync payload.
-      # Without this, --delete would wipe ecosystem.config.cjs from TARGET on
-      # each deploy (it lives in TARGET, not inside .output).
+      # Without this, --delete would wipe it from TARGET on each deploy (it lives
+      # in TARGET, not inside .output). Must be named *.js — the server runs
+      # pm2 4.2.0, which only auto-detects .js/.json ecosystem files and would
+      # otherwise execute a .cjs file as a plain script.
       - name: 📝 Add pm2 config to deploy payload
-        run: cp ecosystem.config.cjs .output/ecosystem.config.cjs
+        run: cp ecosystem.config.js .output/ecosystem.config.js
 
       - name: 🚀 Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.5
@@ -53,10 +55,11 @@ jobs:
           hosts: '${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}'
           privateKey: ${{ secrets.SERVER_SSH_KEY }}
           # The config ships inside .output, so on the server it lives at
-          # <TARGET>/.output/ecosystem.config.cjs. cd to TARGET first so the
+          # <TARGET>/.output/ecosystem.config.js. cd to TARGET first so the
           # relative script path './.output/server/index.mjs' resolves (pm2 uses
           # the cwd where it was invoked as the app's cwd).
           # startOrReload handles the normal case (app already running);
           # the fallback covers a fresh server / deleted process.
+          # pm2 save persists the list so the app survives a server reboot.
           command: |
-            cd ${{ secrets.REMOTE_TARGET }} && pm2 startOrReload .output/ecosystem.config.cjs --update-env || pm2 start .output/ecosystem.config.cjs
+            cd ${{ secrets.REMOTE_TARGET }} && (pm2 startOrReload .output/ecosystem.config.js --update-env || pm2 start .output/ecosystem.config.js) && pm2 save
