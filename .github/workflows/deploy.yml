@@ -52,7 +52,11 @@ jobs:
         with:
           hosts: '${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}'
           privateKey: ${{ secrets.SERVER_SSH_KEY }}
+          # The config ships inside .output, so on the server it lives at
+          # <TARGET>/.output/ecosystem.config.cjs. cd to TARGET first so the
+          # relative script path './.output/server/index.mjs' resolves (pm2 uses
+          # the cwd where it was invoked as the app's cwd).
           # startOrReload handles the normal case (app already running);
           # the fallback covers a fresh server / deleted process.
           command: |
-            cd ${{ secrets.REMOTE_TARGET }} && pm2 startOrReload ecosystem.config.cjs --update-env || pm2 start ecosystem.config.cjs
+            cd ${{ secrets.REMOTE_TARGET }} && pm2 startOrReload .output/ecosystem.config.cjs --update-env || pm2 start .output/ecosystem.config.cjs
