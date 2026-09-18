@@ -29,6 +29,12 @@ jobs:
       - name: 🏗️ Build production bundle
         run: pnpm build
 
+      # Ship the pm2 config inside .output so it's part of every rsync payload.
+      # Without this, --delete would wipe ecosystem.config.cjs from TARGET on
+      # each deploy (it lives in TARGET, not inside .output).
+      - name: 📝 Add pm2 config to deploy payload
+        run: cp ecosystem.config.cjs .output/ecosystem.config.cjs
+
       - name: 🚀 Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.5
         env:
@@ -41,34 +47,12 @@ jobs:
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
           TARGET: ${{ secrets.REMOTE_TARGET }}
 
-      - name: � Write pm2 config on server
-        # The deploy payload is only .output/, so rsync --delete would wipe any
-        # ecosystem.config.cjs sitting in TARGET. Re-create it explicitly before
-        # (re)starting the app, and start from that path so cwd matches the
-        # relative script path './.output/server/index.mjs'.
-        uses: JimCronqvist/action-ssh@master
-        with:
-          hosts: '${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}'
-          privateKey: ${{ secrets.SERVER_SSH_KEY }}
-          command: |
-            cat > ${{ secrets.REMOTE_TARGET }}/ecosystem.config.cjs << 'EOF'
-            module.exports = {
-              apps: [
-                {
-                  name: 'livmarolf',
-                  port: '3003',
-                  exec_mode: 'cluster',
-                  instances: 'max',
-                  script: './.output/server/index.mjs'
-                }
-              ]
-            }
-            EOF
-
       - name: 🔃 Restart pm2 app
         uses: JimCronqvist/action-ssh@master
         with:
           hosts: '${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}'
           privateKey: ${{ secrets.SERVER_SSH_KEY }}
+          # startOrReload handles the normal case (app already running);
+          # the fallback covers a fresh server / deleted process.
           command: |
             cd ${{ secrets.REMOTE_TARGET }} && pm2 startOrReload ecosystem.config.cjs --update-env || pm2 start ecosystem.config.cjs
