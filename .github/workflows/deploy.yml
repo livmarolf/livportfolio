@@ -20,6 +20,8 @@ jobs:
       - name: ☕️ Setup Node.js
         uses: actions/setup-node@v4
         with:
+          # Must match the server's Node major (currently 22) — better-sqlite3
+          # is a native module built for this ABI, so a mismatch breaks content.
           node-version: 22
           cache: pnpm
 
